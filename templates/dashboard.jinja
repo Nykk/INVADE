@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invade</title>
+</head>
+<body>
+	<section id='main'>
+	<section id='header'>
+		<div class="box-container">
+			<div class="box"></div>
+			<div class="box"></div>
+		</div>
+		<div class="empty"></div>
+		<div class="box-container">
+			<div class="box"></div>
+			<div class="box"></div>
+			<div class="box"></div>
+			<div class="box"></div>
+		</div>
+	</section>
+	<div id='content'>
+		<div class="half-screen">
+			<div class='centered'>
+				<h1>
+					Greetings, {{email}}
+				</h1>
+				<p>
+					today you have learned 250 new words <br>
+					and spent 37 minutes on learning </br>
+				</p>
+			</div>
+		</div>
+		<div id="half-screen">
+			Greetings, {{email}}
+		</div>
+	</div>
+	</section>
+</body>
+
+<!-- temp styles -->
+<style>
+	#header{
+		display: flex;
+		flex-direction:row;
+	}
+	#main{
+		display:flex;
+		flex-direction:column;
+		height:100vh;
+	}
+	.empty{
+		flex-grow:1;
+	}
+	.box{
+		border-radius:30%;
+		background-color:purple;
+		padding:20px;
+		margin:5px;
+	}
+	.box-container{
+		display:flex;
+	}
+	#content{
+		display:flex;
+		flex-direction:row;
+		flex-grow:1;
+	}
+	.half-screen{
+		flex-grow:0.5;
+	}
+	.centered{
+		transform: translate(-50%,-50%);
+		margin-left: 50%;
+		margin-top: 50vh;
+	}
+</style>
+
+<!-- temp scripts -->
+<script>
+</script>
+
+</html>
