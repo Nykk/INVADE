@@ -4,7 +4,11 @@
 		<div class="half-screen">
 			<div class='centered'>
 				<h1>
-					Greetings, {{email}}
+					Your dictionaries:
+					<div class='dictionaries'>
+						<div class='dict-logo'>english</div>
+						<div class='dict-logo'>spanish</div>
+					</div>
 				</h1>
 				<p>
 					today you have learned 250 new words <br>
@@ -16,4 +20,4 @@
 			Greetings, {{email}}
 		</div>
 	</div>
-	{%include "ending.jinja" %}
+	{% include "ending.jinja" %}

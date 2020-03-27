@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invade</title>
+</head>
+<body>
+<style>
+
+    /* login section styles */
+    .signup-section {
+        display: none;
+    }
+
+    /* login section styles */
+    .auth-section {
+        display: none;
+    }
+    .auth-buttons__wrapper {
+        display: flex;
+    }
+    .auth-form__signup {
+        cursor: pointer;
+    }
+
+    /* title section styles */
+    .join-cube {
+        float: right;
+    }
+    .join-list-wrapper {
+        display: flex;
+        list-style: none;
+    }
+    .join-list__item {
+        margin-right: 10px;
+    }
+    .list-join-button {
+        cursor: pointer;
+    }
+	#header{
+		display: flex;
+		flex-direction:row;
+	}
+	#main{
+		display:flex;
+		flex-direction:column;
+		height:100vh;
+	}
+	.empty{
+		flex-grow:1;
+	}
+	.box{
+		border-radius:30%;
+		background-color:purple;
+		padding:20px;
+		margin:5px;
+		color:white;
+		text-decoration:none;
+	}
+	.box-container{
+		display:flex;
+	}
+	#content{
+		display:flex;
+		flex-direction:row;
+		flex-grow:1;
+	}
+	.half-screen{
+		flex-grow:0.5;
+	}
+	.centered{
+		transform: translate(-50%,-50%);
+		margin-left: 50%;
+		margin-top: 50vh;
+	}
+	.dict-logo{
+		border-radius: 20px;
+		background-color: purple;
+		padding: 2vw;
+	    padding-left: 2vw;
+		margin: 5px;
+		color: white;
+		text-decoration: none;
+		font-size: 1.2vw;
+		padding-left: 1.5vw;
+	}
+	.dictionaries{	
+	  display: grid;
+	  grid-template-columns: 30% 30% 30%;
+   }
+</style>
+<section id='main'>
+	<section id='header'>
+		<div class="box-container">
+			<div class="box"></div>
+			<div class="box"></div>
+			<a href="/dashboard" class="box">Home</a>
+		</div>
+		<div class="empty"></div>
+		<div class="box-container">
+			<a class="box" href="/dict"> Dict </a>
+			<div class="box"></div>
+			<div class="box"></div>
+			<div class="box"></div>
+		</div>
+	</section>

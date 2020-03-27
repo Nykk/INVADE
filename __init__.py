@@ -3,33 +3,16 @@ from flask_restful import Api, Resource, reqparse
 import random
 import sys, os, signal
 from sqlalchemy import Table, Column, Integer, String, MetaData, create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import mapper
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('sqlite:////tmp/test.db', echo=True)
+from models import *
+
+engine = create_engine('sqlite:///test.db', echo=True)
 session = sessionmaker(bind=engine)()
-Base = declarative_base()
+
 metadata = MetaData()
 
-class User(Base):
-    
-    __tablename__='users'
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    email = Column(String)
-    password = Column(String)
-    native_language = Column(String)
-    
-    def __init__(self, name, email, password, native_language):
-        self.name = name
-        self.email = email
-        self.password = password
-        self.native_language=native_language
-
-    def __repr__(self):
-       return "<User(id=%s, name=%s, email='%s', password='%s, native_language='%s')>" % (
-                            self.id, self.name, self.email, self.password, self.native_language)
 
 print(User.__table__)
 #User.__table__.create(engine)
@@ -53,7 +36,7 @@ def sp():
     if ourUser:
         if ourUser.password == password:
             ses['email']=email
-            return 'ok'
+            return redirect('/dashboard')
         else:
             return 'wrong password'
     return 'No such user'
@@ -84,5 +67,18 @@ def db():
     if 'email' in ses:
         return render_template('dashboard.jinja', email=ses['email'])
     return redirect('/')
+
+@app.route('/dict')
+def dp():
+    if 'email' in ses:
+        return render_template('dictionary.jinja', email=ses['email'])
+    return redirect('/')
+
+@app.route('/addWord/', methods=['POST'])
+def adw():
+    if 'email' in ses:
+        pass
+    return 'not logged in'
+
 
 app.run()
