@@ -1,23 +1,38 @@
 
 	{% include "head.jinja" %}
+	<script>
+		function getDictList(name){
+			fetch('/dict/'+name)
+				.then(res => {
+				    return res.text();
+				})
+				.then(data => {
+					words.innerHTML='';
+				    for (let i of data.split(',')){
+				    	words.innerHTML+="<div class='dict-logo'>"+i+"</div>";
+				    }
+				});
+		}
+	</script>
 	<div id='content'>
 		<div class="half-screen">
 			<div class='centered'>
 				<h1>
 					Your dictionaries:
 					<div class='dictionaries'>
-						<div class='dict-logo'>english</div>
-						<div class='dict-logo'>spanish</div>
+						{% for language in languages %}
+						<div class='dict-logo' onclick='getDictList("{{language}}")'>{{language}}</div>
+						{% endfor %}
 					</div>
 				</h1>
 				<p>
-					today you have learned 250 new words <br>
-					and spent 37 minutes on learning </br>
+					select a dictionary
 				</p>
 			</div>
 		</div>
 		<div id="half-screen">
-			Greetings, {{email}}
+			<div class='words' id='words'>
+			</div>
 		</div>
 	</div>
 	{% include "ending.jinja" %}

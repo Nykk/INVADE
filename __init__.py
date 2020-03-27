@@ -71,8 +71,16 @@ def db():
 @app.route('/dict')
 def dp():
     if 'email' in ses:
-        return render_template('dictionary.jinja', email=ses['email'])
+        return render_template('dictionary.jinja',
+            email=ses['email'],
+            languages=['english','spanish','finnish'])
     return redirect('/')
+
+@app.route('/dict/<name>')
+def dlp(name):
+    if name=='english':
+        return 'a,b,c,d,e,f,gh'
+    return 'cat,rat,set,post,get,rest api'
 
 @app.route('/addWord/', methods=['POST'])
 def adw():
