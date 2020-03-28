@@ -89,6 +89,11 @@ def dp():
 
 @app.route('/dict/<name>')
 def dlp(name):
+    if 'userId' not in ses:
+        return redirect('/')
+    set_id = session.query(WordSet).filter_by(owner_id=ses['userId'], name=name).first().id
+    words = session.query(Word).filter_by(word_set = set_id).all()
+    print(words)
     if name=='english':
         return 'a,b,c,d,e,f,gh'
     return 'cat,rat,set,post,get,rest api'

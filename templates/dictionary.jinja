@@ -1,7 +1,9 @@
 
 	{% include "head.jinja" %}
 	<script>
+	    let currentSetName = null;
 		function getDictList(name){
+		    currentSetName = name;
 			fetch('/dict/'+name)
 				.then(res => {
 				    return res.text();
@@ -27,6 +29,11 @@
         }
         function addDictBtn(){
             AddDict(dictName.value,dictLanguage.value)
+        }
+        function addWordBtn(){
+            if (currentSetName) {
+                alert(currentSetName+' '+spelling.value+' '+translation.value)
+            }
         }
 	</script>
 	<div id='content'>
@@ -56,7 +63,15 @@
 			</div>
 		</div>
 		<div id="half-screen">
-			<div class='words' id='words'>
+			<div>
+			    <div id='words' class='words'>
+				</div>
+    			<div class='form'>
+            	    create a dictionary:<br>
+    			    <input type="text" id="spelling">
+    			    <input type="text" id="translation">
+				    <input type="button" value="add" onclick="addWordBtn()">
+				    </div>
 			</div>
 		</div>
 	</div>
