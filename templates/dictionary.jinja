@@ -13,18 +13,43 @@
 				    }
 				});
 		}
+		function AddDict(name,language){
+		    fetch('/addWordSet',{method:"POST",
+		        headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({
+                    name:name,
+                    language:language
+                })
+            })
+        }
+        function addDictBtn(){
+            AddDict(dictName.value,dictLanguage.value)
+        }
 	</script>
 	<div id='content'>
 		<div class="half-screen">
 			<div class='centered'>
 				<h1>
 					Your dictionaries:
-					<div class='dictionaries'>
-						{% for language in languages %}
-						<div class='dict-logo' onclick='getDictList("{{language}}")'>{{language}}</div>
-						{% endfor %}
-					</div>
 				</h1>
+				<div class='dictionaries'>
+					{% for dictionary in dictionaries %}
+					<div class='dict-logo' onclick='getDictList("{{dictionary}}")'>{{dictionary}}</div>
+					{% endfor %}
+				</div>
+				<div class='form'>
+				    create a dictionary:<br>
+				    <input type="text" id="dictName">
+				    <select id="dictLanguage">
+				        <option disabled> select a language </option>
+				        <option>english</option>
+				        <option>spanish</option>
+				    </select>
+				    <input type="button" value="add" onclick="addDictBtn()">
+				</div>
 				<p>
 					select a dictionary
 				</p>

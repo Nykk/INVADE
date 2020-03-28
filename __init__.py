@@ -1,27 +1,31 @@
 from flask import Flask, request, session as ses, render_template, redirect
-from flask_restful import Api, Resource, reqparse
 import random
 import sys, os, signal
-from sqlalchemy import Table, Column, Integer, String, MetaData, create_engine
+from sqlalchemy import Table, Column, Integer, String, MetaData, create_engine, and_
+import json
 from sqlalchemy.orm import mapper
 from sqlalchemy.orm import sessionmaker
 
 from models import *
 
-engine = create_engine('sqlite:///test.db', echo=True)
+engine = create_engine('sqlite:////Users/alme/PycharmProjects/INVADE/test.db?check_same_thread=False', echo=True)
+con = engine.connect()
 session = sessionmaker(bind=engine)()
 
 metadata = MetaData()
 
 
 print(User.__table__)
-#User.__table__.create(engine)
+# User.__table__.create(engine)
+# WordSet.__table__.create(engine)
+# Word.__table__.create(engine)
+
 
 session.commit()
 
 app = Flask(__name__)
 app.config['SECRET_KEY']='sdfvsdh43f3f34'
-api = Api(app)
+
 
 @app.route('/')
 def mp():
@@ -36,6 +40,7 @@ def sp():
     if ourUser:
         if ourUser.password == password:
             ses['email']=email
+            ses['userId']=ourUser.id
             return redirect('/dashboard')
         else:
             return 'wrong password'
@@ -56,11 +61,14 @@ def rp():
     print(user)
     return 'ok'
 
+
 @app.route('/logout')
 def logout():
     if 'email' in ses:
         ses.pop('email')
+        ses.pop('userId')
     return redirect('/')
+
 
 @app.route('/dashboard')
 def db():
@@ -68,13 +76,16 @@ def db():
         return render_template('dashboard.jinja', email=ses['email'])
     return redirect('/')
 
+
 @app.route('/dict')
 def dp():
-    if 'email' in ses:
+    if 'userId' in ses:
+        sets = session.query(WordSet).filter_by(owner_id=ses['userId']).all()
         return render_template('dictionary.jinja',
             email=ses['email'],
-            languages=['english','spanish','finnish'])
+            dictionaries=[i.name for i in sets])
     return redirect('/')
+
 
 @app.route('/dict/<name>')
 def dlp(name):
@@ -82,11 +93,28 @@ def dlp(name):
         return 'a,b,c,d,e,f,gh'
     return 'cat,rat,set,post,get,rest api'
 
+
 @app.route('/addWord/', methods=['POST'])
 def adw():
     if 'email' in ses:
-        pass
+        print(ses['userId'])
     return 'not logged in'
 
+
+@app.route('/addWordSet/', methods=['POST'])
+def adws():
+    if 'email' in ses:
+        user_id = ses['userId']
+        language = request.json['language']
+        name = request.json['name']
+        print(user_id, name, language)
+        # print(dir(request))
+        if not con.execute("SELECT * FROM word_sets WHERE name = '%s' and owner_id=%s"%(name,user_id)).first():
+            word_set = WordSet(name, user_id, language)
+            session.add(word_set)
+            session.commit()
+            return 'success'
+        return 'word st already exists'
+    return 'not logged in'
 
 app.run()
