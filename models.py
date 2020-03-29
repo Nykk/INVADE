@@ -45,7 +45,7 @@ class Word(Base):
     id = Column(Integer, primary_key=True)
     spelling = Column(String)
     translation = Column(String)
-    word_set = Column(String)
+    word_set = Column(Integer)
     train1 = Column(Integer)
     train2 = Column(Integer)
     train3 = Column(Integer)
@@ -55,14 +55,18 @@ class Word(Base):
     def __init__(self, spelling, translation, word_set):
         self.spelling = spelling
         self.translation = translation
-        self.word_set = set
+        self.word_set = word_set
         self.train1 = 0
         self.train2 = 0
         self.train3 = 0
         self.train4 = 0
         self.train5 = 0
 
+    @property
+    def trains(self):
+        return [self.train1,self.train2,self.train3,self.train4,self.train5]
+
     def __repr__(self):
-        return "<Word(id=%s, spelling=%s, translation='%s', set='%s, trains='%s')>" % (
-            self.id, self.spelling, self.translation, self.set,
+        return "<Word(id=%s, spelling=%s, translation='%s', set=%s, trains='%s')>" % (
+            self.id, self.spelling, self.translation, self.word_set,
             [self.train1,self.train2,self.train3,self.train4,self.train5])

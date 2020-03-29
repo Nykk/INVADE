@@ -1,16 +1,16 @@
-from flask import Flask, request, session as ses, render_template, redirect
+from flask import Flask, request, session as ses, render_template, redirect, abort
 import random
 import sys, os, signal
 from sqlalchemy import Table, Column, Integer, String, MetaData, create_engine, and_
 import json
 from sqlalchemy.orm import mapper
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 
 from models import *
 
-engine = create_engine('sqlite:////Users/alme/PycharmProjects/INVADE/test.db?check_same_thread=False', echo=True)
+engine = create_engine('sqlite:////Volumes/High Sierra/Users/alme/PycharmProjects/INVADE/test.db?check_same_thread=false', echo=True)
 con = engine.connect()
-session = sessionmaker(bind=engine)()
+session = scoped_session(sessionmaker(bind=engine))
 
 metadata = MetaData()
 
@@ -73,7 +73,7 @@ def logout():
 @app.route('/dashboard')
 def db():
     if 'email' in ses:
-        return render_template('dashboard.jinja', email=ses['email'])
+        return render_template('dashboard.html', email=ses['email'])
     return redirect('/')
 
 
@@ -81,9 +81,9 @@ def db():
 def dp():
     if 'userId' in ses:
         sets = session.query(WordSet).filter_by(owner_id=ses['userId']).all()
-        return render_template('dictionary.jinja',
-            email=ses['email'],
-            dictionaries=[i.name for i in sets])
+        return render_template('dictionary.html',
+                               email=ses['email'],
+                               dictionaries=[i.name for i in sets])
     return redirect('/')
 
 
@@ -94,15 +94,34 @@ def dlp(name):
     set_id = session.query(WordSet).filter_by(owner_id=ses['userId'], name=name).first().id
     words = session.query(Word).filter_by(word_set = set_id).all()
     print(words)
-    if name=='english':
-        return 'a,b,c,d,e,f,gh'
-    return 'cat,rat,set,post,get,rest api'
+    strret=''
+    for i in words:
+        strret += i.spelling+','
+    if strret:
+        strret=strret[:-1]
+    print ('returned: '+strret)
+    return strret
+    # if name=='english':
+    #     return 'a,b,c,d,e,f,gh'
+    # return 'cat,rat,set,post,get,rest api'
 
 
 @app.route('/addWord/', methods=['POST'])
 def adw():
     if 'email' in ses:
-        print(ses['userId'])
+        user_id = ses['userId']
+        set_name = request.json['setName']
+        set_id = session.query(WordSet).filter_by(owner_id=ses['userId'], name=set_name).first().id
+        spelling = request.json['spelling']
+        translation = request.json['translation']
+        print(user_id,set_id,spelling,translation)
+        if not session.query(Word).filter_by(word_set=set_id, spelling=spelling).first():
+            word = Word(spelling, translation, set_id)
+            session.add(word)
+            session.commit()
+            return 'ok'
+        else:
+            abort(409)
     return 'not logged in'
 
 
@@ -119,7 +138,33 @@ def adws():
             session.add(word_set)
             session.commit()
             return 'success'
-        return 'word st already exists'
+        abort(409)
     return 'not logged in'
+
+@app.route('/getWordInfo/', methods=['POST'])
+def gwi():
+    if 'email' in ses:
+        user_id = ses['userId']
+        word = request.json['word']
+        word_set = request.json['set']
+        print(user_id, word, word_set)
+        word_set = session.query(WordSet).filter_by(name=word_set, owner_id=user_id).first()
+        print(word_set,word_set.id)
+        word_object = session.query(Word).filter_by(word_set=word_set.id, spelling=word).first()
+        print(word)
+        # print(dir(request))
+        return word_object.translation+'; '+str(word_object.trains)[1:-1]
+        abort(409)
+    return 'not logged in'
+
+@app.route('/deleteWord', methods=['POST'])
+def dwp():
+    if 'email' in ses:
+        user_id = ses['userId']
+        word = request.json['word']
+        word_set = request.json['set']
+        word_set = session.query(WordSet).filter_by(name=word_set,owner_id=user_id).first().id
+        session.query(Word).filter_by(word_set=word_set,spelling=word).delete()
+        session.commit()
 
 app.run()

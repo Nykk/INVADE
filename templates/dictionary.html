@@ -1,0 +1,150 @@
+
+	{% include "head.html" %}
+	<script>
+	    let currentSetName = null;
+	    let currentWord = null;
+	    function deleteWord(){
+	        fetch('/deleteWord', {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        word: currentWord,
+                        set: currentSetName
+                    })
+                }
+            );
+            let word_div = document.getElementById('word_'+currentWord)
+            word_div.parentNode.removeChild(word_div);
+        }
+	    async function showWordInfo(word){
+	        currentWord=word;
+	        fetch('/getWordInfo',{method:"POST",
+		        headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({
+                    word:word,
+                    set:currentSetName
+                })
+            }).then(res=>{
+                    if (res.status==200){
+
+                        res.text().then(function(text){
+                            arr = text.split(';')
+                            wordInfo.innerHTML = word+'<br>'+arr[0];
+                            for(let i=0; i<arr[1].split(',').length; i++){
+                                wordInfo.innerHTML+='<br>train '+i+':'+arr[1].split(',')[i];
+                            }
+                        });
+                    }
+            }).then(data=>{
+                console.log(data);
+                wordInfo.innerHTML = word+data;
+            })
+        }
+		function getDictList(name){
+	        console.log('gdl');
+		    currentSetName = name;
+			fetch('/dict/'+name)
+				.then(res => {
+				    return res.text();
+				})
+				.then(data => {
+					words.innerHTML='';
+					if (data!=''){
+				        for (let i of data.split(',')){
+				        	words.innerHTML+=`<div class='dict-logo' id='word_`+i+`' onclick="showWordInfo('`+i+`')">`+i+`</div>`;
+				        }
+					}
+				});
+		}
+		function AddDict(name,language){
+		    fetch('/addWordSet',{method:"POST",
+		        headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({
+                    name:name,
+                    language:language
+                })
+            }).then(res=>{
+                    if (res.status==200){
+                        dictionaries.innerHTML+="<div class='dict-logo'>"+name+"</div>";
+                    }
+                })
+        }
+        function addDictBtn(){
+            AddDict(dictName.value,dictLanguage.value)
+        }
+        function addWordBtn(){
+            if (currentSetName) {
+                fetch('/addWord',{method:"POST",
+		            headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body:JSON.stringify({
+                        setName:currentSetName,
+                        spelling:spelling.value,
+                        translation:translation.value
+                    })
+                }).then(res=>{
+                    if (res.status==200){
+                        let i = spelling.value;
+                        words.innerHTML+=`<div class='dict-logo' onclick="showWordInfo('`+i+`')">`+i+`</div>`;
+                    }
+                })
+            }
+        }
+	</script>
+	<div id='content'>
+		<div class="half-screen">
+			<div class='centered'>
+				<h1>
+					Your dictionaries:
+				</h1>
+				<div class='dictionaries' id="dictionaries">
+					{% for dictionary in dictionaries %}
+					    <div class='dict-logo' onclick='getDictList("{{dictionary}}")'>{{dictionary}}</div>
+					{% endfor %}
+				</div>
+				<div class='form'>
+				    create a dictionary:<br>
+				    <input type="text" id="dictName">
+				    <select id="dictLanguage">
+				        <option disabled> select a language </option>
+				        <option>english</option>
+				        <option>spanish</option>
+				    </select>
+				    <input type="button" value="add" onclick="addDictBtn()">
+				</div>
+				<p>
+					select a dictionary
+				</p>
+			</div>
+		</div>
+		<div id="half-screen">
+			<div>
+                <h1>Words:</h1>
+			    <div id='words' class='words'>
+                    select a dictionary
+				</div>
+    			<div class='form'>
+            	    add a word:<br>
+    			    <input type="text" id="spelling">
+    			    <input type="text" id="translation">
+				    <input type="button" value="add" onclick="addWordBtn()">
+				    </div>
+			</div>
+            <div id="wordInfo">
+                select a word to show info
+            </div>
+            <button onclick="deleteWord()">delete word</button>
+		</div>
+	</div>
+	{% include "ending.html" %}
