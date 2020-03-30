@@ -1,6 +1,11 @@
 
 	{% include "head.html" %}
 	<script>
+        trainingNames = [
+            {% for i in training_names %}
+                "{{ i }}",
+            {% endfor %}
+        ];
 	    let currentSetName = null;
 	    let currentWord = null;
 	    function deleteWord(){
@@ -35,9 +40,9 @@
 
                         res.text().then(function(text){
                             arr = text.split(';')
-                            wordInfo.innerHTML = word+'<br>'+arr[0];
+                            wordInfo.innerHTML = 'word: '+word+'<br>translation: '+arr[0];
                             for(let i=0; i<arr[1].split(',').length; i++){
-                                wordInfo.innerHTML+='<br>train '+i+':'+arr[1].split(',')[i];
+                                wordInfo.innerHTML+='<br>'+trainingNames[i]+':'+arr[1].split(',')[i];
                             }
                         });
                     }

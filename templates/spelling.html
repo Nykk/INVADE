@@ -23,11 +23,16 @@
 				<div id="train">
                     <div v-if="!ended">
                         <div id="translation">{{translation}}</div>
-                        <input type="text" id="spell">
+                        <input type="text" id="spell" v-model="answer">
                         <input type="button" value="check" v-on:click="check">
                     </div>
                     <div v-if="ended">
-                        result
+                        <b>
+                        result<br>
+                        correct:<br></b>
+                        <div v-for="i in corrects">{{ i.spelling }}</div>
+                        <b>incorrect:<br></b>
+                        <div v-for="i in incorrects">{{ i.spelling }}</div>
                     </div>
                 </div>
                 <script>
@@ -36,6 +41,9 @@
                         data: {
                             wordNum: 0,
                             ended:false,
+                            answer:'',
+                            corrects:[],
+                            incorrects:[]
                         },
                         computed:{
                             translation: function(){
@@ -44,13 +52,32 @@
                                 return null;
                             }
                         },
-                        methods:{
-                            check:()=>{
-                                console.log('check');
+                        methods: {
+                            check: () => {
+                                if (app.answer == words[app.wordNum].spelling)
+                                    app.corrects.push(words[app.wordNum])
+                                else
+                                    app.incorrects.push(words[app.wordNum])
+                                app.answer = '';
                                 app.wordNum++;
                                 console.log(app.wordNum);
-                                if (app.wordNum==words.length){
-                                    app.ended=true;
+                                if (app.wordNum == words.length) {
+                                    app.ended = true;
+                                    corrects_ids = app.corrects.map(i => i.id);
+                                    incorrects_ids = app.incorrects.map(i => i.id);
+                                    console.log(corrects_ids, incorrects_ids);
+                                    fetch('/trainingRes', {
+                                        method: "POST",
+                                        headers: {
+                                            'Accept': 'application/json',
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            corrects: corrects_ids,
+                                            incorrects:incorrects_ids,
+                                            trainingId:0,//spelling
+                                        })
+                                    })
                                 }
                             }
                         }

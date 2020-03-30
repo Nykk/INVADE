@@ -5,6 +5,7 @@ from sqlalchemy import Table, Column, Integer, String, MetaData, create_engine, 
 import json
 from sqlalchemy.orm import mapper
 from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy import update
 
 from models import *
 
@@ -14,7 +15,7 @@ session = scoped_session(sessionmaker(bind=engine))
 
 metadata = MetaData()
 
-TRAINING_NAMES = ['spelling','choose translation','choose spelling']
+TRAINING_NAMES = ['spelling','choose translation','choose spelling','quick quiz','space invasion']
 DIFFICULTIES = ['easy','medium','hard']
 
 print(User.__table__)
@@ -63,6 +64,28 @@ def rp():
     print(user)
     return 'ok'
 
+@app.route('/trainingRes/', methods=['POST'])
+def trs():
+    if 'email' in ses:
+        user_id = ses['userId']
+        training_id = request.json['trainingId']
+        corrects = request.json['corrects']
+        incorrects = request.json['incorrects']
+
+        print(user_id,training_id,corrects,incorrects)
+        train_name="train"+str(training_id)
+        print(train_name)
+        incorrect_records = session.query(Word).filter(Word.id.in_(incorrects)).all()
+        correct_records = session.query(Word).filter(Word.id.in_(corrects)).all()
+        print(incorrect_records)
+        for i in incorrect_records:
+            i.train1=0
+        for i in correct_records:
+            i.train1+=1
+        session.commit()
+        print(session.query(Word).filter(Word.id.in_(corrects)).all())
+        return 'ok'
+    abort(409)
 
 @app.route('/logout')
 def logout():
@@ -85,7 +108,8 @@ def dp():
         sets = session.query(WordSet).filter_by(owner_id=ses['userId']).all()
         return render_template('dictionary.html',
                                email=ses['email'],
-                               dictionaries=[i.name for i in sets])
+                               dictionaries=[i.name for i in sets],
+                               training_names=TRAINING_NAMES)
     return redirect('/')
 
 @app.route('/startTraining/<name>/<difficulty>')
@@ -107,14 +131,14 @@ def stng(name,difficulty):
 @app.route('/startTraining/<name>/<difficulty>/<set_name>')
 def training(name,difficulty,set_name):
     if 'userId' in ses:
-        word_set = session.query(WordSet).filter_by(owner_id=ses['userId'], name=set_name).first()
-        words = session.query(Word).filter_by(word_set=word_set.id).all()
-        print(words)
-        print(word_set)
         if name not in TRAINING_NAMES:
             return 'wrong training name'
         if difficulty not in DIFFICULTIES:
             return "wrong difficulty"
+        word_set = session.query(WordSet).filter_by(owner_id=ses['userId'], name=set_name).first()
+        words = session.query(Word).filter(Word.word_set==word_set.id, Word.train1<3).limit(2).all()
+        print(words)
+        print(word_set)
         # return name+' '+difficulty
         return render_template(name+'.html',words=words)
     return redirect('/')
