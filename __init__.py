@@ -107,16 +107,16 @@ def stng(name,difficulty):
 @app.route('/startTraining/<name>/<difficulty>/<set_name>')
 def training(name,difficulty,set_name):
     if 'userId' in ses:
-        sets = [i.name for i in session.query(WordSet).filter_by(owner_id=ses['userId']).all()]
-        print(sets)
+        word_set = session.query(WordSet).filter_by(owner_id=ses['userId'], name=set_name).first()
+        words = session.query(Word).filter_by(word_set=word_set.id).all()
+        print(words)
+        print(word_set)
         if name not in TRAINING_NAMES:
             return 'wrong training name'
         if difficulty not in DIFFICULTIES:
             return "wrong difficulty"
-        if set_name not in sets:
-            return "wrong set name"
         # return name+' '+difficulty
-        return 'starting training '+name+' '+difficulty+' '+set_name
+        return render_template(name+'.html',words=words)
     return redirect('/')
 
 
