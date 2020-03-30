@@ -79,9 +79,9 @@ def trs():
         correct_records = session.query(Word).filter(Word.id.in_(corrects)).all()
         print(incorrect_records)
         for i in incorrect_records:
-            i.train1=0
+            setattr(i,'train'+str(training_id),0)#i.train1=0
         for i in correct_records:
-            i.train1+=1
+            setattr(i,'train'+str(training_id),getattr(i,'train'+str(training_id))+1)
         session.commit()
         print(session.query(Word).filter(Word.id.in_(corrects)).all())
         return 'ok'
@@ -135,12 +135,13 @@ def training(name,difficulty,set_name):
             return 'wrong training name'
         if difficulty not in DIFFICULTIES:
             return "wrong difficulty"
+        training_id = TRAINING_NAMES.index(name)+1
         word_set = session.query(WordSet).filter_by(owner_id=ses['userId'], name=set_name).first()
-        words = session.query(Word).filter(Word.word_set==word_set.id, Word.train1<3).limit(2).all()
+        words = session.query(Word).filter(Word.word_set==word_set.id, getattr(Word,'train'+str(training_id)) <3).limit(6).all()
         print(words)
         print(word_set)
         # return name+' '+difficulty
-        return render_template(name+'.html',words=words)
+        return render_template('trainings/'+name+'.html',words=words)
     return redirect('/')
 
 
