@@ -1,0 +1,55 @@
+
+	{% include "head.html" %}
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+	    let currentSetName = null;
+	    let currentWord = null;
+
+
+		function getDictList(name){
+	        console.log('gdl');
+		    currentSetName = name;
+			fetch('/dict/'+name)
+				.then(res => {
+				    return res.text();
+				})
+				.then(data => {
+					words.innerHTML='';
+					if (data!=''){
+				        for (let i of data.split(',')){
+				        	words.innerHTML+=`<div class='dict-logo' id='word_`+i+`' onclick="showWordInfo('`+i+`')">`+i+`</div>`;
+				        }
+					}
+				});
+		}
+
+		function start(num){
+		    alert(num)
+        }
+	</script>
+	<div id='content'>
+        <div class='centered'>
+				<div class='dictionaries' id="dictionaries">
+					{% for training in trainings %}
+					    <div class='training-logo' onclick='start("{{trainings.index(training)}}")'>{{training}}</div>
+					{% endfor %}
+				</div>
+		</div>
+	</div>
+{% raw %}
+    <div id="trainSettingsForm" v-if="shown">
+        tmn
+        {{ trainName }}
+    </div>
+<script>
+
+	    var App = new Vue({
+            el:"#trainSettingsForm",
+            data:{
+                trainName:'spelling',
+                shown:false,
+            }
+        });
+</script>
+{% endraw %}
+	{% include "ending.html" %}

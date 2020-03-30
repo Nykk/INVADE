@@ -106,6 +106,13 @@ def dlp(name):
     # return 'cat,rat,set,post,get,rest api'
 
 
+@app.route('/train')
+def trp():
+    if 'userId' not in ses:
+        return redirect('/')
+    return render_template('trainingList.html',trainings=['spelling','choose translation','choose spelling'])
+
+
 @app.route('/addWord/', methods=['POST'])
 def adw():
     if 'email' in ses:
