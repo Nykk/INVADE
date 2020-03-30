@@ -41,6 +41,7 @@
                         res.text().then(function(text){
                             arr = text.split(';')
                             wordInfo.innerHTML = 'word: '+word+'<br>translation: '+arr[0];
+                            console.log(arr);
                             for(let i=0; i<arr[1].split(',').length; i++){
                                 wordInfo.innerHTML+='<br>'+trainingNames[i]+':'+arr[1].split(',')[i];
                             }

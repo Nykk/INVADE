@@ -215,6 +215,7 @@ def gwi():
         word_object = session.query(Word).filter_by(word_set=word_set.id, spelling=word).first()
         print(word)
         # print(dir(request))
+        print(word_object.train1)
         return word_object.translation+'; '+str(word_object.trains)[1:-1]
         abort(409)
     return 'not logged in'
