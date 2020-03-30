@@ -5,6 +5,7 @@
 	    let currentSetName = null;
 	    let currentWord = null;
 
+	    var trainingNames = [{% for i in trainings %}"{{ i }}",{% endfor %}];
 
 		function getDictList(name){
 	        console.log('gdl');
@@ -23,26 +24,35 @@
 				});
 		}
 
-		function start(num){
-		    alert(num)
-        }
+
 	</script>
-	<div id='content'>
+<div id="trainSettingsForm">
+	<div id='content' v-if="!shown">
         <div class='centered'>
 				<div class='dictionaries' id="dictionaries">
 					{% for training in trainings %}
-					    <div class='training-logo' onclick='start("{{trainings.index(training)}}")'>{{training}}</div>
+					    <div class='training-logo' onclick='select("{{trainings.index(training)}}")'>{{training}}</div>
 					{% endfor %}
 				</div>
 		</div>
 	</div>
 {% raw %}
-    <div id="trainSettingsForm" v-if="shown">
-        tmn
+    <div v-if="shown">
         {{ trainName }}
+        {%  endraw %}
+        <button onclick="closeSelect()">close</button>
+        <form action="/startTraining" method="POST">
+            <select id="difficulty">
+                {%  for difficulty in difficulties %}
+                <option>{{difficulty}}</option>
+                <{% endfor %}
+            </select>
+        {% raw %}
+            <input type="button" onclick="start()" value="start">
+        </form>
     </div>
+</div>
 <script>
-
 	    var App = new Vue({
             el:"#trainSettingsForm",
             data:{
@@ -50,6 +60,17 @@
                 shown:false,
             }
         });
+	    function select(num){
+		    //alert(num, trainingNames[num]);
+            App.shown = true;
+            App.trainName = trainingNames[num];
+        }
+        function closeSelect(){
+            App.shown = false;
+        }
+        function start(){
+	        window.location.replace('/startTraining/'+App.trainName+'/'+difficulty.value)
+        }
 </script>
 {% endraw %}
 	{% include "ending.html" %}

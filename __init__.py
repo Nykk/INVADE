@@ -14,6 +14,8 @@ session = scoped_session(sessionmaker(bind=engine))
 
 metadata = MetaData()
 
+TRAINING_NAMES = ['spelling','choose translation','choose spelling']
+DIFFICULTIES = ['easy','medium','hard']
 
 print(User.__table__)
 # User.__table__.create(engine)
@@ -86,6 +88,37 @@ def dp():
                                dictionaries=[i.name for i in sets])
     return redirect('/')
 
+@app.route('/startTraining/<name>/<difficulty>')
+def stng(name,difficulty):
+    if 'userId' in ses:
+        sets = session.query(WordSet).filter_by(owner_id=ses['userId']).all()
+        if name not in TRAINING_NAMES:
+            return 'wrong training name'
+        if difficulty not in DIFFICULTIES:
+            return "wrong difficulty"
+        # return name+' '+difficulty
+        return render_template('choseDictForTraining.html',
+                               name = name,
+                               difficulty=difficulty,
+                               dictionaries=[i.name for i in sets])
+    return redirect('/')
+
+
+@app.route('/startTraining/<name>/<difficulty>/<set_name>')
+def training(name,difficulty,set_name):
+    if 'userId' in ses:
+        sets = [i.name for i in session.query(WordSet).filter_by(owner_id=ses['userId']).all()]
+        print(sets)
+        if name not in TRAINING_NAMES:
+            return 'wrong training name'
+        if difficulty not in DIFFICULTIES:
+            return "wrong difficulty"
+        if set_name not in sets:
+            return "wrong set name"
+        # return name+' '+difficulty
+        return 'starting training '+name+' '+difficulty+' '+set_name
+    return redirect('/')
+
 
 @app.route('/dict/<name>')
 def dlp(name):
@@ -101,16 +134,13 @@ def dlp(name):
         strret=strret[:-1]
     print ('returned: '+strret)
     return strret
-    # if name=='english':
-    #     return 'a,b,c,d,e,f,gh'
-    # return 'cat,rat,set,post,get,rest api'
 
 
 @app.route('/train')
 def trp():
     if 'userId' not in ses:
         return redirect('/')
-    return render_template('trainingList.html',trainings=['spelling','choose translation','choose spelling'])
+    return render_template('trainingList.html',trainings=TRAINING_NAMES, difficulties=DIFFICULTIES)
 
 
 @app.route('/addWord/', methods=['POST'])
