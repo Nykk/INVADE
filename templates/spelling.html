@@ -1,0 +1,63 @@
+
+	{% include "head.html" %}
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<div id='content'>
+			<div class='centered'>
+                <script>
+                    var words=[
+                        {% for word in words %}
+                            {
+                                id:{{word.id}},
+                                spelling:"{{ word.spelling }}",
+                                translation:"{{ word.translation }}"
+                            },
+                        {% endfor %}
+                    ];
+                    var corrects=[];
+                    var incorrects=[];
+	            </script>
+				<h1>
+					Spelling test
+				</h1>
+                {% raw %}
+				<div id="train">
+                    <div v-if="!ended">
+                        <div id="translation">{{translation}}</div>
+                        <input type="text" id="spell">
+                        <input type="button" value="check" v-on:click="check">
+                    </div>
+                    <div v-if="ended">
+                        result
+                    </div>
+                </div>
+                <script>
+                    var app = new Vue({
+                        el: '#train',
+                        data: {
+                            wordNum: 0,
+                            ended:false,
+                        },
+                        computed:{
+                            translation: function(){
+                                if (this.wordNum<words.length)
+                                return words[this.wordNum].translation;
+                                return null;
+                            }
+                        },
+                        methods:{
+                            check:()=>{
+                                console.log('check');
+                                app.wordNum++;
+                                console.log(app.wordNum);
+                                if (app.wordNum==words.length){
+                                    app.ended=true;
+                                }
+                            }
+                        }
+                    })
+                </script>
+                {% endraw %}
+			</div>
+		</div>
+	</div>
+	{%include "ending.html" %}
