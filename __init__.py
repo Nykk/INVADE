@@ -115,16 +115,27 @@ def dp():
 @app.route('/startTraining/<name>/<difficulty>')
 def stng(name,difficulty):
     if 'userId' in ses:
-        sets = session.query(WordSet).filter_by(owner_id=ses['userId']).all()
+
         if name not in TRAINING_NAMES:
             return 'wrong training name'
         if difficulty not in DIFFICULTIES:
             return "wrong difficulty"
+        training_id = TRAINING_NAMES.index(name) + 1
+        sets = session.query(WordSet).filter_by(owner_id=ses['userId']).all()
+        sets2={}
+        for i in sets:
+            # print(i.id)
+            # print(session.query(Word).filter_by(word_set=i.id).count())
+            sets2[i.id]={"setName":i.name,
+                         "wordCout":session.query(Word).filter_by(word_set=i.id).count(),
+                         "needToTrain":session.query(Word).filter(Word.word_set==i.id,getattr(Word,'train'+str(training_id)) <3).count()}
+        for i in sets2:
+            print(i,sets2[i])
         # return name+' '+difficulty
         return render_template('choseDictForTraining.html',
                                name = name,
                                difficulty=difficulty,
-                               dictionaries=[i.name for i in sets])
+                               dictionaries=[sets2[i] for i in sets2])
     return redirect('/')
 
 

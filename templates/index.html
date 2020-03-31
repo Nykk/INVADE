@@ -9,15 +9,22 @@
 
     <!-- signup section -->
     <section class="signup-section">
+
+        <svg class="close-button" viewBox="0 0 70.826 68.357"><defs><style>.a{fill:none;stroke:#703a98;stroke-width:5px;}</style></defs><g transform="translate(-1309.732 -79.732)"><line class="a" x1="64.821" y1="64.821" transform="translate(1313.969 81.5)"/><line class="a" y1="64.821" x2="64.821" transform="translate(1311.5 81.5)"/></g></svg>
+
         <form class="signup-form" action="/signup" method="post">
 
-            <input type="text" name="name" class="signup-form__name" placeholder="name">
+            <div class="signup-inputs__wrapper">
 
-            <input type="email" name="email" class="signup-form__email" placeholder="e-mail">
+                <input type="text" name="name" class="signup-form__name" placeholder="name">
 
-            <input type="password" name="password" class="signup-form__password" placeholder="password">
+                <input type="email" name="email" class="signup-form__email" placeholder="e-mail">
 
-            <input type="text" name="language" class="signup-form__language" placeholder="native language">
+                <input type="password" name="password" class="signup-form__password" placeholder="password">
+
+                <input type="text" name="language" class="signup-form__language" placeholder="native language">
+
+            </div>
 
             <button type="submit" name="submit" class="signup-form__submit">join</button>
 
@@ -26,6 +33,9 @@
 
     <!-- login section -->
     <section class="auth-section">
+
+        <svg class="close-button" viewBox="0 0 70.826 68.357"><defs><style>.a{fill:none;stroke:#703a98;stroke-width:5px;}</style></defs><g transform="translate(-1309.732 -79.732)"><line class="a" x1="64.821" y1="64.821" transform="translate(1313.969 81.5)"/><line class="a" y1="64.821" x2="64.821" transform="translate(1311.5 81.5)"/></g></svg>
+
         <form class="auth-form" action="/signin" method="post">
 
             <input type="email" name="email" class="auth-form__email" placeholder="e-mail">
@@ -34,65 +44,669 @@
 
             <div class="auth-buttons__wrapper">
                 <button type="submit" name="submit" class="auth-form__submit">log in</button>
-                <div class="auth-form__signup">sign in</div>
+                <div class="auth-form__signup"> or sign up</div>
             </div>
 
         </form>
     </section>
 
-    <!-- title section -->
-    <section class="title-section">
+    <div id="app">
+        <!-- title section -->
+        <section class="title-section">
 
-        <!-- background cube as join section -->
-        <div class="bg-cube join-cube">
+            <!-- background cube as join section -->
+            <div class="bg-cube join-cube">
 
-            <!-- right top two buttons -->
-            <ul class="join-list-wrapper">
-                <li class="join-list__item list-join-button">join</li>
-                <li class="join-list__item list-invade-button"><a class="invade-link" href="#main_page.html">invade</a></li>
-            </ul>
+                <!-- right top two buttons -->
+                <ul class="join-list__wrapper">
+                    <li class="join-list__item list-join-button">join</li>
+                    <li class="join-list__item list-invade-button"><a class="invade-link" href="#main_page.html">invade</a></li>
+                </ul>
 
-        </div>
+            </div>
 
 
-        <!-- the rest of the section -->
-    </section>
-    <!-- the rest of the page -->
+            <div class="bg-cube animated-cubes__wrapper">
+
+                <div class="animated-title-cube above-cube"></div>
+                <div class="animated-title-cube middle-cube"></div>
+                <div class="animated-title-cube under-cube"></div>
+
+            </div>
+
+            <div class="title-text__wrapper">
+                <h1 class="title-text">
+                    we don’t have <span class="foreign_colored-word">foreign</span> languages 
+                </h1>
+            </div>
+
+        </section>
+
+        <!-- middle section -->
+        <section class="middle-section">
+
+            <div class="bg-cube transport-cubes__wrapper">
+                <div class="bicycle-cube__item">bicycle</div>
+                <div class="plane-cube__item">plane</div>
+                <div class="car-cube__item">car</div>
+                <div class="ship-cube__item">ship</div>
+            </div>
+
+            <div class="transport-text__wrapper">
+                <p class="transport-text"> what’s your <span class="favourite_colored-word">favourite</span> mean of transport?</p>
+                <p class="transport-answer">…let <span class="people_colored-word">people</span> know!</p>
+            </div>
+
+        </section>
+
+        <!-- bottom section -->
+        <section class="bottom-section">
+
+            <div class="languages__wrapper">
+                <div class="dive-cube">dive</div>
+                <div class="into-cube">into</div>
+
+                <ul class="languages-example-list">
+                    <li class="english__example-item">languages</li>
+                    <li class="russian__example-item">языки</li>
+                    <li class="chinese__example-item">语言</li>
+                    <li class="german__example-item">sprachen</li>
+                </ul>
+            </div>
+
+            <div class="qa__wrapper">
+                
+                <div class="learner-qa-part__wrapper">
+                    <p class="learner-question__item">a learner?</p>
+                    <p class="learner-answer__item">learn new words</p>
+                </div>
+
+                <div class="native-qa-part__wrapper">
+                    <p class="native-question__item">a native speaker?</p>
+                    <p class="native-answer__item">add words, help and meet new people</p>
+                </div>
+
+            </div>
+
+            <div class="right-bottom-join__wrapper">
+                <div class="top-left-cube__item">join</div>
+                <div class="top-right-cube__item"></div>
+                <div class="bottom-left-cube__item"></div>
+                <div class="bottom-right-cube__item"></div>
+            </div>
+
+        </section>
+    </div>
+
 </body>
 
 <!-- temp styles -->
 <style>
 
-    /* login section styles */
-    .signup-section {
-        display: none;
+    /* animation */
+
+    /* @keyframes smallCubesShowUp {
+        from {
+            transform: scale(0);
+        }
+        to {
+            transform: scale(1);
+        }
+    } */
+
+    /* basic styles */
+
+    @font-face {
+        font-family: 'HelveticaNeue';
+        src: url(../static/fonts/HelveticaNeue.ttf);
     }
 
-    /* login section styles */
-    .auth-section {
-        display: none;
+    * {
+        font-family: 'HelveticaNeue';
     }
-    .auth-buttons__wrapper {
-        display: flex;
+
+    body, html {
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        overflow-x: hidden;
     }
-    .auth-form__signup {
+
+    #app {
+        width: 100vw;
+        height: 310vh;
+        overflow: hidden;
+    }
+
+    section {
+        position: relative;
+        height: 100vh;
+        width: 100vw;
+
+    }
+
+    .close-button {
+        position: absolute;
+        width: 10vw;
+        height: 10vw;
+        right: 50px;
+        top: 50px;
         cursor: pointer;
     }
 
+    /* animation */
+
+    @keyframes smallCubes {
+        0% {
+            transform: translateX(0px) translateY(0px);
+        }
+        50% {
+            transform: translateX(25px) translateY(25px);
+        }
+        100% {
+            transform: translateX(0px) translateY(0px);
+        }
+    }
+
     /* title section styles */
-    .join-cube {
+
+    .title-section > .join-cube {
+        position: absolute;
+        top: -700px;
+        right: -250px;
+        width: 851px;
+        height: 851px;
+        background-color: #F4F4F4;
+        border-radius: 115px;
+        transform: rotate(-133deg);
         float: right;
     }
-    .join-list-wrapper {
+    .title-section > .join-cube > .join-list__wrapper {
+        position: relative;
+        margin-top: 150px;
+        margin-right: 500px;
+        transform: rotate(133deg);
+        font-size: 50px;
         display: flex;
         list-style: none;
     }
     .join-list__item {
-        margin-right: 10px;
+        margin-right: 29px;
     }
     .list-join-button {
         cursor: pointer;
+        color: #9D25FC;
     }
+    .list-invade-button > .invade-link {
+        text-decoration: none;
+        color: black;
+    }
+    .animated-cubes__wrapper {
+        position: absolute;
+        top: -100px;
+        left: -350px;
+        width: 64vw;
+        height: 64vw;
+        background-color: #F4F4F4;
+        border-radius: 6vw;
+        transform: rotate(-133deg);
+    }
+    .animated-cubes__wrapper > .above-cube {
+        position: relative;
+        top: 40vw;
+        right: -18vw;
+        width: 18vw;
+        height: 18vw;
+        border-radius: 5vw;
+        background-color: #9D00FF;
+        transform: scale(0);
+        transition: .5s cubic-bezier(0.34,1.61,0.7,1);
+        /* transform: rotate(0deg); */
+    }
+    .animated-cubes__wrapper > .middle-cube {
+        position: relative;
+        top: 28vw;
+        right: -3vw;
+        width: 10vw;
+        height: 10vw;
+        border-radius: 3vw;
+        background-color: #CE26FC;
+        transform: scale(0);
+        transition: .5s cubic-bezier(0.34,1.61,0.7,1);
+        /* transform: rotate(-28deg); */
+    }
+    .animated-cubes__wrapper > .under-cube {
+        position: relative;
+        top: 4vw;
+        right: -5vw;
+        width: 7vw;
+        height: 7vw;
+        border-radius: 2vw;
+        background-color: #ECA5FF;
+        transform: scale(0);
+        transition: .5s cubic-bezier(0.34,1.61,0.7,1);
+        /* transform: rotate(-17deg); */
+    }
+    /*
+    .animated-title-cube {
+        animation: smallCubesShowUp .5s cubic-bezier(0.34,1.61,0.7,1);;
+    }
+    */
+    .title-text__wrapper {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 80%;
+        top: 40%;
+        width: 33vw;
+        height: 5vw;
+    }
+    .title-text {
+        font-size: 4vw;
+        font-weight: 300;
+        color: black;
+    }
+    .title-text > .foreign_colored-word {
+        color: #CE00FF;
+    }
+
+    /* middle section styles */
+
+    .transport-cubes__wrapper {
+        position: absolute;
+        top: 10vw;
+        right: -10vw;
+        width: 50vw;
+        height: 50vw;
+        border-radius: 6vw;
+        background-color: #F4F4F4;
+        transform: rotate(-133deg);
+    }
+    .transport-cubes__wrapper > .bicycle-cube__item {
+        position: relative;
+        top: 25vw;
+        right: -35vw;
+        width: 25vw;
+        height: 25vw;
+        background-color: #CE26FC;
+        border-radius: 5vw;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        font-size: 6vw;
+        color: white;
+        transform: rotate(118deg);
+    }
+    .transport-cubes__wrapper > .plane-cube__item {
+        position: relative;
+        top: -15vw;
+        right: -44vw;
+        width: 10vw;
+        height: 10vw;
+        background-color: #ECA5FD;
+        border-radius: 3vw;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        font-size: 3vw;
+        color: white;
+        transform: rotate(152deg);
+    }
+    .transport-cubes__wrapper > .car-cube__item {
+        position: relative;
+        top: -30vw;
+        right: -38vw;
+        width: 5vw;
+        height: 5vw;
+        background-color: #9D25FC;
+        border-radius: 1.5vw;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        font-size: 2.2vw;
+        color: white;
+        transform: rotate(102deg);
+    }
+    .transport-cubes__wrapper > .ship-cube__item {
+        position: relative;
+        top: -26vw;
+        right: -25vw;
+        width: 10vw;
+        height: 10vw;
+        background-color: #7F5689;
+        border-radius: 3vw;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        font-size: 3vw;
+        color: white;
+        transform: rotate(118deg);
+    }
+    .transport-text__wrapper {
+        position: absolute;
+        width: 35vw;
+        height: 27vw;
+        color: black;
+        display: grid;
+        justify-content: space-between;
+        margin-left: 7vw;
+        margin-top: 12vw;
+    }
+    .transport-text {
+        font-size: 5vw;
+    }
+    .transport-answer {
+        font-size: 3vw;
+    }
+    .favourite_colored-word, .people_colored-word {
+        color: #CE26FC;
+    }
+
+    /* bottom section styles */
+
+    .languages__wrapper {
+        position: relative;
+        top: 35vw;
+        left: -10vw;
+        width: 50vw;
+        height: 50vw;
+        border-radius: 6vw;
+        background-color: #F4F4F4;
+        transform: rotate(-133deg);
+    }
+    .dive-cube {
+        position: relative;
+        top: 50vw;
+        left: 50vw;
+        width: 17vw;
+        height: 17vw;
+        border-radius: 4vw;
+        background-color: #ECA5FD;
+        transform: rotate(152deg);
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 6vw;
+    }
+    .into-cube {
+        position: relative;
+        top: 20vw;
+        left: 45vw;
+        width: 9vw;
+        height: 9vw;
+        border-radius: 2.5vw;
+        background-color: #CE26FC;
+        transform: rotate(118deg);
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 3vw;
+    }
+    .languages-example-list {
+        position: relative;
+        margin-left: -30vw;
+        margin-top: 30vw;
+        list-style: none;
+        transform: rotate(133deg);
+        font-size: 6vw;
+        color: #3B3B3B;
+        line-height: 1;
+    }
+    .qa__wrapper {
+        position: absolute;
+        margin-top: -40vw;
+        right: 0;
+        width: 30vw;
+        height: 10vw;
+        font-size: 3vw;
+        display: grid;
+        justify-content: space-between;
+        color: #3B3B3B;
+    }
+    .learner-qa-part__wrapper, .native-qa-part__wrapper, .learner-answer__item, .native-answer__item, .learner-question__item, .native-question__item {
+        padding: 0;
+        margin: 0;
+        line-height: 1;
+    }
+    .native-question__item {
+        margin-top: 40px;
+    }
+
+    .learner-question__item, .native-question__item {
+        color: #CE26FC;
+    }
+    .right-bottom-join__wrapper {
+        position: absolute;
+        bottom: -20%;
+        right: -100px;
+        width: 460px;
+        height: 460px;
+        display: flex;
+        flex-wrap: wrap;
+        transform: scale(.8);
+    }
+    .right-bottom-join__wrapper > div {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        border-radius: 45px;
+        background-color: #9D25FC;
+        margin: 15px;
+    }
+    .top-left-cube__item {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 73px;
+        cursor: pointer;
+    }
+    .top-right-cube__item {
+        transform: rotate(-84deg);
+    }
+    .bottom-left-cube__item {
+        transform: rotate(-104deg);
+    }
+    .bottom-right-cube__item {
+        transform: rotate(-97deg);
+    }
+
+
+    /* login section styles */
+    .signup-section {
+        z-index: 10;
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(255, 255, 255, .95);
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+    .signup-form {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+    }
+    .signup-inputs__wrapper {
+        display: grid;
+        justify-content: space-around;
+    }
+    .signup-form__name, .signup-form__email, .signup-form__password, .signup-form__language, .signup-form__submit {
+        width: 40vw;
+        height: 6vw;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-size: 5vw;
+        color: black;
+    }
+    .signup-form__name::placeholder, .signup-form__email::placeholder, .signup-form__password::placeholder, .signup-form__language::placeholder {
+        color: black;
+    }
+    .signup-form__submit {
+        margin-top: 30px;
+        color: #D884F0;
+        text-align: start;
+        cursor: pointer;
+    }
+
+
+    /* login section styles */
+    .auth-section {
+        z-index: 10;
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(255, 255, 255, .95);
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+    .auth-form {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+    }
+    .auth-form__email, .auth-form__password {
+        width: 50vw;
+        height: 10vw;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-size: 8vw;
+        color: black;
+    }
+    .auth-form__email::placeholder, .auth-form__password::placeholder {
+        color: black;
+    }
+    .auth-buttons__wrapper {
+        display: flex;
+        font-size: 8vw;
+    }
+    .auth-form__submit {
+        border: none;
+        outline: none;
+        width: 30vw;
+        height: 10vw;
+        background-color: transparent;
+        color: #D884F0;
+        font-size: 8vw;
+        text-align: start;
+        cursor: pointer;
+    }
+    .auth-form__signup {
+        cursor: pointer;
+        color: #D884F0;
+    }
+
+
+    /* adopting */
+    @media (max-width: 1280px) {
+        .title-text__wrapper {
+            transform: translate(-50%, -50%);
+            left: 70%;
+            top: 40%;
+            width: 47vw;
+        }
+        .title-text {
+            font-size: 5vw;
+        }
+    }
+    @media (max-width: 980px) {
+        #app {
+            height: 240vh;
+        }
+        section {
+            height: 80vh;
+        }
+        .animated-cubes__wrapper {
+            display: none;
+        }
+        .title-text__wrapper {
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 40%;
+            width: 65vw;
+        }
+        .title-text {
+            font-size: 8vw;
+        }
+        .transport-cubes__wrapper {
+            background-color: rgba(0, 0, 0, 0);
+        }
+        .languages__wrapper {
+            display: none;
+        }
+        .qa__wrapper {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            left: 30%;
+            bottom: 40%;
+            width: 44vw;
+            height: 20vw;
+            font-size: 5vw;
+            display: grid;
+            justify-content: space-between;
+            color: #3B3B3B;
+        }
+        .right-bottom-join__wrapper {
+            transform: scale(.5);
+        }
+    }
+    @media (max-width: 768px) {
+        #app {
+            height: 180vh;
+        }
+        section {
+            height: 60vh;
+        }
+    }
+    @media (max-width: 480px) {
+        #app {
+            height: 100vh;
+        }
+        .list-join-button {
+            margin-left: 20px;
+        }
+        .bottom-section {
+            display: none;
+        }
+    }
+    @media (max-height: 560px) {
+        #app {
+            height: 200vh;
+        }
+        section {
+            height: 120vh;
+        }
+    }
+    @media (max-height: 480px) {
+        #app {
+            height: 300vh;
+        }
+        section {
+            height: 110vh;
+        }
+    }
+    @media (max-height: 366px) {
+        #app {
+            height: 300vh;
+        }
+        section {
+            height: 150vh;
+        }
+    }
+    @media (max-height: 275px) {
+        #app {
+            height: 100vh;
+        }
+        section {
+            height: 300vh;
+        }
+    }
+    
 
 </style>
 
@@ -102,6 +716,10 @@
     // buttons to click
     var showLoginButton = document.getElementsByClassName('list-join-button')[0];
     var showSignupButton = document.getElementsByClassName('auth-form__signup')[0];
+    var closeButton0 = document.getElementsByClassName('close-button')[0];
+    var closeButton1 = document.getElementsByClassName('close-button')[1];
+    var bottomJoin = document.getElementsByClassName('top-left-cube__item')[0];
+
 
     // events after clicking
     var loginSectionShown = document.getElementsByClassName('auth-section')[0];
@@ -109,13 +727,49 @@
 
     // events functions
     showLoginButton.onclick = function() {
-        this.style.display = 'none';
-        loginSectionShown.style.display = 'initial';
+        loginSectionShown.style.display = 'grid';
     };
+    bottomJoin.onclick = function() {
+        signupSectionShown.style.display = 'grid';
+    }
     showSignupButton.onclick = function() {
             loginSectionShown.style.display = 'none';
-            signupSectionShown.style.display = 'initial';
+            signupSectionShown.style.display = 'grid';
     };
+    closeButton0.onclick = function() {
+        loginSectionShown.style.display = 'none';
+        signupSectionShown.style.display = 'none';
+    }
+    closeButton1.onclick = function() {
+        loginSectionShown.style.display = 'none';
+        signupSectionShown.style.display = 'none';
+    }
+    
+    //animation
+    var aboveCube = document.getElementsByClassName('above-cube')[0];
+    var middleCube = document.getElementsByClassName('middle-cube')[0];
+    var underCube = document.getElementsByClassName('under-cube')[0];
+
+    setTimeout(function() {
+        aboveCube.style.transform = 'scale(1)';
+    }, 475);
+    setTimeout(function() {
+        middleCube.style.transform = 'scale(1)';
+    }, 425);
+    setTimeout(function() {
+        underCube.style.transform = 'scale(1)';
+    }, 325);
+
+    setTimeout(function() {
+        aboveCube.style.animation = '4.8s smallCubes infinite';
+    }, 900);
+    setTimeout(function() {
+        middleCube.style.animation = '4.9s smallCubes infinite';
+    }, 1100);
+    setTimeout(function() {
+        underCube.style.animation = '5s smallCubes infinite';
+    }, 1300);
+
 </script>
 
 </html>

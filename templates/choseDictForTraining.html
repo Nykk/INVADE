@@ -8,7 +8,7 @@
 				</h1>
 				<div class='dictionaries' id="dictionaries">
 					{% for dictionary in dictionaries %}
-					    <div class='dict-logo' onclick="window.location+='/{{ dictionary }}'">{{dictionary}}</div>
+					    <div class='dict-logo' onclick="window.location+='/{{ dictionary.setName }}'">{{dictionary}}</div>
 					{% endfor %}
 				</div>
 			</div>
