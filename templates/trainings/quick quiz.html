@@ -1,0 +1,115 @@
+
+	{% include "head.html" %}
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<div id='content' >
+			<div class='centered'>
+                <script>
+                    window.onload = function() {
+                        app.setSpelling();
+                    };
+                    var words=[
+                        {% for word in words %}
+                            {
+                                id:{{word.id}},
+                                spelling:"{{ word.spelling }}",
+                                translation:"{{ word.translation }}"
+                            },
+                        {% endfor %}
+                    ];
+                    var corrects=[];
+                    var incorrects=[];
+	            </script>
+				<h1>
+					Is it a correct pair?
+				</h1>
+                {% raw %}
+				<div id="train"  onload="">
+                    <div v-if="!ended">
+                        <div id="translation">{{translation}}/{{ spelling }}</div>
+                        <button v-on:click="check(1)">yes</button>
+                        <button v-on:click="check(0)">no</button>
+                    </div>
+                    <div v-if="ended">
+                        <b>
+                        result<br>
+                        correct:<br></b>
+                        <div v-for="i in corrects">{{ i.spelling }}</div>
+                        <b>incorrect:<br></b>
+                        <div v-for="i in incorrects">{{ i.spelling }}</div>
+                    </div>
+                </div>
+                <script>
+                    function randInt(from,to){
+                        return Math.round(from+Math.random()*(to-from));
+                    }
+                    var app = new Vue({
+                        el: '#train',
+                        data: {
+                            wordNum: 0,
+                            ended:false,
+                            answer:'',
+                            spelling: '',
+                            corrects:[],
+                            incorrects:[],
+                            variants:[],
+                            correct:0,
+                        },
+                        computed:{
+                            translation: function(){
+                                if (this.wordNum<words.length)
+                                return words[this.wordNum].translation;
+                                return null;
+                            }
+                        },
+                        methods: {
+                            check: (answer) => {
+                                if(answer==app.correct)
+                                        app.corrects.push(words[app.wordNum])
+                                    else
+                                        app.incorrects.push(words[app.wordNum])
+                                    if (app.wordNum < words.length - 1) {
+                                        app.wordNum++;
+                                        app.setSpelling();
+                                        correct = words[app.wordNum].spelling;
+                                    } else {
+                                        app.ended = true;
+                                        corrects_ids = app.corrects.map(i => i.id);
+                                        incorrects_ids = app.incorrects.map(i => i.id);
+                                        fetch('/trainingRes', {
+                                            method: "POST",
+                                            headers: {
+                                                'Accept': 'application/json',
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({
+                                                corrects: corrects_ids,
+                                                incorrects:incorrects_ids,
+                                                trainingId:4,//quick quiz
+                                            })
+                                        })
+
+                                    }
+                            },
+                            setSpelling:()=>{
+                                if (Math.random()<0.5) {
+                                    app.spelling=words[app.wordNum].spelling;
+                                    app.correct=1;
+                                }
+                                else{
+                                    num = app.wordNum;
+                                    while(num==app.wordNum)
+                                        num = randInt(0,words.length-1);
+                                    app.spelling=words[num].spelling;
+                                    app.correct=0;
+                                }
+                            }
+                        },
+                    })
+
+
+                </script>
+                {% endraw %}
+			</div>
+		</div>
+	</div>
+	{%include "ending.html" %}
