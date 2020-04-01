@@ -1,0 +1,20 @@
+
+<div class="result">
+    <div class="third">
+        {% raw %}{{ trainName }}{% endraw %}
+    </div>
+    <div class="third">
+        <form action="/startTraining" method="POST" id="difficulties">
+{#            <select id="difficulty">#}
+                {%  for difficulty in difficulties %}
+{#                    <option>{{difficulty}}</option>#}
+                    <p><input type="radio" name="difficultySelect"  vl="{{ difficulty }}"> {{ difficulty }}</p>
+                 {% endfor %}
+{#            </select>#}
+        </form>
+    </div>
+    <div class="third">
+        <input type="button" onclick="start()" value="start">
+    </div>
+    <button onclick="closeSelect()">close1</button>
+</div>

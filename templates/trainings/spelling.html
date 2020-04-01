@@ -1,7 +1,29 @@
-
-	{% include "head.html" %}
+{% include "trainings/trainingTop.html" %}
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<div id='content'>
+        <style>
+            input[type="text"]{
+                background-color: rebeccapurple;
+                color:white;
+                border-style: none;
+                border-radius:50vh;
+                padding:30px;
+                font-size:55px;
+            }
+            #translation{
+                font-size: 80px;
+            }
+            #train{
+                transform: translateY(-50%);
+                padding-top: 50%;
+            }
+            .a{
+                fill:#703a98;
+            }
+            #next{
+                transform: translateY(20px);
+            }
+        </style>
 			<div class='centered'>
                 <script>
                     var words=[
@@ -16,23 +38,26 @@
                     var corrects=[];
                     var incorrects=[];
 	            </script>
-				<h1>
-					Spelling test
-				</h1>
                 {% raw %}
 				<div id="train">
                     <div v-if="!ended">
                         <div id="translation">{{translation}}</div>
-                        <input type="text" id="spell" v-model="answer">
-                        <input type="button" value="check" v-on:click="check">
+                        <div>
+                            <input type="text" id="spell" v-model="answer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="141.538" height="100.151" viewBox="0 0 141.538 159.151" id="next" v-on:click="check">
+                                <g transform="translate(-491.319 -156.746)">
+                                    <rect class="a" width="149" height="25" rx="12.5" transform="translate(503.819 156.746) rotate(30)"/>
+                                    <rect class="a" width="149" height="25" rx="12.5" transform="translate(491.319 294.247) rotate(-30)"/>
+                                </g>
+                            </svg>
+                        </div>
                     </div>
                     <div v-if="ended">
-                        <b>
-                        result<br>
-                        correct:<br></b>
-                        <div v-for="i in corrects">{{ i.spelling }}</div>
-                        <b>incorrect:<br></b>
-                        <div v-for="i in incorrects">{{ i.spelling }}</div>
+                        <div>
+                            {% endraw %}
+                                {% include "trainings/trainEnd.html" %}
+                            {% raw %}
+                        </div>
                     </div>
                 </div>
                 <script>
@@ -54,6 +79,7 @@
                         },
                         methods: {
                             check: () => {
+                                score.innerText=app.wordNum+2+'/'+words.length;
                                 if (app.answer == words[app.wordNum].spelling)
                                     app.corrects.push(words[app.wordNum])
                                 else
@@ -66,6 +92,7 @@
                                     corrects_ids = app.corrects.map(i => i.id);
                                     incorrects_ids = app.incorrects.map(i => i.id);
                                     console.log(corrects_ids, incorrects_ids);
+                                    score.style.display='none';
                                     fetch('/trainingRes', {
                                         method: "POST",
                                         headers: {
@@ -82,6 +109,7 @@
                             }
                         }
                     })
+                    score.innerText=1+'/'+words.length;
                 </script>
                 {% endraw %}
 			</div>

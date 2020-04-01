@@ -15,7 +15,7 @@ session = scoped_session(sessionmaker(bind=engine))
 
 metadata = MetaData()
 
-TRAINING_NAMES = ['spelling','choose translation','choose spelling','quick quiz','space invasion']
+TRAINING_NAMES = ['spelling','choose translation','choose spelling','quick quiz']
 DIFFICULTIES = ['easy','medium','hard']
 
 print(User.__table__)
@@ -152,7 +152,7 @@ def training(name,difficulty,set_name):
         print(words)
         print(word_set)
         # return name+' '+difficulty
-        return render_template('trainings/'+name+'.html',words=words)
+        return render_template('trainings/'+name+'.html',words=words, training_name=name)
     return redirect('/')
 
 
@@ -226,7 +226,7 @@ def gwi():
         word_object = session.query(Word).filter_by(word_set=word_set.id, spelling=word).first()
         print(word)
         # print(dir(request))
-        return word_object.translation+'; '+str(word_object.trains)[1:-1]
+        return word_object.translation+'; '+str(word_object.trains[:-1])[1:-1]
         abort(409)
     return 'not logged in'
 
