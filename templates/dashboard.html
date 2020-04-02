@@ -1,19 +1,21 @@
 
 	{% include "head.html" %}
-	<div id='content'>
-		<div class="half-screen">
-			<div class='centered'>
-				<h1>
-					Greetings, {{email}}
-				</h1>
-				<p>
-					today you have learned 250 new words <br>
-					and spent 37 minutes on learning </br>
-				</p>
-			</div>
-		</div>
-		<div id="half-screen">
-			Greetings, {{email}}
-		</div>
-	</div>
+        <span class="bg-head-cube"></span>
+        <span class="bg-news-cube"></span>
+
+        <section id='content'>
+            <div class="left-side-board">
+                <div class='centered board-main'>
+                    <h1 class="greeting">
+                        Greetings, {{email}}!
+                    </h1>
+                    <p class="news">
+                        Today you have learned <span class="words-number-colored"> 250 new words </span> and spent <span class="spent-time-colored"> 37 minutes </span> on learning!
+                    </p>
+                </div>
+            </div>
+            <div class="right-side-board">
+                <svg viewBox="0 0 176 236"><defs><style>.a{fill:#8c6b3b;}.a,.b,.c,.d{stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:8px;}.a,.b,.d{fill-rule:evenodd;}.b{fill:#fbad4a;}.c{fill:#26bbec;}.d{fill:#ffdd95;}</style></defs><g transform="translate(-66 -36)"><path class="a" d="M198,52.783,228.282,44,207.028,66.477,234,61.423,215.656,76"/><path class="b" d="M94,92.023A51.988,51.988,0,0,1,145.97,40h24.059A52,52,0,0,1,222,92.023V148H94Z"/><circle class="c" cx="16" cy="16" r="16" transform="translate(166 56)"/><circle cx="6" cy="6" r="6" transform="translate(174 64)"/><path class="d" d="M154,268c57.948,0,84-35.66,84-104.418a400.3,400.3,0,0,1-23.81-39.713l-39.165,22.6L145.756,76l-34.805,70.471-26.7-51.007S70,138.941,70,163.582C70,232.34,96.052,268,154,268Z"/></g></svg>
+            </div>
+        </section>
 	{%include "ending.html" %}
