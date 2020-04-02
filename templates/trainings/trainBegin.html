@@ -8,13 +8,22 @@
 {#            <select id="difficulty">#}
                 {%  for difficulty in difficulties %}
 {#                    <option>{{difficulty}}</option>#}
-                    <p><input type="radio" name="difficultySelect"  vl="{{ difficulty }}"> {{ difficulty }}</p>
+                    <div>
+                        <label>
+                            <input type="radio" name="difficultySelect"
+                                    {% if difficulties.index(difficulty)==0 %}
+                                        checked
+                                    {% endif %}
+                                   vl="{{ difficulty }}">
+                            {{ difficulty }}
+                        </label>
+                    </div>
                  {% endfor %}
 {#            </select>#}
         </form>
     </div>
     <div class="third">
-        <input type="button" onclick="start()" value="start">
+        <input type="button" onclick="start()" value="start" id="startButton">
     </div>
-    <button onclick="closeSelect()">close1</button>
+    <button onclick="closeSelect()" id="closeButton">close1</button>
 </div>
