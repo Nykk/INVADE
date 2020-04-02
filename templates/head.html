@@ -7,59 +7,128 @@
 </head>
 <body>
 <style>
-
-    /* login section styles */
-    .signup-section {
-        display: none;
+	@font-face {
+        font-family: 'HelveticaNeue';
+        src: url(../static/fonts/HelveticaNeue.ttf);
     }
 
-    /* login section styles */
-    .auth-section {
-        display: none;
-    }
-    .auth-buttons__wrapper {
-        display: flex;
-    }
-    .auth-form__signup {
-        cursor: pointer;
+    * {
+        font-family: 'HelveticaNeue';
     }
 
-    /* title section styles */
-    .join-cube {
-        float: right;
-    }
-    .join-list-wrapper {
-        display: flex;
-        list-style: none;
-    }
-    .join-list__item {
-        margin-right: 10px;
-    }
-    .list-join-button {
-        cursor: pointer;
-    }
-	#header{
-		display: flex;
-		flex-direction:row;
+	body, html {
+		margin: 0;
+		height: 100vh;
+		width: 100vw;
 	}
+
+	.words-box {
+		display: grid;
+		line-height: .9;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+	}
+	.words-box__amount {
+		font-size: 3vw;
+	}
+	.words-box__comment {
+		font-size: 1.1vw;
+	}
+
+	.level-box {
+		display: grid;
+		line-height: .9;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+	}
+	.level-box__amount {
+		font-size: 3vw;
+	}
+	.level-box__comment {
+		font-size: 1.1vw;
+	}
+
+    #header{
+		display: flex;
+		width: 100%;
+		justify-content: space-around;
+	}
+	.box-container-left {
+		display: flex;
+		margin-right: auto;
+	}
+	.box-container-right {
+		display: flex;
+		margin-left: auto;
+	}
+
+
+	.box {
+		border-radius: 2vw;
+		width: 7vw;
+		height: 7vw;
+		background-color: #9D25FC;
+		color:white;
+		text-decoration: none;
+		display: grid;
+		justify-content: center;
+		align-items: center;
+		margin: 1.2vw;
+	}
+	.box-container-left:nth-child(1) {
+		margin-left: 1.2vw;
+		margin-top: 1.2vw;
+	}
+	.box-container-right:nth-last-child(1) {
+		margin-right: 1.2vw;
+		margin-top: 1.2vw;
+	}
+	.box > svg {
+		width: 4vw;
+		height: 4vw;
+	}
+	.box > a > svg {
+		width: 4vw;
+		height: 4vw;
+	}
+	.brain_svg {
+		margin-top: .55vw;
+	}
+	.book_svg {
+		margin-top: .5vw;
+	}
+
+
+	.words-box__wrapper {
+		transform: rotate(3deg);
+	}
+	.level-box__wrapper {
+		transform: rotate(-7deg);
+	}
+	.back-box__wrapper {
+		display: none;
+		transform: rotate(1deg);
+	}
+	.brain-box__wrapper {
+		transform: rotate(10deg);
+	}
+	.book-box__wrapper {
+		transform: rotate(-4deg);
+	}
+	.tools-box__wrapper {
+		transform: rotate(2deg);
+	}
+	.exit-box__wrapper {
+		transform: rotate(-14deg);
+	}
+
+
 	#main{
 		display:flex;
 		flex-direction:column;
 		height:100vh;
-	}
-	.empty{
-		flex-grow:1;
-	}
-	.box{
-		border-radius:30%;
-		background-color:purple;
-		padding:20px;
-		margin:5px;
-		color:white;
-		text-decoration:none;
-	}
-	.box-container{
-		display:flex;
 	}
 	#content{
 		display:flex;
@@ -94,7 +163,7 @@
 		text-decoration: none;
 		font-size: 3vw;
 	}
-	.dictionaries{	
+	.dictionaries{
 	  display: grid;
 	  grid-template-columns: 30% 30% 30%;
    }
@@ -102,19 +171,83 @@
    	  display:grid;
    	  grid-template-columns:repeat(5,35%);
    }
+
+   @media (max-width: 780px) {
+	   #header {
+		   display: grid;
+		   justify-content: start;
+	   }
+	   .box-container-left {
+		   padding: 0;
+		   margin-left: 0;
+		   flex-flow: row-reverse;
+	   }
+	   .box-container-right {
+		   padding: 0;
+		   margin-left: 1.2vw;
+		   display: flex;
+		   flex-flow: column-reverse;
+	   }
+		.box {
+			transform: scale(1.7);
+			margin: 4vw;
+		}
+	}
 </style>
-<section id='main'>
-	<section id='header'>
-		<div class="box-container">
-			<div class="box"></div>
-			<div class="box"></div>
-			<a href="/dashboard" class="box">Home</a>
-		</div>
-		<div class="empty"></div>
-		<div class="box-container">
-			<a class="box" href="/dict"> Dict </a>
-			<a class="box" href="/train"> Train </a>
-			<div class="box"></div>
-			<a class="box" href="/logout">Log out</a>
-		</div>
-	</section>
+    <section id='main'>
+        <section id='header'>
+            <div class="box-container-left">
+
+                <div class="words-box__wrapper box">
+
+					<span class="words-box">
+						<span class="words-box__amount">33</span>
+						<span class="words-box__comment">words</span>
+					</span>
+
+				</div>
+
+				<div class="level-box__wrapper box">
+
+					<span class="level-box">
+						<span class="level-box__amount">0</span>
+						<span class="level-box__comment">level</span>
+					</span>
+
+				</div>
+
+
+				<div class="back-box__wrapper box"><a href="/dashboard">
+
+					<svg width="61.447" height="52.85" viewBox="0 0 65.447 52.85"><defs><style>.a{fill:#fff;}</style></defs><g transform="translate(-3 -4.518)"><path class="a" d="M58.179,55.824c-5.6-8.534-12.525-11.214-21.042-11.893v4.906a6.781,6.781,0,0,1-2,4.827,7,7,0,0,1-9.637.017L4.017,32.491a3.416,3.416,0,0,1,0-4.865L25.483,6.451a6.991,6.991,0,0,1,9.657,0,6.792,6.792,0,0,1,2,4.827V17.1A34.076,34.076,0,0,1,64.447,50.54v3.414a3.41,3.41,0,0,1-2.437,3.27,3.557,3.557,0,0,1-.976.143A3.421,3.421,0,0,1,58.179,55.824ZM33.8,36.926c7.534.191,15.833,1.345,23.07,7.241A27.258,27.258,0,0,0,33.341,23.411a27.869,27.869,0,0,0-3.031-.178V11.3L11.275,30.057,30.31,48.833V36.888S32.829,36.922,33.8,36.926Z" transform="translate(0 0)"/></g></svg>
+
+				</a></div>
+            </div>
+			<div class="box-container-right">
+
+				<div class="brain-box__wrapper box"><a href="/dict">
+
+					<svg class="brain_svg" width="79.245" height="67.802" viewBox="0 0 79.245 67.802"><defs><style>.brain_a{fill:#f0908b;}.brain_b{fill:none;stroke:#2c3e50;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:2px;}</style></defs><g transform="translate(1 1)"><path class="brain_a" d="M35.762,36.048a9.444,9.444,0,0,0-5.722-8.583A7.283,7.283,0,0,0,24.89,15.02h-.715a8.486,8.486,0,0,0,.715-3.29,7.326,7.326,0,0,0-7.3-7.3,6.8,6.8,0,0,0-3.433.858C13.16,2.432,10.442,0,7.3,0A7.685,7.685,0,0,0,0,6.58H0V56.647H.143a9.159,9.159,0,0,0,9.3,9.155A9.36,9.36,0,0,0,18.6,58.22a9.357,9.357,0,0,0,12.159-8.869,10.322,10.322,0,0,0-1.144-4.578A9.217,9.217,0,0,0,35.762,36.048Z" transform="translate(41.484 0)"/><path class="brain_a" d="M0,36.048a9.444,9.444,0,0,1,5.722-8.583,7.283,7.283,0,0,1,5.15-12.445h.715a8.486,8.486,0,0,1-.715-3.29,7.326,7.326,0,0,1,7.3-7.3,6.8,6.8,0,0,1,3.433.858C22.6,2.432,25.319,0,28.466,0a7.685,7.685,0,0,1,7.3,6.58h0V56.647h-.143a9.159,9.159,0,0,1-9.3,9.155,9.36,9.36,0,0,1-9.155-7.582A9.357,9.357,0,0,1,5.007,49.351a10.322,10.322,0,0,1,1.144-4.578A9.217,9.217,0,0,1,0,36.048Z" transform="translate(0 0)"/><path class="brain_b" d="M35.762,36.048a9.444,9.444,0,0,0-5.722-8.583A7.283,7.283,0,0,0,24.89,15.02h-.715a8.486,8.486,0,0,0,.715-3.29,7.326,7.326,0,0,0-7.3-7.3,6.8,6.8,0,0,0-3.433.858C13.16,2.432,10.442,0,7.3,0A7.685,7.685,0,0,0,0,6.58H0V56.647H.143a9.159,9.159,0,0,0,9.3,9.155A9.36,9.36,0,0,0,18.6,58.22a9.357,9.357,0,0,0,12.159-8.869,10.322,10.322,0,0,0-1.144-4.578A9.217,9.217,0,0,0,35.762,36.048Z" transform="translate(41.484 0)"/><path class="brain_b" d="M0,36.048a9.444,9.444,0,0,1,5.722-8.583,7.283,7.283,0,0,1,5.15-12.445h.715a8.486,8.486,0,0,1-.715-3.29,7.326,7.326,0,0,1,7.3-7.3,6.8,6.8,0,0,1,3.433.858C22.6,2.432,25.319,0,28.466,0a7.685,7.685,0,0,1,7.3,6.58h0V56.647h-.143a9.159,9.159,0,0,1-9.3,9.155,9.36,9.36,0,0,1-9.155-7.582A9.357,9.357,0,0,1,5.007,49.351a10.322,10.322,0,0,1,1.144-4.578A9.217,9.217,0,0,1,0,36.048Z" transform="translate(0 0)"/><path class="brain_b" d="M0,.056A9.1,9.1,0,0,1,9.441,5.492c3.147,7.152-1,12.445-7.152,14.448" transform="translate(15.02 38.28)"/><path class="brain_b" d="M17.738,2.432S14.162,8.154,7.725,6.723A9.938,9.938,0,0,1,0,0" transform="translate(11.73 15.02)"/><path class="brain_b" d="M9.3,8.3A13.7,13.7,0,0,0,0,0" transform="translate(20.17 22.029)"/><path class="brain_b" d="M.257,0A11.588,11.588,0,0,0,3.976,11.158c2.575,2.289,7.725,3,12.159,2.432" transform="translate(54.673 31.184)"/><path class="brain_b" d="M0,4.434s3.862,2.432,7.152,1.43S12.731,0,12.731,0" transform="translate(52.927 15.02)"/><path class="brain_b" d="M0,7.3S1.86,0,10.442,0" transform="translate(50.067 43.629)"/></g></svg>
+
+				</a></div>
+
+				<div class="book-box__wrapper box"><a href="/train">
+
+					<svg class="book_svg" width="53.998" height="66.998" viewBox="0 0 53.998 66.998"><defs><style>.book_a{fill:#16a085;}.book_b{fill:#ecf0f1;}.book_c{fill:#bdc3c7;}.book_d{fill:#1abc9c;}</style></defs><path class="book_a" d="M0,0V39a6,6,0,0,0,6,6H48a6,6,0,0,0,6-6V0Z" transform="translate(0 20.999)"/><path class="book_b" d="M0,0V39a6.009,6.009,0,0,0,6,6H48a6.008,6.008,0,0,0,6-6V0Z" transform="translate(0 17.999)"/><path class="book_c" d="M0,0V39a6.009,6.009,0,0,0,6,6H48a6.008,6.008,0,0,0,6-6V0Z" transform="translate(0 15)"/><path class="book_b" d="M0,0V39a6.009,6.009,0,0,0,6,6H48a6.008,6.008,0,0,0,6-6V0Z" transform="translate(0 12)"/><path class="book_a" d="M6,0A6,6,0,0,0,0,6V60a6,6,0,0,0,6,6h6V63H7.5a4.5,4.5,0,0,1,0-9H48a6,6,0,0,0,6-6V6a6,6,0,0,0-6-6H6Z" transform="translate(0)"/><path class="book_d" d="M0,0V54H33a6,6,0,0,0,6-6V6a6,6,0,0,0-6-6H0Z" transform="translate(15 0)"/></svg>
+
+				</a></div>
+
+				<div class="tools-box__wrapper box">
+
+					<svg width="51.023" height="51.024" viewBox="0 0 51.023 51.024"><defs><style>.tools_a{fill:#e2e4e5;}.tools_b{fill:#fff;}.tools_c{fill:#df2c2c;}.tools_d{fill:#fa5655;}</style></defs><g transform="translate(0)"><path class="tools_a" d="M48.221,34.682a9.555,9.555,0,0,0-9.234-2.47L21.658,14.885A11.143,11.143,0,0,0,7.411.647l8.25,8.25v4.51l-2.255,2.255H8.9L.646,7.411A11.143,11.143,0,0,0,14.9,21.654L32.221,38.977a9.564,9.564,0,1,0,16-4.295ZM42.944,47l-5.553-1.488L35.9,39.96l4.065-4.065,5.553,1.488,1.488,5.553Z"/><path class="tools_b" d="M31.575,32.212,14.247,14.885A11.143,11.143,0,0,0,0,.647L8.25,8.9v4.51l-1.08,1.08,23.4,23.4,1.991-1.991,5.553,1.488L39.6,42.934l-1.991,1.991,3.242,3.242a9.559,9.559,0,0,0-9.274-15.955Z" transform="translate(7.411 0)"/><path class="tools_c" d="M24.1,12.748a2.4,2.4,0,0,0,.62-2.311,2.389,2.389,0,0,1,.619-2.311L27.6,5.871a.8.8,0,0,0,0-1.127L23.088.234a.8.8,0,0,0-1.127,0L19.706,2.488a2.393,2.393,0,0,1-2.311.619,2.394,2.394,0,0,0-2.311.62L.539,18.273c-2.819,2.819,6.2,11.838,9.02,9.02Z" transform="translate(0.441 23.192)"/><path class="tools_a" d="M23.889,0,14.306,5.074,13.742,9.02,0,22.762l3.382,3.383L17.125,12.4l3.89-.507,5.193-9.576Z" transform="translate(24.094 1.227)"/><path class="tools_b" d="M23.889,0,14.306,5.074,13.742,9.02,0,22.762l1.869,1.869L25.194,1.305Z" transform="translate(24.094 1.227)"/><path class="tools_d" d="M23.088.234a.8.8,0,0,0-1.127,0L19.706,2.489a2.389,2.389,0,0,1-2.311.619,2.4,2.4,0,0,0-2.311.621L.538,18.273c-1.446,1.446.226,4.524,2.577,6.8l22.406-22.4Z" transform="translate(0.442 23.192)"/></g></svg>
+
+				</div>
+
+				<div class="exit-box__wrapper box"><a href="/logout">
+
+					<svg width="56.712" height="91.504" viewBox="0 0 56.712 43.504"><defs><style>.exit_a{fill:#758190;}.exit_b{fill:#96cc7f;}.exit_c{fill:#c0e0b2;}.exit_d{fill:#a8b0bc;}.exit_e{fill:#dcdfe4;}.exit_f{fill:#ef7e68;}.exit_g{fill:none;stroke:#000;stroke-linejoin:round;stroke-width:2px;}</style></defs><g transform="translate(1 1)"><path class="exit_a" d="M0,0Z" transform="translate(39.25 90.394)"/><rect class="exit_b" width="54.712" height="45.197" transform="translate(0 0)"/><path class="exit_c" d="M0,0V38.534a34.43,34.43,0,0,0,6.788.685c20.176,0,36.565-17.5,36.938-39.219Z" transform="translate(0.004 0)"/><path class="exit_d" d="M0,4.525H13.576V0l7.542,7.542-7.542,7.542V10.559H0Z" transform="translate(16.596 24.134)"/><path class="exit_e" d="M13.576,0V4.525H0v6.034H7.272a37.446,37.446,0,0,0,9.343-7.519Z" transform="translate(16.596 24.134)"/><path class="exit_f" d="M0,0Z" transform="translate(43.23 90.504)"/><rect class="exit_g" width="54.712" height="45.197" transform="translate(0 0)"/><path class="exit_g" d="M7.542,0H0V12.067H7.542" transform="translate(9.054 6.034)"/><line class="exit_g" x2="5.947" transform="translate(9.515 11.894)"/><path class="exit_g" d="M0,15.084H0A9.967,9.967,0,0,1,1.673,9.558L4.361,5.527A9.968,9.968,0,0,0,6.034,0h0" transform="translate(21.121 4.525)"/><path class="exit_g" d="M6.034,15.084h0A9.967,9.967,0,0,0,4.361,9.558L1.673,5.527A9.968,9.968,0,0,1,0,0H0" transform="translate(21.121 4.525)"/><line class="exit_g" y2="14.273" transform="translate(33.303 4.758)"/><line class="exit_g" x2="8.326" transform="translate(38.061 5.947)"/><line class="exit_g" y2="13.083" transform="translate(42.818 5.947)"/><path class="exit_g" d="M0,4.525H13.576V0l7.542,7.542-7.542,7.542V10.559H0Z" transform="translate(16.596 24.134)"/></g></svg>
+
+				</a></div>
+
+			</div>
+    	</section>

@@ -9,7 +9,7 @@ from sqlalchemy import update
 
 from models import *
 
-engine = create_engine('sqlite:////Volumes/High Sierra/Users/alme/PycharmProjects/INVADE/test.db?check_same_thread=false', echo=True)
+engine = create_engine('sqlite:///test.db?check_same_thread=false', echo=True)
 con = engine.connect()
 session = scoped_session(sessionmaker(bind=engine))
 
