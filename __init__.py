@@ -240,4 +240,8 @@ def dwp():
         session.query(Word).filter_by(word_set=word_set,spelling=word).delete()
         session.commit()
 
+@app.errorhandler(404)
+def erp(n):
+    return render_template("page404.html")
+
 app.run()
