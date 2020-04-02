@@ -1,5 +1,5 @@
 
-	{% include "head.html" %}
+	{% include "trainings/trainingTop.html" %}
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<div id='content' >
 			<div class='centered'>
@@ -19,23 +19,17 @@
                     var corrects=[];
                     var incorrects=[];
 	            </script>
-				<h1>
-					Is it a correct pair?
-				</h1>
                 {% raw %}
 				<div id="train"  onload="">
                     <div v-if="!ended">
-                        <div id="translation">{{translation}}/{{ spelling }}</div>
-                        <button v-on:click="check(1)">yes</button>
-                        <button v-on:click="check(0)">no</button>
+                        <div>is <span class="word">{{ translation }}</span> translated as <span class="word">{{ spelling }}</span>?</div>
+                        <button v-on:click="check(1)" class="btn">correct</button>
+                        <button v-on:click="check(0)" class="btn">incorrect</button>
                     </div>
                     <div v-if="ended">
-                        <b>
-                        result<br>
-                        correct:<br></b>
-                        <div v-for="i in corrects">{{ i.spelling }}</div>
-                        <b>incorrect:<br></b>
-                        <div v-for="i in incorrects">{{ i.spelling }}</div>
+                        {% endraw %}
+                            {% include "trainings/trainEnd.html" %}
+                        {% raw %}
                     </div>
                 </div>
                 <script>
@@ -63,6 +57,7 @@
                         },
                         methods: {
                             check: (answer) => {
+                                score.innerText=app.wordNum+2+'/'+words.length;
                                 if(answer==app.correct)
                                         app.corrects.push(words[app.wordNum])
                                     else
@@ -105,8 +100,7 @@
                             }
                         },
                     })
-
-
+                    score.innerText=1+'/'+words.length;
                 </script>
                 {% endraw %}
 			</div>

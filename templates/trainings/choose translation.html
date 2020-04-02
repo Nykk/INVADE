@@ -1,5 +1,5 @@
 
-	{% include "head.html" %}
+	{% include "trainings/trainingTop.html" %}
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<div id='content' >
 			<div class='centered'>
@@ -23,18 +23,19 @@
 					choose translation
 				</h1>
                 {% raw %}
-				<div id="train"  onload="">
-                    <div v-if="!ended">
-                        <div id="translation">{{translation}}</div>
-                        <button v-for="i in variants" v-on:click="check(i)">{{ i }}</button>
+				<div id="train">
+                    <div class="flex-right" v-if="!ended">
+                        <div id="translation">
+                            <div class="given-word">{{translation}}</div>
+                        </div>
+                        <div class="grid2x2">
+                            <button v-for="i in variants" v-on:click="check(i)">{{ i }}</button>
+                        </div>
                     </div>
                     <div v-if="ended">
-                        <b>
-                        result<br>
-                        correct:<br></b>
-                        <div v-for="i in corrects">{{ i.spelling }}</div>
-                        <b>incorrect:<br></b>
-                        <div v-for="i in incorrects">{{ i.spelling }}</div>
+                        {% endraw %}
+                            {% include "trainings/trainEnd.html" %}
+                        {% raw %}
                     </div>
                 </div>
                 <script>
@@ -58,6 +59,7 @@
                         },
                         methods: {
                             check: (answer) => {
+                                score.innerText=app.wordNum+2+'/'+words.length;
                                 console.log(answer);
                                 if (answer == correct)
                                     app.corrects.push(words[app.wordNum])
@@ -98,7 +100,7 @@
                         console.log(all,all.indexOf(correct))
                         app.variants=all;
                     }
-
+                    score.innerText=1+'/'+words.length;
                 </script>
                 {% endraw %}
 			</div>
