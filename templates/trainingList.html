@@ -31,6 +31,47 @@
     #trainSettingsForm{
         position:relative;
     }
+    .training-logo {
+border-radius: 4vw;
+color: white;
+text-decoration: none;
+font-size: 3.5vw;
+display: grid;
+align-items: center;
+width: 20vw;
+height: 20vw;
+margin: 1.7vw;
+}
+.training-logo > p {
+text-align: start;
+margin-left: 1.5vw;
+}
+.training-logo-spelling {
+background-color: #006CFF;
+}
+.training-logo-choose-translation {
+background-color: #FC2557;
+}
+.training-logo-choose-spelling {
+background-color: #4BD32B;
+}
+.training-logo-quick-quiz {
+background-color: #FF6200;
+}
+
+.training-logo {
+border-radius: 5.5vw;
+color: white;
+text-decoration: none;
+font-size: 4.5vw;
+width: 26vw;
+height: 26vw;
+margin: 2vw;
+}
+.training-logo > p {
+text-align: start;
+margin-left: 1.5vw;
+}
 </style>
 	{% include "head.html" %}
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -64,7 +105,7 @@
         <div class='centered'>
 				<div class='dictionaries'>
 					{% for training in trainings %}
-					    <div class='training-logo' onclick='select("{{trainings.index(training)}}")'>{{training}}</div>
+					    <div class='training-logo training-logo-{{ training.replace(' ', '-') }}' onclick='select("{{trainings.index(training)}}")'><p>{{training}}</p></div>
 					{% endfor %}
 				</div>
 		</div>

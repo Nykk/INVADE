@@ -128,7 +128,7 @@ def stng(name,difficulty):
             # print(i.id)
             # print(session.query(Word).filter_by(word_set=i.id).count())
             sets2[i.id]={"setName":i.name,
-                         "wordCout":session.query(Word).filter_by(word_set=i.id).count(),
+                         "wordCount":session.query(Word).filter_by(word_set=i.id).count(),
                          "needToTrain":session.query(Word).filter(Word.word_set==i.id,getattr(Word,'train'+str(training_id)) <3).count()}
         for i in sets2:
             print(i,sets2[i])
