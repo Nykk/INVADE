@@ -108,6 +108,23 @@
             }
         }
 	</script>
+    <style>
+        .dict-logo{
+            padding:20px;
+            color:white;
+            background-color: #9D25FC;
+            border-radius:20px;
+            {#width:2vw;#}
+            height:auto;
+            margin:1vw;
+        }
+        .dict-name{
+            font-size:4vw;
+        }
+        .dict-lang{
+
+        }
+    </style>
 	<div id='content'>
 		<div class="half-screen">
 			<div class='centered'>
@@ -116,7 +133,9 @@
 				</h1>
 				<div class='dictionaries' id="dictionaries">
 					{% for dictionary in dictionaries %}
-					    <div class='dict-logo' onclick='getDictList("{{dictionary}}")'>{{dictionary}}</div>
+					    <div class='dict-logo' onclick='getDictList("{{dictionary.name}}")'>
+                            <div class="dict-name"> {{dictionary.name}} </div> {{ dictionary.language }}
+                        </div>
 					{% endfor %}
 				</div>
 				<div class='form'>
@@ -129,12 +148,9 @@
 				    </select>
 				    <input type="button" value="add" onclick="addDictBtn()">
 				</div>
-				<p>
-					select a dictionary
-				</p>
 			</div>
 		</div>
-		<div id="half-screen">
+		<div class="half-screen">
 			<div>
                 <h1>Words:</h1>
 			    <div id='words' class='words'>

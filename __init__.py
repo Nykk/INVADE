@@ -33,6 +33,8 @@ app.config['SECRET_KEY']='sdfvsdh43f3f34'
 
 @app.route('/')
 def mp():
+    if 'email' in ses:
+        return redirect('/dashboard')
     return render_template('index.html')
 
 
@@ -109,7 +111,7 @@ def dp():
         sets = session.query(WordSet).filter_by(owner_id=ses['userId']).all()
         return render_template('dictionary.html',
                                email=ses['email'],
-                               dictionaries=[i.name for i in sets],
+                               dictionaries=[i for i in sets],
                                training_names=TRAINING_NAMES)
     return redirect('/')
 
