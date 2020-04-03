@@ -7,7 +7,7 @@
 </head>
 <body>
 <style>
-	@font-face {
+        @font-face {
         font-family: 'HelveticaNeue';
         src: url(../static/fonts/HelveticaNeue.ttf);
     }
@@ -20,6 +20,7 @@
 		margin: 0;
 		height: 100vh;
 		width: 100vw;
+        overflow: hidden;
 	}
 
 	.words-box {
@@ -125,44 +126,74 @@
 	}
 
 
+    /* here */
+
+
+    .bg-head-cube {
+        position: absolute;
+        z-index: -1;
+        top: -65vw;
+        right: -31vw;
+        width: 80vw;
+        height: 80vw;
+        background-color: #F4F4F4;
+        border-radius: 9vw;
+        transform: rotate(-105deg);
+        float: right;
+    }
+    .bg-news-cube {
+        position: absolute;
+        z-index: -1;
+        bottom: -100vw;
+        left: -145vw;
+        width: 200vw;
+        height: 200vw;
+        background-color: #F4F4F4;
+        border-radius: 115px;
+        transform: rotate(-105deg);
+        float: left;
+    }
+
 	#main{
 		display:flex;
 		flex-direction:column;
 		height:100vh;
 	}
 	#content{
-		display:flex;
-		flex-direction:row;
-		flex-grow:1;
+		width: 100%;
+        height: 100%;
+        display: flex;
 	}
-	.half-screen{
-		flex-grow:0.5;
-	}
-	.centered{
-		transform: translate(-50%,-50%);
-		margin-left: 50%;
-		margin-top: 50vh;
-	}
-	.dict-logo{
-		border-radius: 20px;
-		background-color: purple;
-		padding: 2vw;
-	    padding-left: 5px;
-		margin: 5px;
-		color: white;
-		text-decoration: none;
-		font-size: 1.2vw;
-	}
-    .training-logo{
-		border-radius: 20px;
-		background-color: purple;
-		padding: 6vw;
-	    padding-left: 5px;
-		margin: 5px;
-		color: white;
-		text-decoration: none;
-		font-size: 3vw;
-	}
+    .left-side-board {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+    }
+    .right-side-board {
+        width: 100%;
+        height: 100%;
+    }
+    .board-main {
+        width: 37vw;
+    }
+    .greeting {
+        font-size: 4vw;
+        font-weight: 300;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    .news {
+        font-size: 2vw;
+    }
+    .words-number-colored {
+        color:#9D25FC;
+    }
+    .spent-time-colored {
+        color:#9D25FC;
+    }
+
 	.dictionaries{
 	  display: grid;
 	  grid-template-columns: 30% 30% 30%;
@@ -171,44 +202,39 @@
    	  display:grid;
    	  grid-template-columns:repeat(5,35%);
    }
-   #startButton{
-       padding: 30%;
-       background-color: inherit;
-       height: 100%;
-       border: 2px solid white;
-       border-radius: 20px;
-       color: white;
+   .right-side-board {
+       display: grid;
+       justify-content: center;
+       align-items: center;
    }
-   #closeButton{
-       position: absolute;
-       top: 20px;
-       right: 20px;
-       padding: 10px;
-       border-radius: 20px;
-   }
-   input+label{
-       display:flex;
-       padding:1vw;
-       border-radius:1vw;
-       margin-right:5px;
-   }
-   input:checked+label{
-       background-color: #9999FF !important;
-   }
-   input[type="radio"]{
-       display:none;
+   .right-side-board > svg {
+       width: 10vw;
+       height: 15vw;
    }
    @media (max-width: 780px) {
-	   #header {
+       body {
+           overflow: scroll;
+       }
+       #main{
+            display:flex;
+            flex-direction: row;
+            height:100vh;
+	    }
+        #content {
+            display: grid;
+            justify-content: space-around;
+        }
+	    #header {
 		   display: grid;
 		   justify-content: start;
+           width: 40%;
 	   }
-	   .box-container-left {
+	    .box-container-left {
 		   padding: 0;
 		   margin-left: 0;
 		   flex-flow: row-reverse;
 	   }
-	   .box-container-right {
+	    .box-container-right {
 		   padding: 0;
 		   margin-left: 1.2vw;
 		   display: flex;
@@ -218,8 +244,26 @@
 			transform: scale(1.7);
 			margin: 4vw;
 		}
+        .bg-head-cube {
+            display: none;
+        }
+        .bg-news-cube {
+            display: none;
+        }
+        .board-main {
+            width: 50vw;
+            background-color:#F4F4F4;
+            border-radius: 7vw;
+            padding: 5vw;
+        }
+        .greeting {
+            font-size: 7vw;
+        }
+        .news {
+            font-size: 3vw;
+        }
 	}
-</style>
+    </style>
     <section id='main'>
         <section id='header'>
             <div class="box-container-left">
@@ -253,13 +297,13 @@
 
 				<div class="brain-box__wrapper box"><a href="/dict">
 
-					<svg class="brain_svg" width="79.245" height="67.802" viewBox="0 0 79.245 67.802"><defs><style>.brain_a{fill:#f0908b;}.brain_b{fill:none;stroke:#2c3e50;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:2px;}</style></defs><g transform="translate(1 1)"><path class="brain_a" d="M35.762,36.048a9.444,9.444,0,0,0-5.722-8.583A7.283,7.283,0,0,0,24.89,15.02h-.715a8.486,8.486,0,0,0,.715-3.29,7.326,7.326,0,0,0-7.3-7.3,6.8,6.8,0,0,0-3.433.858C13.16,2.432,10.442,0,7.3,0A7.685,7.685,0,0,0,0,6.58H0V56.647H.143a9.159,9.159,0,0,0,9.3,9.155A9.36,9.36,0,0,0,18.6,58.22a9.357,9.357,0,0,0,12.159-8.869,10.322,10.322,0,0,0-1.144-4.578A9.217,9.217,0,0,0,35.762,36.048Z" transform="translate(41.484 0)"/><path class="brain_a" d="M0,36.048a9.444,9.444,0,0,1,5.722-8.583,7.283,7.283,0,0,1,5.15-12.445h.715a8.486,8.486,0,0,1-.715-3.29,7.326,7.326,0,0,1,7.3-7.3,6.8,6.8,0,0,1,3.433.858C22.6,2.432,25.319,0,28.466,0a7.685,7.685,0,0,1,7.3,6.58h0V56.647h-.143a9.159,9.159,0,0,1-9.3,9.155,9.36,9.36,0,0,1-9.155-7.582A9.357,9.357,0,0,1,5.007,49.351a10.322,10.322,0,0,1,1.144-4.578A9.217,9.217,0,0,1,0,36.048Z" transform="translate(0 0)"/><path class="brain_b" d="M35.762,36.048a9.444,9.444,0,0,0-5.722-8.583A7.283,7.283,0,0,0,24.89,15.02h-.715a8.486,8.486,0,0,0,.715-3.29,7.326,7.326,0,0,0-7.3-7.3,6.8,6.8,0,0,0-3.433.858C13.16,2.432,10.442,0,7.3,0A7.685,7.685,0,0,0,0,6.58H0V56.647H.143a9.159,9.159,0,0,0,9.3,9.155A9.36,9.36,0,0,0,18.6,58.22a9.357,9.357,0,0,0,12.159-8.869,10.322,10.322,0,0,0-1.144-4.578A9.217,9.217,0,0,0,35.762,36.048Z" transform="translate(41.484 0)"/><path class="brain_b" d="M0,36.048a9.444,9.444,0,0,1,5.722-8.583,7.283,7.283,0,0,1,5.15-12.445h.715a8.486,8.486,0,0,1-.715-3.29,7.326,7.326,0,0,1,7.3-7.3,6.8,6.8,0,0,1,3.433.858C22.6,2.432,25.319,0,28.466,0a7.685,7.685,0,0,1,7.3,6.58h0V56.647h-.143a9.159,9.159,0,0,1-9.3,9.155,9.36,9.36,0,0,1-9.155-7.582A9.357,9.357,0,0,1,5.007,49.351a10.322,10.322,0,0,1,1.144-4.578A9.217,9.217,0,0,1,0,36.048Z" transform="translate(0 0)"/><path class="brain_b" d="M0,.056A9.1,9.1,0,0,1,9.441,5.492c3.147,7.152-1,12.445-7.152,14.448" transform="translate(15.02 38.28)"/><path class="brain_b" d="M17.738,2.432S14.162,8.154,7.725,6.723A9.938,9.938,0,0,1,0,0" transform="translate(11.73 15.02)"/><path class="brain_b" d="M9.3,8.3A13.7,13.7,0,0,0,0,0" transform="translate(20.17 22.029)"/><path class="brain_b" d="M.257,0A11.588,11.588,0,0,0,3.976,11.158c2.575,2.289,7.725,3,12.159,2.432" transform="translate(54.673 31.184)"/><path class="brain_b" d="M0,4.434s3.862,2.432,7.152,1.43S12.731,0,12.731,0" transform="translate(52.927 15.02)"/><path class="brain_b" d="M0,7.3S1.86,0,10.442,0" transform="translate(50.067 43.629)"/></g></svg>
+					<svg class="book_svg" width="53.998" height="66.998" viewBox="0 0 53.998 66.998"><defs><style>.book_a{fill:#16a085;}.book_b{fill:#ecf0f1;}.book_c{fill:#bdc3c7;}.book_d{fill:#1abc9c;}</style></defs><path class="book_a" d="M0,0V39a6,6,0,0,0,6,6H48a6,6,0,0,0,6-6V0Z" transform="translate(0 20.999)"/><path class="book_b" d="M0,0V39a6.009,6.009,0,0,0,6,6H48a6.008,6.008,0,0,0,6-6V0Z" transform="translate(0 17.999)"/><path class="book_c" d="M0,0V39a6.009,6.009,0,0,0,6,6H48a6.008,6.008,0,0,0,6-6V0Z" transform="translate(0 15)"/><path class="book_b" d="M0,0V39a6.009,6.009,0,0,0,6,6H48a6.008,6.008,0,0,0,6-6V0Z" transform="translate(0 12)"/><path class="book_a" d="M6,0A6,6,0,0,0,0,6V60a6,6,0,0,0,6,6h6V63H7.5a4.5,4.5,0,0,1,0-9H48a6,6,0,0,0,6-6V6a6,6,0,0,0-6-6H6Z" transform="translate(0)"/><path class="book_d" d="M0,0V54H33a6,6,0,0,0,6-6V6a6,6,0,0,0-6-6H0Z" transform="translate(15 0)"/></svg>
 
 				</a></div>
 
 				<div class="book-box__wrapper box"><a href="/train">
 
-					<svg class="book_svg" width="53.998" height="66.998" viewBox="0 0 53.998 66.998"><defs><style>.book_a{fill:#16a085;}.book_b{fill:#ecf0f1;}.book_c{fill:#bdc3c7;}.book_d{fill:#1abc9c;}</style></defs><path class="book_a" d="M0,0V39a6,6,0,0,0,6,6H48a6,6,0,0,0,6-6V0Z" transform="translate(0 20.999)"/><path class="book_b" d="M0,0V39a6.009,6.009,0,0,0,6,6H48a6.008,6.008,0,0,0,6-6V0Z" transform="translate(0 17.999)"/><path class="book_c" d="M0,0V39a6.009,6.009,0,0,0,6,6H48a6.008,6.008,0,0,0,6-6V0Z" transform="translate(0 15)"/><path class="book_b" d="M0,0V39a6.009,6.009,0,0,0,6,6H48a6.008,6.008,0,0,0,6-6V0Z" transform="translate(0 12)"/><path class="book_a" d="M6,0A6,6,0,0,0,0,6V60a6,6,0,0,0,6,6h6V63H7.5a4.5,4.5,0,0,1,0-9H48a6,6,0,0,0,6-6V6a6,6,0,0,0-6-6H6Z" transform="translate(0)"/><path class="book_d" d="M0,0V54H33a6,6,0,0,0,6-6V6a6,6,0,0,0-6-6H0Z" transform="translate(15 0)"/></svg>
+                    <svg class="brain_svg" width="79.245" height="67.802" viewBox="0 0 79.245 67.802"><defs><style>.brain_a{fill:#f0908b;}.brain_b{fill:none;stroke:#2c3e50;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:2px;}</style></defs><g transform="translate(1 1)"><path class="brain_a" d="M35.762,36.048a9.444,9.444,0,0,0-5.722-8.583A7.283,7.283,0,0,0,24.89,15.02h-.715a8.486,8.486,0,0,0,.715-3.29,7.326,7.326,0,0,0-7.3-7.3,6.8,6.8,0,0,0-3.433.858C13.16,2.432,10.442,0,7.3,0A7.685,7.685,0,0,0,0,6.58H0V56.647H.143a9.159,9.159,0,0,0,9.3,9.155A9.36,9.36,0,0,0,18.6,58.22a9.357,9.357,0,0,0,12.159-8.869,10.322,10.322,0,0,0-1.144-4.578A9.217,9.217,0,0,0,35.762,36.048Z" transform="translate(41.484 0)"/><path class="brain_a" d="M0,36.048a9.444,9.444,0,0,1,5.722-8.583,7.283,7.283,0,0,1,5.15-12.445h.715a8.486,8.486,0,0,1-.715-3.29,7.326,7.326,0,0,1,7.3-7.3,6.8,6.8,0,0,1,3.433.858C22.6,2.432,25.319,0,28.466,0a7.685,7.685,0,0,1,7.3,6.58h0V56.647h-.143a9.159,9.159,0,0,1-9.3,9.155,9.36,9.36,0,0,1-9.155-7.582A9.357,9.357,0,0,1,5.007,49.351a10.322,10.322,0,0,1,1.144-4.578A9.217,9.217,0,0,1,0,36.048Z" transform="translate(0 0)"/><path class="brain_b" d="M35.762,36.048a9.444,9.444,0,0,0-5.722-8.583A7.283,7.283,0,0,0,24.89,15.02h-.715a8.486,8.486,0,0,0,.715-3.29,7.326,7.326,0,0,0-7.3-7.3,6.8,6.8,0,0,0-3.433.858C13.16,2.432,10.442,0,7.3,0A7.685,7.685,0,0,0,0,6.58H0V56.647H.143a9.159,9.159,0,0,0,9.3,9.155A9.36,9.36,0,0,0,18.6,58.22a9.357,9.357,0,0,0,12.159-8.869,10.322,10.322,0,0,0-1.144-4.578A9.217,9.217,0,0,0,35.762,36.048Z" transform="translate(41.484 0)"/><path class="brain_b" d="M0,36.048a9.444,9.444,0,0,1,5.722-8.583,7.283,7.283,0,0,1,5.15-12.445h.715a8.486,8.486,0,0,1-.715-3.29,7.326,7.326,0,0,1,7.3-7.3,6.8,6.8,0,0,1,3.433.858C22.6,2.432,25.319,0,28.466,0a7.685,7.685,0,0,1,7.3,6.58h0V56.647h-.143a9.159,9.159,0,0,1-9.3,9.155,9.36,9.36,0,0,1-9.155-7.582A9.357,9.357,0,0,1,5.007,49.351a10.322,10.322,0,0,1,1.144-4.578A9.217,9.217,0,0,1,0,36.048Z" transform="translate(0 0)"/><path class="brain_b" d="M0,.056A9.1,9.1,0,0,1,9.441,5.492c3.147,7.152-1,12.445-7.152,14.448" transform="translate(15.02 38.28)"/><path class="brain_b" d="M17.738,2.432S14.162,8.154,7.725,6.723A9.938,9.938,0,0,1,0,0" transform="translate(11.73 15.02)"/><path class="brain_b" d="M9.3,8.3A13.7,13.7,0,0,0,0,0" transform="translate(20.17 22.029)"/><path class="brain_b" d="M.257,0A11.588,11.588,0,0,0,3.976,11.158c2.575,2.289,7.725,3,12.159,2.432" transform="translate(54.673 31.184)"/><path class="brain_b" d="M0,4.434s3.862,2.432,7.152,1.43S12.731,0,12.731,0" transform="translate(52.927 15.02)"/><path class="brain_b" d="M0,7.3S1.86,0,10.442,0" transform="translate(50.067 43.629)"/></g></svg>
 
 				</a></div>
 
@@ -274,6 +318,5 @@
 					<svg width="56.712" height="91.504" viewBox="0 0 56.712 43.504"><defs><style>.exit_a{fill:#758190;}.exit_b{fill:#96cc7f;}.exit_c{fill:#c0e0b2;}.exit_d{fill:#a8b0bc;}.exit_e{fill:#dcdfe4;}.exit_f{fill:#ef7e68;}.exit_g{fill:none;stroke:#000;stroke-linejoin:round;stroke-width:2px;}</style></defs><g transform="translate(1 1)"><path class="exit_a" d="M0,0Z" transform="translate(39.25 90.394)"/><rect class="exit_b" width="54.712" height="45.197" transform="translate(0 0)"/><path class="exit_c" d="M0,0V38.534a34.43,34.43,0,0,0,6.788.685c20.176,0,36.565-17.5,36.938-39.219Z" transform="translate(0.004 0)"/><path class="exit_d" d="M0,4.525H13.576V0l7.542,7.542-7.542,7.542V10.559H0Z" transform="translate(16.596 24.134)"/><path class="exit_e" d="M13.576,0V4.525H0v6.034H7.272a37.446,37.446,0,0,0,9.343-7.519Z" transform="translate(16.596 24.134)"/><path class="exit_f" d="M0,0Z" transform="translate(43.23 90.504)"/><rect class="exit_g" width="54.712" height="45.197" transform="translate(0 0)"/><path class="exit_g" d="M7.542,0H0V12.067H7.542" transform="translate(9.054 6.034)"/><line class="exit_g" x2="5.947" transform="translate(9.515 11.894)"/><path class="exit_g" d="M0,15.084H0A9.967,9.967,0,0,1,1.673,9.558L4.361,5.527A9.968,9.968,0,0,0,6.034,0h0" transform="translate(21.121 4.525)"/><path class="exit_g" d="M6.034,15.084h0A9.967,9.967,0,0,0,4.361,9.558L1.673,5.527A9.968,9.968,0,0,1,0,0H0" transform="translate(21.121 4.525)"/><line class="exit_g" y2="14.273" transform="translate(33.303 4.758)"/><line class="exit_g" x2="8.326" transform="translate(38.061 5.947)"/><line class="exit_g" y2="13.083" transform="translate(42.818 5.947)"/><path class="exit_g" d="M0,4.525H13.576V0l7.542,7.542-7.542,7.542V10.559H0Z" transform="translate(16.596 24.134)"/></g></svg>
 
 				</a></div>
-
 			</div>
-    	</section>
+        </section>
