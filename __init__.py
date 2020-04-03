@@ -242,6 +242,8 @@ def dwp():
         word_set = session.query(WordSet).filter_by(name=word_set,owner_id=user_id).first().id
         session.query(Word).filter_by(word_set=word_set,spelling=word).delete()
         session.commit()
+        return 'ok'
+    return 'not logged in'
 
 @app.errorhandler(404)
 def erp(n):

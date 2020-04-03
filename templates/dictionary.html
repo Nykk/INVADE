@@ -21,6 +21,7 @@
                     })
                 }
             );
+	        wordInfo.innerHTML='select a word to show info';
             let word_div = document.getElementById('word_'+currentWord)
             word_div.parentNode.removeChild(word_div);
         }
@@ -45,6 +46,7 @@
                             for(let i=0; i<arr[1].split(',').length; i++){
                                 wordInfo.innerHTML+='<br>'+trainingNames[i]+':'+arr[1].split(',')[i];
                             }
+                            wordInfo.innerHTML+='<div><button onclick="deleteWord()">delete word</button></div>';
                         });
                     }
             }).then(data=>{
@@ -62,10 +64,14 @@
 				.then(data => {
 					words.innerHTML='';
 					if (data!=''){
+					    words.style.display='grid';
 				        for (let i of data.split(',')){
 				        	words.innerHTML+=`<div class='dict-logo' id='word_`+i+`' onclick="showWordInfo('`+i+`')">`+i+`</div>`;
 				        }
-					}
+					}else{
+					    words.innerHTML = 'Selected word list is empty';
+					    words.style.display='block';
+                    }
 				});
 		}
 		function AddDict(name,language){
@@ -80,7 +86,7 @@
                 })
             }).then(res=>{
                     if (res.status==200){
-                        dictionaries.innerHTML+="<div class='dict-logo'>"+name+"</div>";
+                        dictionaries.innerHTML+="<div class='dict-logo'><div class='dict-name'>"+name+"</div>"+language+"</div>";
                     }
                 })
         }
@@ -102,16 +108,20 @@
                 }).then(res=>{
                     if (res.status==200){
                         let i = spelling.value;
-                        words.innerHTML+=`<div class='dict-logo' onclick="showWordInfo('`+i+`')">`+i+`</div>`;
+                        words.innerHTML+=`<div class='dict-logo' id="word_`+spelling.value+`" onclick="showWordInfo('`+i+`')">`+i+`</div>`;
                     }
                 })
             }
         }
 	</script>
     <style>
+        div{
+
+            color:grey;
+        }
         .dict-logo{
             padding:20px;
-            color:white;
+            color:white; !important;
             background-color: #9D25FC;
             border-radius:20px;
             {#width:2vw;#}
@@ -120,11 +130,38 @@
         }
         .dict-name{
             font-size:4vw;
+            color:white;
         }
-        .dict-lang{
-
+        .create-dict-form{
+            color:grey;
+            font-size:4vw;
+        }
+        input, select, button{
+            background-color: #9D25FC;
+            appearance: none;
+            -webkit-appearance: none;
+            padding: 10px;
+            border-style: none;
+            border-radius:10px;
+            color:white;
+        }
+        #createDictForm{
+            display: none;
+        }
+        #words{
+            display:block;
+            padding-bottom: 20px;
+            font-size:2vw;
+        }
+        #wordInfo{
+            padding-top:20px;
         }
     </style>
+    <script>
+        function showHideForm(){
+            createDictForm.style.display='block';
+        }
+    </script>
 	<div id='content'>
 		<div class="half-screen">
 			<div class='centered'>
@@ -138,15 +175,17 @@
                         </div>
 					{% endfor %}
 				</div>
-				<div class='form'>
-				    create a dictionary:<br>
-				    <input type="text" id="dictName">
-				    <select id="dictLanguage">
-				        <option disabled> select a language </option>
-				        <option>english</option>
-				        <option>spanish</option>
-				    </select>
-				    <input type="button" value="add" onclick="addDictBtn()">
+				<div class='create-dict-form'>
+				    <div onclick="showHideForm()">create a dictionary</div>
+                    <div id="createDictForm">
+				        <input type="text" id="dictName" placeholder="name">
+				        <select id="dictLanguage">
+				            <option disabled> select a language </option>
+				            <option>english</option>
+				            <option>spanish</option>
+				        </select>
+				        <input type="button" value="add" onclick="addDictBtn()">
+                    </div>
 				</div>
 			</div>
 		</div>
@@ -166,7 +205,7 @@
             <div id="wordInfo">
                 select a word to show info
             </div>
-            <button onclick="deleteWord()">delete word</button>
+{#            <button onclick="deleteWord()">delete word</button>#}
 		</div>
 	</div>
 	{% include "ending.html" %}
