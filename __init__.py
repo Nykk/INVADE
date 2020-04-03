@@ -159,12 +159,12 @@ def training(name,difficulty,set_name):
     return redirect('/')
 
 
-@app.route('/dict/<name>')
-def dlp(name):
+@app.route('/dict/<name>/<offset>')
+def dlp(name,offset):
     if 'userId' not in ses:
         return redirect('/')
     set_id = session.query(WordSet).filter_by(owner_id=ses['userId'], name=name).first().id
-    words = session.query(Word).filter_by(word_set = set_id).all()
+    words = session.query(Word).filter_by(word_set = set_id).limit(9).offset(offset).all()
     print(words)
     strret=''
     for i in words:
@@ -244,6 +244,10 @@ def dwp():
         session.commit()
         return 'ok'
     return 'not logged in'
+
+@app.route('/settings')
+def stp():
+    return  render_template("settings.html")
 
 @app.errorhandler(404)
 def erp(n):

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+</head>
+<body>
+    <style>
+
+        
+        .settings {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+        .settings-window {
+            background-color: #F4F4F4;
+            width: 50%;
+            font-size:2vw;
+            height: 35vw;
+            border-radius: 4vw;
+        }
+        .settings-window > p {
+            margin: 3vw;
+        }
+        .settings-window > ul {
+            list-style: none;
+            font-size: 1.5vw;
+            line-height: 1.5;
+            margin-left: 3.2vw;
+            padding: 0;
+        }
+        .settings-window > ul > li{
+            font-size:3vw;
+        }
+        .settings-window > ul > li:nth-child(1) > span {
+            color: #FF9BE4;
+            cursor: pointer;
+        }
+        .settings-window > ul > li:nth-child(2) > span {
+            color: #FF9BE4;
+            cursor: pointer;
+        }
+        @media (max-width: 780px) {
+            .settings-window {
+                background-color: #F4F4F4;
+                width: 45vw;
+                height: 63vw;
+                border-radius: 7.2vw;
+            }
+            .settings-window > p {
+            font-size: 5.4vw;
+            margin: 5.4vw;
+            }
+            .settings-window > ul {
+                list-style: none;
+                font-size: 2.7vw;
+                line-height: 1.5;
+                margin-left: 5.8vw;
+                padding: 0;
+            }
+            .settings-window > ul > li:nth-child(1) > span {
+                color: #FF9BE4;
+                cursor: pointer;
+            }
+            .settings-window > ul > li:nth-child(2) > span {
+                color: #FF9BE4;
+                cursor: pointer;
+            }
+        }
+        .title{
+            font-size:4vw;
+        }
+    </style>
+    {% include "head.html" %}
+    <section class="settings">
+        <div class="settings-window">
+            <p class="title">Settings</p>
+            <ul>
+                <li>Change <span>native language</span></li>
+                <li>Change <span>password</span></li>
+            </ul>
+        </div>
+    </section>
+    {%include "ending.html" %}

@@ -1,6 +1,7 @@
 
 	{% include "head.html" %}
 	<script>
+        var currentOffset=0;
         trainingNames = [
             {% for i in training_names %}
                 "{{ i }}",
@@ -54,25 +55,33 @@
                 wordInfo.innerHTML = word+data;
             })
         }
-		function getDictList(name){
-	        console.log('gdl');
-		    currentSetName = name;
-			fetch('/dict/'+name)
+        function loadWordsWithOffset(name,offset){
+	        currentOffset=offset+9;
+	        fetch('/dict/'+name+'/'+offset)
 				.then(res => {
 				    return res.text();
 				})
 				.then(data => {
-					words.innerHTML='';
+				    if (offset==0)
+					    words.innerHTML='';
 					if (data!=''){
 					    words.style.display='grid';
 				        for (let i of data.split(',')){
 				        	words.innerHTML+=`<div class='dict-logo' id='word_`+i+`' onclick="showWordInfo('`+i+`')">`+i+`</div>`;
 				        }
 					}else{
-					    words.innerHTML = 'Selected word list is empty';
-					    words.style.display='block';
+					    if (offset==0){
+					        words.innerHTML = 'Selected word list is empty';
+					        words.style.display='block';
+					    }
                     }
 				});
+        }
+		function getDictList(name){
+	        console.log('gdl');
+		    currentSetName = name;
+            loadWordsWithOffset(name,0);
+            curretOffset=0;
 		}
 		function AddDict(name,language){
 		    fetch('/addWordSet',{method:"POST",
@@ -195,6 +204,7 @@
 			    <div id='words' class='words'>
                     select a dictionary
 				</div>
+                <input type="button" value="load more words" onclick="loadWordsWithOffset(currentSetName,currentOffset)">
     			<div class='form'>
             	    add a word:<br>
     			    <input type="text" id="spelling">
