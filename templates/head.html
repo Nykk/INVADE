@@ -186,6 +186,18 @@
        padding: 10px;
        border-radius: 20px;
    }
+   input+label{
+       display:flex;
+       padding:1vw;
+       border-radius:1vw;
+       margin-right:5px;
+   }
+   input:checked+label{
+       background-color: #9999FF !important;
+   }
+   input[type="radio"]{
+       display:none;
+   }
    @media (max-width: 780px) {
 	   #header {
 		   display: grid;

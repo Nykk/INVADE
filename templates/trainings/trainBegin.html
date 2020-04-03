@@ -9,12 +9,12 @@
                 {%  for difficulty in difficulties %}
 {#                    <option>{{difficulty}}</option>#}
                     <div>
-                        <label>
-                            <input type="radio" name="difficultySelect"
+                        <input type="radio" name="difficultySelect"
                                     {% if difficulties.index(difficulty)==0 %}
                                         checked
                                     {% endif %}
-                                   vl="{{ difficulty }}">
+                                   vl="{{ difficulty }}" id="_{{ difficulty }}">
+                        <label for="_{{ difficulty }}">
                             {{ difficulty }}
                         </label>
                     </div>
