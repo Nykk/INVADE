@@ -1,0 +1,106 @@
+{
+%
+raw
+%
+}
+body {
+    overflow: scroll !important;
+}
+
+.result {
+    color: white;
+    background-color: #006CFF;
+    padding: 30px;
+    margin: 5px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: row;
+}
+
+.result > div {
+    width: 25%;
+}
+
+.training-name {
+    font-size: 6vw;
+}
+
+.training-res-num {
+    font-size: 15vw;
+}
+
+.exit-training {
+    color: white;
+    font-size: 40px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #006CFF;
+    text-decoration: none;
+}
+
+.third {
+    width: 33% !important;
+    font-size: 3vw;
+}
+
+#trainSettingsForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.training-logo {
+    border-radius: 4vw;
+    color: white;
+    text-decoration: none;
+    font-size: 3.5vw;
+    display: grid;
+    align-items: center;
+    width: 20vw;
+    height: 20vw;
+    margin: 1.7vw;
+}
+
+.training-logo > p {
+    text-align: start;
+    margin-left: 1.5vw;
+}
+
+.training-logo-spelling {
+    background-color: #006CFF;
+}
+
+.training-logo-choose-translation {
+    background-color: #FC2557;
+}
+
+.training-logo-choose-spelling {
+    background-color: #4BD32B;
+}
+
+.training-logo-quick-quiz {
+    background-color: #FF6200;
+}
+
+.training-logo {
+    border-radius: 5.5vw;
+    color: white;
+    text-decoration: none;
+    font-size: 4.5vw;
+    display: grid;
+    align-items: center;
+    width: 26vw;
+    height: 26vw;
+    margin: 1.7vw;
+}
+
+.training-logo > p {
+    text-align: start;
+    margin-left: 1.5vw;
+}
+
+{
+%
+endraw
+%
+}

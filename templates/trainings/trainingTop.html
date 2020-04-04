@@ -5,124 +5,148 @@
     <title>Title</title>
 </head>
 <body>
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            font-family: 'HelveticaNeue';
-        }
-        #header{
-            display: flex;
-            flex-direction: row;
-        }
-        .empty{
-            flex-grow:1;
-        }
-        #score{
-            color:#703a98;
-            font-size:5vw;
-            margin: 7px;
-            margin-right: 15%;
-        }
-        .result{
-            color:white;
-            background-color:#006CFF;
-            padding:30px;
-            margin:5px;
-            border-radius:30px;
-            display: flex;
-            font-size:3vw;
-            flex-direction: row;
-        }
-        .result>div{
-            width:25%;
-        }
-        .training-name{
-            font-size: 6vw;
-        }
-        .training-res-num{
-            font-size: 15vw;
-        }
-        .exit-training{
-            color:white;
-            font-size:40px;
-            padding:10px;
-            border-radius:10px;
-            background-color: #006CFF;
-            text-decoration:none;
-        }
-        .flex-right{
-            display: flex;
-            flex-direction:row;
-        }
-        .flex-right > div{
-            flex-grow:1;
-            height:40vw;
-        }
-        .grid2x2{
-            display: grid;
-            grid-template-columns: 50% 50%;
-        }
-        .grid2x2>button{
-            height:20vw;
-            font-size:3vw;
-            border-radius:2vw;
-            background-color: #9D25FC;
-            color:white;
-        }
-        .given-word{
-            transform: translate(-5vw, -50%);
-            top: 50%;
-            left: 30%;
-            position:relative;
-            font-size:7vw;
-        }
-        #translation{
-            border-radius:2vw;
-            background-color: #9D25FC;
-            color:white;
-            font-size:3vw;
-        }
-        .word{
-            color: #9D25FC;
-        }
-        .btn{
-            border-radius:50vh;
-            padding:20px;
-            font-size: 7vw;
-        }
-        #train{
-            font-size:3vw;
-            font-size:7vw;
-        }
-        #difficulties{
-            display: flex;
-            flex-direction: column;
-        }
-    </style>
-    <div id="header">
-        <div class="empty"></div>
-        <div id="score">10/10</div>
-        <a href="/train">
-            <svg class="close-button" viewBox="0 0 70.826 68.357" >
-                <defs>
-                    <style>
-                        .close-button {
-                            width: 5vw;
-                            cursor: pointer;
-                            margin:10px;
-                        }
-                        .a{
-                            fill:none;
-                            stroke:#703a98;
-                            stroke-width:5px;
-                        }
-                    </style>
-                </defs>
-                <g transform="translate(-1309.732 -79.732)">
-                    <line class="a" x1="64.821" y1="64.821" transform="translate(1313.969 81.5)"/>
-                    <line class="a" y1="64.821" x2="64.821" transform="translate(1311.5 81.5)"/>
-                </g>
-            </svg>
-        </a>
-    </div>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: 'HelveticaNeue';
+    }
+
+    #header {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .empty {
+        flex-grow: 1;
+    }
+
+    .below-ending{
+        display: flex;
+        flex-direction: row
+    }
+
+    #score {
+        color: #703a98;
+        font-size: 5vw;
+        margin: 7px;
+        margin-right: 15%;
+    }
+
+    .result {
+        color: white;
+        background-color: #006CFF;
+        padding: 30px;
+        margin: 5px;
+        border-radius: 30px;
+        display: flex;
+        font-size: 3vw;
+        flex-direction: row;
+    }
+
+    .result > div {
+        width: 25%;
+    }
+
+    .training-name {
+        font-size: 6vw;
+    }
+
+    .training-res-num {
+        font-size: 15vw;
+    }
+
+    .exit-training {
+        color: white;
+        font-size: 40px;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #006CFF;
+        text-decoration: none;
+    }
+
+    .flex-right {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .flex-right > div {
+        flex-grow: 1;
+        height: 40vw;
+    }
+
+    .grid2x2 {
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+
+    .grid2x2 > button {
+        height: 20vw;
+        font-size: 3vw;
+        border-radius: 2vw;
+        background-color: #9D25FC;
+        color: white;
+    }
+
+    .given-word {
+        transform: translate(-5vw, -50%);
+        top: 50%;
+        left: 30%;
+        position: relative;
+        font-size: 7vw;
+    }
+
+    #translation {
+        border-radius: 2vw;
+        background-color: #9D25FC;
+        color: white;
+        font-size: 3vw;
+    }
+
+    .word {
+        color: #9D25FC;
+    }
+
+    .btn {
+        border-radius: 50vh;
+        padding: 20px;
+        font-size: 7vw;
+    }
+
+    #train {
+        font-size: 3vw;
+        font-size: 7vw;
+    }
+
+    #difficulties {
+        display: flex;
+        flex-direction: column;
+    }
+</style>
+<div id="header">
+    <div class="empty"></div>
+    <div id="score">10/10</div>
+    <a href="/train">
+        <svg class="close-button" viewBox="0 0 70.826 68.357">
+            <defs>
+                <style>
+                    .close-button {
+                        width: 5vw;
+                        cursor: pointer;
+                        margin: 10px;
+                    }
+
+                    .a {
+                        fill: none;
+                        stroke: #703a98;
+                        stroke-width: 5px;
+                    }
+                </style>
+            </defs>
+            <g transform="translate(-1309.732 -79.732)">
+                <line class="a" x1="64.821" y1="64.821" transform="translate(1313.969 81.5)"/>
+                <line class="a" y1="64.821" x2="64.821" transform="translate(1311.5 81.5)"/>
+            </g>
+        </svg>
+    </a>
+</div>

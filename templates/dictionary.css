@@ -1,0 +1,42 @@
+{% raw %}div{
+
+            color:grey;
+        }
+        .dict-logo{
+            padding:20px;
+            color:white; !important;
+            background-color: #9D25FC;
+            border-radius:20px;
+            {#width:2vw;#}
+            height:auto;
+            margin:1vw;
+        }
+        .dict-name{
+            font-size:4vw;
+            color:white;
+        }
+        .create-dict-form{
+            color:grey;
+            font-size:4vw;
+        }
+        input, select, button{
+            background-color: #9D25FC;
+            appearance: none;
+            -webkit-appearance: none;
+            padding: 10px;
+            border-style: none;
+            border-radius:10px;
+            color:white;
+        }
+        #createDictForm{
+            display: none;
+        }
+        #words{
+            display:block;
+            padding-bottom: 20px;
+            font-size:2vw;
+        }
+        #wordInfo{
+            padding-top:20px;
+        }
+{% endraw %}

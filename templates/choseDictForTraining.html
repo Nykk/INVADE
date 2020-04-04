@@ -1,41 +1,28 @@
-
-	{% include "head.html" %}
-	<div id='content'>
-        <style>
-            .dictionaries{
-                display:flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-            .dict-logo{
-                padding:20px;
-                border-radius:20px;
-                color:white;
-                background-color: #9D00FF;
-                margin: 2px;
-                font-size:3.6vw;
-            }
-        </style>
-        <div class='centered'>
-            <h1>
-                Starting {{ difficulty }} {{ name }}:<br>
-                Select word set:
-            </h1>
-            <div class='dictionaries' id="dictionaries">
-                {% for dictionary in dictionaries %}
-                    <div class='dict-logo'
-                         {% if dictionary.needToTrain>=6 %}
-                            onclick="window.location+='/{{ dictionary.setName }}'"
-                         {% else %}
-                            onclick="alert('not enough words to train')"
-                         {% endif %}
-                    >
-                        <h3>{{dictionary.setName}}</h3>
-                        <p>total words: {{ dictionary.wordCount }}</p>
-                        <p>need to train: {{ dictionary.needToTrain }}</p>
-                    </div>
-                {% endfor %}
-            </div>
+{% include "head.html" %}
+<div id='content'>
+    <style>
+        {% include "chooseDictForTraining.css" %}
+    </style>
+    <div class='centered'>
+        <h1>
+            Starting {{ difficulty }} {{ name }}:<br>
+            Select word set:
+        </h1>
+        <div class='dictionaries' id="dictionaries">
+            {% for dictionary in dictionaries %}
+                <div class='dict-logo'
+                        {% if dictionary.needToTrain>=6 %}
+                     onclick="window.location+='/{{ dictionary.setName }}'"
+                        {% else %}
+                     onclick="alert('not enough words to train')"
+                        {% endif %}
+                >
+                    <h3>{{ dictionary.setName }}</h3>
+                    <p>total words: {{ dictionary.wordCount }}</p>
+                    <p>need to train: {{ dictionary.needToTrain }}</p>
+                </div>
+            {% endfor %}
         </div>
-	</div>
-	{% include "ending.html" %}
+    </div>
+</div>
+{% include "ending.html" %}

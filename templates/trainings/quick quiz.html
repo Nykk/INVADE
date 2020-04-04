@@ -1,109 +1,110 @@
-
-	{% include "trainings/trainingTop.html" %}
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<div id='content' >
-			<div class='centered'>
-                <script>
-                    window.onload = function() {
-                        app.setSpelling();
-                    };
-                    var words=[
-                        {% for word in words %}
-                            {
-                                id:{{word.id}},
-                                spelling:"{{ word.spelling }}",
-                                translation:"{{ word.translation }}"
-                            },
-                        {% endfor %}
-                    ];
-                    var corrects=[];
-                    var incorrects=[];
-	            </script>
-                {% raw %}
-				<div id="train"  onload="">
-                    <div v-if="!ended">
-                        <div>is <span class="word">{{ translation }}</span> translated as <span class="word">{{ spelling }}</span>?</div>
-                        <button v-on:click="check(1)" class="btn">correct</button>
-                        <button v-on:click="check(0)" class="btn">incorrect</button>
-                    </div>
-                    <div v-if="ended">
-                        {% endraw %}
-                            {% include "trainings/trainEnd.html" %}
-                        {% raw %}
-                    </div>
+{% include "trainings/trainingTop.html" %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<div id='content'>
+    <div class='centered'>
+        <script>
+            window.onload = function () {
+                app.setSpelling();
+            };
+            var words = [
+                {% for word in words %}
+                    {
+                        id:{{word.id}},
+                        spelling: "{{ word.spelling }}",
+                        translation: "{{ word.translation }}"
+                    },
+                {% endfor %}
+            ];
+            var corrects = [];
+            var incorrects = [];
+        </script>
+        {% raw %}
+        <div id="train" onload="">
+            <div v-if="!ended">
+                <div>is <span class="word">{{ translation }}</span> translated as <span
+                        class="word">{{ spelling }}</span>?
                 </div>
-                <script>
-                    function randInt(from,to){
-                        return Math.round(from+Math.random()*(to-from));
-                    }
-                    var app = new Vue({
-                        el: '#train',
-                        data: {
-                            wordNum: 0,
-                            ended:false,
-                            answer:'',
-                            spelling: '',
-                            corrects:[],
-                            incorrects:[],
-                            variants:[],
-                            correct:0,
-                        },
-                        computed:{
-                            translation: function(){
-                                if (this.wordNum<words.length)
-                                return words[this.wordNum].translation;
-                                return null;
-                            }
-                        },
-                        methods: {
-                            check: (answer) => {
-                                score.innerText=app.wordNum+2+'/'+words.length;
-                                if(answer==app.correct)
-                                        app.corrects.push(words[app.wordNum])
-                                    else
-                                        app.incorrects.push(words[app.wordNum])
-                                    if (app.wordNum < words.length - 1) {
-                                        app.wordNum++;
-                                        app.setSpelling();
-                                        correct = words[app.wordNum].spelling;
-                                    } else {
-                                        app.ended = true;
-                                        corrects_ids = app.corrects.map(i => i.id);
-                                        incorrects_ids = app.incorrects.map(i => i.id);
-                                        fetch('/trainingRes', {
-                                            method: "POST",
-                                            headers: {
-                                                'Accept': 'application/json',
-                                                'Content-Type': 'application/json'
-                                            },
-                                            body: JSON.stringify({
-                                                corrects: corrects_ids,
-                                                incorrects:incorrects_ids,
-                                                trainingId:4,//quick quiz
-                                            })
-                                        })
-
-                                    }
-                            },
-                            setSpelling:()=>{
-                                if (Math.random()<0.5) {
-                                    app.spelling=words[app.wordNum].spelling;
-                                    app.correct=1;
-                                }
-                                else{
-                                    num = app.wordNum;
-                                    while(num==app.wordNum)
-                                        num = randInt(0,words.length-1);
-                                    app.spelling=words[num].spelling;
-                                    app.correct=0;
-                                }
-                            }
-                        },
-                    })
-                    score.innerText=1+'/'+words.length;
-                </script>
+                <button v-on:click="check(1)" class="btn">correct</button>
+                <button v-on:click="check(0)" class="btn">incorrect</button>
+            </div>
+            <div v-if="ended">
                 {% endraw %}
-			</div>
-		</div>
-	</div>
-	{%include "ending.html" %}
+                {% include "trainings/trainEnd.html" %}
+                {% raw %}
+            </div>
+        </div>
+        <script>
+            function randInt(from, to) {
+                return Math.round(from + Math.random() * (to - from));
+            }
+
+            var app = new Vue({
+                el: '#train',
+                data: {
+                    wordNum: 0,
+                    ended: false,
+                    answer: '',
+                    spelling: '',
+                    corrects: [],
+                    incorrects: [],
+                    variants: [],
+                    correct: 0,
+                },
+                computed: {
+                    translation: function () {
+                        if (this.wordNum < words.length)
+                            return words[this.wordNum].translation;
+                        return null;
+                    }
+                },
+                methods: {
+                    check: (answer) => {
+                        score.innerText = app.wordNum + 2 + '/' + words.length;
+                        if (answer == app.correct)
+                            app.corrects.push(words[app.wordNum])
+                        else
+                            app.incorrects.push(words[app.wordNum])
+                        if (app.wordNum < words.length - 1) {
+                            app.wordNum++;
+                            app.setSpelling();
+                            correct = words[app.wordNum].spelling;
+                        } else {
+                            app.ended = true;
+                            corrects_ids = app.corrects.map(i => i.id);
+                            incorrects_ids = app.incorrects.map(i => i.id);
+                            fetch('/trainingRes', {
+                                method: "POST",
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    corrects: corrects_ids,
+                                    incorrects: incorrects_ids,
+                                    trainingId: 4,//quick quiz
+                                })
+                            })
+
+                        }
+                    },
+                    setSpelling: () => {
+                        if (Math.random() < 0.5) {
+                            app.spelling = words[app.wordNum].spelling;
+                            app.correct = 1;
+                        } else {
+                            num = app.wordNum;
+                            while (num == app.wordNum)
+                                num = randInt(0, words.length - 1);
+                            app.spelling = words[num].spelling;
+                            app.correct = 0;
+                        }
+                    }
+                },
+            });
+            score.innerText = 1 + '/' + words.length;
+        </script>
+        {% endraw %}
+    </div>
+</div>
+</div>
+{% include "ending.html" %}

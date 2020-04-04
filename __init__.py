@@ -1,14 +1,7 @@
 from flask import Flask, request, session as ses, render_template, redirect, abort
-import random
-import sys, os, signal
-from sqlalchemy import Table, Column, Integer, String, MetaData, create_engine, and_
-import json
-from sqlalchemy.orm import mapper
 from sqlalchemy.orm import sessionmaker, scoped_session
-from sqlalchemy import update
 
 from models import *
-
 
 engine = create_engine('sqlite:////Volumes/High Sierra/Users/alme/PycharmProjects/INVADE/test.db?check_same_thread=false', echo=True)
 con = engine.connect()
@@ -54,7 +47,7 @@ def sp():
         if ourUser.password == password:
             ses['email']=email
             ses['userId']=ourUser.id
-            return redirect('/dashboard')
+            return redirect('/common')
         else:
             return 'wrong password'
     return 'No such user'
@@ -259,7 +252,7 @@ def stp():
     user = session.query(User).filter_by(email=ses['email']).first()
     if not user:
         abort(401)
-    return render_template("t-settings-2.html", languages=LANGUAGES, current_language=user.native_language)
+    return render_template("settings.html", languages=LANGUAGES, current_language=user.native_language)
 
 
 @app.route('/settings/setlang/<lang>')
