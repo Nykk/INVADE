@@ -1,0 +1,76 @@
+{% raw %}
+@keyframes cubesErrorAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(90deg);
+    }
+}
+
+@font-face {
+    font-family: 'HelveticaNeue';
+    src: url(../static/fonts/HelveticaNeue.ttf);
+}
+
+* {
+    font-family: 'HelveticaNeue';
+}
+
+body, html {
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.message__container {
+    color: #393939;
+    width: 50vw;
+    text-align: center;
+    line-height: .9;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.message-number {
+    font-size: 20vw;
+}
+
+.message-comment {
+    font-size: 4vw;
+}
+
+.cube1 {
+    margin-top: 1.8vw;
+    width: 8vw;
+    height: 8vw;
+    border-radius: 2.5vw;
+    background-color: #9D00FF;
+    animation: cubesErrorAnimation 1s infinite linear;
+    animation-direction: reverse;
+}
+
+.cube2 {
+    margin-top: .8vw;
+    margin-left: 8vw;
+    width: 6vw;
+    height: 6vw;
+    border-radius: 2vw;
+    background-color: #CE26FC;
+    animation: cubesErrorAnimation 1s infinite linear;
+}
+
+.cube3 {
+    margin-top: .8vw;
+    margin-left: 5vw;
+    width: 4vw;
+    height: 4vw;
+    border-radius: 1.4vw;
+    background-color: #ECA5FF;
+    animation: cubesErrorAnimation 1s infinite linear;
+    animation-direction: reverse;
+}
+{% endraw %}

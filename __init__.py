@@ -47,7 +47,7 @@ def sp():
         if ourUser.password == password:
             ses['email']=email
             ses['userId']=ourUser.id
-            return redirect('/common')
+            return redirect('/dashboard')
         else:
             return 'wrong password'
     return 'No such user'

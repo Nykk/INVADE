@@ -1,8 +1,4 @@
-{
-%
-raw
-%
-}
+{% raw %}
 .dictionaries {
     display: flex;
     flex-direction: row;
@@ -17,9 +13,4 @@ raw
     margin: 2px;
     font-size: 3.6vw;
 }
-
-{
-%
-endraw
-%
-}
+{% endraw %}
