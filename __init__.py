@@ -247,7 +247,8 @@ def dwp():
 
 @app.route('/settings')
 def stp():
-    return  render_template("settings.html")
+    return  render_template("t-"
+                            "settings-2.html")
 
 @app.errorhandler(404)
 def erp(n):
