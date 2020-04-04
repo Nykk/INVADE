@@ -10,7 +10,7 @@ from sqlalchemy import update
 from models import *
 
 
-engine = create_engine('sqlite:////Volumes/High Sierra/Users/alme/PycharmProjects/INVADE/test.db?check_same_thread=false', echo=True)
+engine = create_engine('sqlite:///test.db?check_same_thread=false', echo=True)
 con = engine.connect()
 session = scoped_session(sessionmaker(bind=engine))
 
@@ -18,10 +18,6 @@ metadata = MetaData()
 
 TRAINING_NAMES = ['spelling','choose translation','choose spelling','quick quiz']
 DIFFICULTIES = ['easy','medium','hard']
-LANGUAGES = [['russian','русский'],
-             ['chinese','中文'],
-             ['english','english'],
-             ['german','Deutsch']]
 
 print(User.__table__)
 # User.__table__.create(engine)
@@ -163,12 +159,12 @@ def training(name,difficulty,set_name):
     return redirect('/')
 
 
-@app.route('/dict/<name>/<offset>')
-def dlp(name,offset):
+@app.route('/dict/<name>')
+def dlp(name):
     if 'userId' not in ses:
         return redirect('/')
     set_id = session.query(WordSet).filter_by(owner_id=ses['userId'], name=name).first().id
-    words = session.query(Word).filter_by(word_set = set_id).limit(9).offset(offset).all()
+    words = session.query(Word).filter_by(word_set = set_id).all()
     print(words)
     strret=''
     for i in words:
@@ -246,45 +242,6 @@ def dwp():
         word_set = session.query(WordSet).filter_by(name=word_set,owner_id=user_id).first().id
         session.query(Word).filter_by(word_set=word_set,spelling=word).delete()
         session.commit()
-        return 'ok'
-    return 'not logged in'
-
-@app.route('/settings')
-def stp():
-    if 'email' not in ses:
-        return redirect('/')
-    user = session.query(User).filter_by(email=ses['email']).first()
-    if not user:
-        abort(401)
-    return render_template("t-settings-2.html", languages=LANGUAGES, current_language=user.native_language)
-
-
-@app.route('/settings/setlang/<lang>')
-def stlp(lang):
-    if 'email' not in ses:
-        return redirect('/')
-    user = session.query(User).filter_by(email=ses['email']).first()
-    if not user:
-        abort(401)
-    user.native_language=lang
-    session.commit()
-    return 'ok'
-
-
-@app.route('/settings/setpassword', methods=['POST'])
-def spp():
-    if 'email' not in ses:
-        return redirect('/')
-    password = request.json['password']
-    password_repeat = request.json['passwordRepeat']
-    user = session.query(User).filter_by(email=ses['email']).first()
-    if not user:
-        abort(401)
-    if password==password_repeat and len(password)>=6:
-        user.password = password
-        session.commit()
-        return 'ok'
-    return 'error'
 
 @app.errorhandler(404)
 def erp(n):

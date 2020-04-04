@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invade</title>
+</head>
+<body>
+
+    <!-- signup section -->
+    <section class="signup-section">
+        <form class="signup-form" action="/signup" method="post">
+
+            <input type="text" name="name" class="signup-form__name" placeholder="name">
+
+            <input type="email" name="email" class="signup-form__email" placeholder="e-mail">
+
+            <input type="password" name="password" class="signup-form__password" placeholder="password">
+
+            <input type="text" name="language" class="signup-form__language" placeholder="native language">
+
+            <button type="submit" name="submit" class="signup-form__submit">join</button>
+
+        </form>
+    </section>
+
+    <!-- login section -->
+    <section class="auth-section">
+        <form class="auth-form" action="/signin" method="post">
+
+            <input type="email" name="email" class="auth-form__email" placeholder="e-mail">
+
+            <input type="password" name="password" class="auth-form__password" placeholder="password">
+
+            <div class="auth-buttons__wrapper">
+                <button type="submit" name="submit" class="auth-form__submit">log in</button>
+                <div class="auth-form__signup">sign in</div>
+            </div>
+
+        </form>
+    </section>
+
+    <!-- title section -->
+    <section class="title-section">
+
+        <!-- background cube as join section -->
+        <div class="bg-cube join-cube">
+
+            <!-- right top two buttons -->
+            <ul class="join-list-wrapper">
+                <li class="join-list__item list-join-button">join</li>
+                <li class="join-list__item list-invade-button"><a class="invade-link" href="#main_page.html">invade</a></li>
+            </ul>
+
+        </div>
+
+
+        <!-- the rest of the section -->
+    </section>
+    <!-- the rest of the page -->
+</body>
+
+<!-- temp styles -->
+<style>
+
+    /* login section styles */
+    .signup-section {
+        display: none;
+    }
+
+    /* login section styles */
+    .auth-section {
+        display: none;
+    }
+    .auth-buttons__wrapper {
+        display: flex;
+    }
+    .auth-form__signup {
+        cursor: pointer;
+    }
+
+    /* title section styles */
+    .join-cube {
+        float: right;
+    }
+    .join-list-wrapper {
+        display: flex;
+        list-style: none;
+    }
+    .join-list__item {
+        margin-right: 10px;
+    }
+    .list-join-button {
+        cursor: pointer;
+    }
+
+</style>
+
+<!-- temp scripts -->
+<script>
+
+    // buttons to click
+    var showLoginButton = document.getElementsByClassName('list-join-button')[0];
+    var showSignupButton = document.getElementsByClassName('auth-form__signup')[0];
+
+    // events after clicking
+    var loginSectionShown = document.getElementsByClassName('auth-section')[0];
+    var signupSectionShown = document.getElementsByClassName('signup-section')[0];
+
+    // events functions
+    showLoginButton.onclick = function() {
+        this.style.display = 'none';
+        loginSectionShown.style.display = 'initial';
+    };
+    showSignupButton.onclick = function() {
+            loginSectionShown.style.display = 'none';
+            signupSectionShown.style.display = 'initial';
+    };
+</script>
+
+</html>
