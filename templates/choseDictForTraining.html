@@ -23,7 +23,13 @@
             </h1>
             <div class='dictionaries' id="dictionaries">
                 {% for dictionary in dictionaries %}
-                    <div class='dict-logo' onclick="window.location+='/{{ dictionary.setName }}'">
+                    <div class='dict-logo'
+                         {% if dictionary.needToTrain>=6 %}
+                            onclick="window.location+='/{{ dictionary.setName }}'"
+                         {% else %}
+                            onclick="alert('not enough words to train')"
+                         {% endif %}
+                    >
                         <h3>{{dictionary.setName}}</h3>
                         <p>total words: {{ dictionary.wordCount }}</p>
                         <p>need to train: {{ dictionary.needToTrain }}</p>

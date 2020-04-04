@@ -34,6 +34,9 @@ session.commit()
 app = Flask(__name__)
 app.config['SECRET_KEY']='sdfvsdh43f3f34'
 
+@app.context_processor
+def load_baseInfo():
+    return {"totalWords":43}
 
 @app.route('/')
 def mp():
