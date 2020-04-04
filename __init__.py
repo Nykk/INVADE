@@ -18,6 +18,10 @@ metadata = MetaData()
 
 TRAINING_NAMES = ['spelling','choose translation','choose spelling','quick quiz']
 DIFFICULTIES = ['easy','medium','hard']
+LANGUAGES = [['russian','русский'],
+             ['chinese','中文'],
+             ['english','english'],
+             ['german','Deutsch']]
 
 print(User.__table__)
 # User.__table__.create(engine)
@@ -247,8 +251,25 @@ def dwp():
 
 @app.route('/settings')
 def stp():
-    return  render_template("t-"
-                            "settings-2.html")
+    if 'email' not in ses:
+        return redirect('/')
+    user = session.query(User).filter_by(email=ses['email']).first()
+    if not user:
+        abort(401)
+    return render_template("t-settings-2.html", languages=LANGUAGES, current_language=user.native_language)
+
+
+@app.route('/settings/setlang/<lang>')
+def stlp(lang):
+    if 'email' not in ses:
+        return redirect('/')
+    user = session.query(User).filter_by(email=ses['email']).first()
+    if not user:
+        abort(401)
+    user.native_language=lang
+    session.commit()
+    return 'ok'
+
 
 @app.errorhandler(404)
 def erp(n):
