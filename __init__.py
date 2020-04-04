@@ -271,6 +271,21 @@ def stlp(lang):
     return 'ok'
 
 
+@app.route('/settings/setpassword', methods=['POST'])
+def spp():
+    if 'email' not in ses:
+        return redirect('/')
+    password = request.json['password']
+    password_repeat = request.json['passwordRepeat']
+    user = session.query(User).filter_by(email=ses['email']).first()
+    if not user:
+        abort(401)
+    if password==password_repeat and len(password)>=6:
+        user.password = password
+        session.commit()
+        return 'ok'
+    return 'error'
+
 @app.errorhandler(404)
 def erp(n):
     return render_template("page404.html")

@@ -144,10 +144,10 @@
             <p class="title">Password</p>
             <ul>
                 <li class="current-password">Current password:</li>
-                <li class="current-password-input"><input type="password"></li>
+                <li class="current-password-input"><input type="password" id="password"></li>
                 <li class="new-password">New password:</li>
-                <li class="new-password-input"><input type="password"></li>
-                <li class="change-button">Change it</li>
+                <li class="new-password-input"><input type="password" id="repeatPassword"></li>
+                <li class="change-button" onclick="changePassword()">Change it</li>
             </ul>
         </div>
     </section>
@@ -170,6 +170,27 @@
             } else {
                 passWindow.style.display = 'none';
             }
+        }
+
+        function changePassword(){
+            if (password.value==repeatPassword.value){
+                if (password.value.length<6){
+                    alert('password is too short')
+                }else {
+                    fetch('/settings/setpassword', {
+                        method: "POST",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            password: password.value,
+                            passwordRepeat: repeatPassword.value,
+                        })
+                    })
+                }
+            }else
+                alert('password and password repeat must be equal')
         }
 
         {% for lang in languages %}
