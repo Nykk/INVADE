@@ -1,7 +1,7 @@
 {% raw %}
 @font-face {
     font-family: 'HelveticaNeue';
-    src: url(../static/fonts/HelveticaNeue.ttf);
+    src: url(../../static/fonts/HelveticaNeue.ttf);
 }
 
 * {
