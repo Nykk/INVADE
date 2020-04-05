@@ -217,6 +217,7 @@ def adws():
         abort(409)
     return 'not logged in'
 
+
 @app.route('/getWordInfo/', methods=['POST'])
 def gwi():
     if 'email' in ses:
