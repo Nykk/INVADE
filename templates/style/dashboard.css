@@ -1,0 +1,31 @@
+{% raw %}
+.bg-head-cube {
+    position: absolute;
+    z-index: -1;
+    top: -65vw;
+    right: -31vw;
+    width: 80vw;
+    height: 80vw;
+    background-color: #F4F4F4;
+    border-radius: 9vw;
+    transform: rotate(-105deg);
+    float: right;
+}
+
+.bg-news-cube {
+    position: absolute;
+    z-index: -1;
+    bottom: -100vw;
+    left: -145vw;
+    width: 200vw;
+    height: 200vw;
+    background-color: #F4F4F4;
+    border-radius: 115px;
+    transform: rotate(-105deg);
+    float: left;
+}
+
+.back-box__wrapper {
+    display: none;
+}
+{% endraw %}

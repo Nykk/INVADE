@@ -1,4 +1,8 @@
 {% raw %}
+body{
+    overflow: scroll;
+}
+
 div {
     color: grey;
 }
@@ -45,4 +49,5 @@ input, select, button {
 #wordInfo {
     padding-top: 20px;
 }
+
 {% endraw %}
