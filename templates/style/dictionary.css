@@ -50,4 +50,22 @@ input, select, button {
     padding-top: 20px;
 }
 
+@media(max-width:780px){
+    #content{
+        position:fixed;
+        left:17vw;
+        top:14vw;
+        flex-direction: column;
+    }
+    .half-screen{
+        width:85%;
+    }
+    .dictionaries{
+        margin-left:0;
+    }
+    footer{
+        display: none;
+    }
+}
+
 {% endraw %}
