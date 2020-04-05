@@ -1,20 +1,15 @@
 from flask import Flask, request, session as ses, render_template, redirect, abort
 from sqlalchemy.orm import sessionmaker, scoped_session
 
+from config.base import *
+from config.local import db_path
 from models import *
 
-engine = create_engine('sqlite:////Volumes/High Sierra/Users/alme/PycharmProjects/INVADE/test.db?check_same_thread=false', echo=True)
+engine = create_engine('sqlite:///'+db_path+'?check_same_thread=false', echo=True)
 con = engine.connect()
 session = scoped_session(sessionmaker(bind=engine))
 
 metadata = MetaData()
-
-TRAINING_NAMES = ['spelling','choose translation','choose spelling','quick quiz']
-DIFFICULTIES = ['easy','medium','hard']
-LANGUAGES = [['russian','русский'],
-             ['chinese','中文'],
-             ['english','english'],
-             ['german','Deutsch']]
 
 print(User.__table__)
 # User.__table__.create(engine)
