@@ -87,8 +87,12 @@ body {
     align-items: center;
     width: 26vw;
     margin-bottom:2px;
+    cursor: pointer;
 }
-
+svg > g > .b , #closeButton {
+    fill: white;
+    stroke: none;
+}
 .training-logo > p {
     text-align: start;
     margin-left: 1.5vw;
