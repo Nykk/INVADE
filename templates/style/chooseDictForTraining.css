@@ -4,13 +4,19 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
+* {
+    font-family: 'HelveticaNeue';
+}
 
 .dict-logo {
-    padding: 20px;
-    border-radius: 20px;
+    padding: 2px;
+    border-radius: 2px;
     color: white;
-    background-color: #9D00FF;
+    background-color: #FF9D00;
     margin: 2px;
-    font-size: 3.6vw;
+    font-size: 2.5vw;
+}
+h3{
+    font-size:3vw;
 }
 {% endraw %}

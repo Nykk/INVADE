@@ -1,0 +1,28 @@
+{%raw%}
+
+input[type="text"] {
+    background-color: rebeccapurple;
+    color: white;
+    border-style: none;
+    border-radius: 50vh;
+    padding: 30px;
+    font-size: 55px;
+}
+
+#translation {
+    font-size: 80px;
+}
+
+#train {
+    transform: translateY(-50%);
+    padding-top: 50%;
+}
+
+.a {
+    fill: #703a98;
+}
+
+#next {
+    transform: translateY(20px);
+}
+{%endraw%}

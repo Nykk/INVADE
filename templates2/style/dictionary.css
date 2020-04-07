@@ -55,7 +55,7 @@ input, select, button {
         position:fixed;
         left:17vw;
         top:14vw;
-        flex-direction: column;
+        display: block;
     }
     .half-screen{
         width:85%;

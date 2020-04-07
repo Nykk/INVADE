@@ -1,0 +1,16 @@
+{% raw %}
+.dictionaries {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.dict-logo {
+    padding: 20px;
+    border-radius: 20px;
+    color: white;
+    background-color: #9D00FF;
+    margin: 2px;
+    font-size: 3.6vw;
+}
+{% endraw %}
