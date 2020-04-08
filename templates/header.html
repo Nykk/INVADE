@@ -7,8 +7,10 @@
         text-decoration:none;
         color:black;
     }
-    a:hover{
-        color:orange;
+    @media(min-width: 761px){
+        a:hover{
+            color:orange;
+        }
     }
     ul {
         list-style: none;
@@ -20,8 +22,10 @@
         margin-right: 2vw;
         cursor: pointer;
     }
-    li:hover {
-        color: #FF9D00;
+    @media(min-width:761px) {
+        li:hover {
+            color: #FF9D00;
+        }
     }
     header {
     display: flex;
@@ -29,8 +33,19 @@
     align-items: center;
 }
 {# animations for other pages #}
-    .dict-logo:hover, .training-logo:hover{
-        transform:scale(1.080002007); /* #wetakeitback */
+    @media(min-width:761px) {
+        .dict-logo:hover, .training-logo:hover {
+            transform: scale(1.080002007); /* #wetakeitback */
+        }
+    }
+    body, html, section {
+        overflow-x:auto !important;
+        display: contents;
+    }
+    @media(min-width: 780px){
+        body, html,section{
+            overflow-x: hidden !important;
+        }
     }
 
 </style>

@@ -1,6 +1,7 @@
 {% raw %}
 body {
     overflow: scroll !important;
+    overflow-x:auto !important;
 }
 
 .result {
