@@ -1,6 +1,10 @@
 from flask import Flask, request, session as ses, render_template, redirect, abort
 from sqlalchemy.orm import sessionmaker, scoped_session
 
+from scripts import *
+
+print()
+
 from config.base import *
 from config.local import db_path
 from models import *
@@ -277,6 +281,10 @@ def spp():
         session.commit()
         return 'ok'
     return 'error'
+
+@app.route('/getinfo/<wd>/<to>')
+def trpg(wd,to):
+    return translate_to(wd,to)
 
 @app.errorhandler(404)
 def erp(n):
