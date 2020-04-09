@@ -1,0 +1,90 @@
+@font-face {
+    font-family: 'HelveticaNeue';
+    src: url(./fonts/HelveticaNeue.ttf);
+}
+* {
+    font-family: 'HelveticaNeue';
+}
+
+body, html {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+section {
+    width: 100%;
+    display: grid;
+    grid-gap: 15px;
+    grid-template-rows: 2fr 9.5fr .5fr;
+}
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+ul {
+    list-style: none;
+    display: flex;
+    font-size: 2.2vw;
+    color: #2D2E43;
+}
+ul > li {
+    margin-right: 2vw;
+    cursor: pointer;
+}
+
+@media(min-width:761px){
+    li:hover {
+        color: #FF9D00;
+    }
+}
+
+main {
+    background-color: #F4F4F4;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+h1 {
+    font-weight: 300;
+    font-size: 3vw;
+    margin: 2vw;
+}
+main > div > div {
+    margin: 2vw;
+}
+main > div {
+    height: 100%;
+    margin-left: auto;
+}
+video {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+footer {
+    display: flex;
+    justify-content: center;
+    background-color: #F4F4F4;
+}
+@media (max-width: 760px) {
+    main {
+        display: grid;
+    }
+    main > div {
+        margin-left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    h1 {
+        font-size: 5vw;
+    }
+    ul {
+        font-size: 4vw;
+    }
+    ul > li {
+        font-size: 4vw;
+        margin-right: 3vw;
+    }
+}

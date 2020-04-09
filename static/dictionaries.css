@@ -1,0 +1,283 @@
+@font-face {
+    font-family: 'HelveticaNeue';
+    src: url(./fonts/HelveticaNeue.ttf);
+}
+* {
+    font-family: 'HelveticaNeue';
+}
+
+body, html {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+section {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 160px 9.5fr .5fr;
+}
+
+main {
+    background-color: #F4F4F4;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 50%);
+    align-items: center;
+}
+
+main > .dict-part {
+    height: 100%;
+    margin-right: auto;
+        display: grid;
+        grid-template-rows: 160px 6fr .5fr .5fr;
+    margin: 0;
+}
+main > div > .title-dicts {
+    display: grid;
+    justify-content: start;
+    align-items: center;
+}
+main > div > .title-dicts > p {
+    font-size: 50px;
+    color: #2D2E43;
+    margin-left: 1vw;
+}
+main > div > .existing-dicts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+.dict-logo {
+    padding: 10px;
+    color: white;
+    font-size: 15px;
+    border-radius: 5px;
+    background-color: #FF9D00;
+    height: auto;
+    margin: 1vw;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.dict-logo > p {
+    width: 100%;
+    height: auto;
+}
+.dict-name {
+    text-align: center;
+    font-size: 20px;
+    color: white;
+    width: 100%;
+    height: auto;
+}
+main > div > .create-comment {
+    background-color: white;
+    color: #2D2E43;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+main > div > .create-dicts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
+}
+
+#dictName {
+    height: 96%;
+    margin: 0;
+    border: none;
+    outline: none;
+    background-color: #F4F4F4;
+    font-size: 20px;
+    text-align: center;
+    color: #2D2E43;
+}
+#dictLanguage {
+    height: 100%;
+    margin: 0;
+    border: none;
+    border-radius: none;
+    outline: none;
+    background-color: white;
+    color: #2D2E43;
+    font-size: 20px;
+    text-align: center;
+}
+#dict-button {
+    height: 100%;
+    margin: 0;
+    border: none;
+    outline: none;
+    color: #2D2E43;
+    background-color: #F4F4F4;
+    font-size: 20px;
+    text-align: center;
+}
+@media(min-width:761px) {
+    #dict-button:hover {
+        background-color: #FF9D00;
+        color: white;
+        cursor: pointer;
+    }
+}
+
+main > .words-part {
+    height: 100%;
+    margin-left: auto;
+    display: grid;
+    grid-template-rows: 160px 4.5fr .5fr .5fr 1fr;
+    margin: 0;
+}
+main > .words-part > .title-words {
+    background-color: #848484;
+    display: grid;
+    justify-content: start;
+    align-items: center;
+}
+main > .words-part > .title-words > p {
+    font-size: 50px;
+    color: white;
+    margin-left: 1vw;
+}
+main > .words-part > .select-dict {
+    background-color: #cccccc;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+main > .words-part > .select-dict > p {
+    color: #353535;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+main > .words-part > .load-more {
+    background-color: #cccccc;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+main > .words-part > .load-more > input {
+    height: 100%;
+    width: 100%;
+    border: none;
+    font-size: 20px;
+    background-color: transparent;
+    color: #db8505;
+    cursor: pointer;
+}
+main > .words-part > .add-word {
+    background-color: #cccccc;
+    display: grid;
+    justify-content: start;
+    align-items: center;
+}
+main > .words-part > .add-word > p {
+    margin-left: 1vw;
+    color: #2D2E43;
+    opacity: .7;
+}
+
+main > .words-part > .input-word{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
+}
+main > .words-part > .input-word > input {
+    background-color: #ff9D00;
+    color: white;
+    margin: 0;
+    height: 100%;
+    border: none;
+    font-size: 20px;
+    outline: none;
+    height:calc(100% - 2px)
+}
+#translateButton{
+    height: 100%;
+}
+main > .words-part > .input-word > #translation {
+    background-color: #FF9D00;
+    /*height: 100%;*/
+    border: none;
+}
+#spelling::placeholder, #translation::placeholder {
+    color: white;
+    opacity: .6;
+    text-align: center;
+}
+@media(min-width:761px) {
+    #translateButton:hover {
+        color: white;
+        cursor: pointer;
+    }
+}
+main > .words-part > .comment-info {
+    background-color: white;
+}
+main > .words-part > .comment-info > p {
+    color: #2D2E43;
+    display: grid;
+    justify-content: end;
+    align-items: center;
+    margin-right: 1vw;
+}
+
+#dictionaries{
+    grid-template-rows: repeat(auto-fit, minmax(10px,100px));
+}
+
+#words{
+    grid-template-rows: repeat(auto-fit, minmax(10px,50px));
+}
+
+#wordInfo{
+    display: none;
+    font-size: 4vw;
+    transform:translate(50%, 50%);
+    position:fixed;
+    bottom:50%;
+    right:50%;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    background-color: #F4F4F4;
+    margin-top: 40px;
+}
+
+#trainings{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: 2vw;
+}
+
+.word-logo{
+    background-color: #50c878;
+}
+
+
+
+@media (max-width: 760px) {
+    section {
+        width: 100%;
+        display: grid;
+        grid-template-rows: .5fr 11fr .5fr;
+    }
+    main {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, 100%);
+        align-items: center;
+    }
+    header > ul {
+        font-size: 4vw;
+    }
+    main > .dict-part{
+        grid-template-rows: 80px 6fr .5fr .5fr;
+    }
+    main > .words-part{
+        grid-template-rows: 80px 4.5fr .5fr .5fr 1fr;
+    }
+    .title-p {
+        font-size: 30px !important;
+    }
+}

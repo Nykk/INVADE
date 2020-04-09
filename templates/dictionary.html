@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/dictionaries.css">
+    <title>Dictionaries</title>
+    <script>
+        var currentOffset = 0;
+    trainingNames = [
+        {% for i in training_names %}
+            "{{ i }}",
+        {% endfor %}
+    ];
+    let currentSetName = null;
+    let currentWord = null;
+
+    function deleteWord() {
+        fetch('/deleteWord', {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    word: currentWord,
+                    set: currentSetName
+                })
+            }
+        );
+        wordInfo.innerHTML = 'select a word to show info';
+        let word_div = document.getElementById('word_' + currentWord)
+        word_div.parentNode.removeChild(word_div);
+    }
+
+    async function showWordInfo(word) {
+        wordInfo.style.display='block';
+        currentWord = word;
+        fetch('/getWordInfo', {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                word: word,
+                set: currentSetName
+            })
+        }).then(res => {
+            if (res.status == 200) {
+
+                res.text().then(function (text) {
+                    arr = text.split(';')
+                    wordInfo.innerHTML = '<button onclick="wordInfo.style.display=\'none\'">close</button><div>word: ' + word + '</div><div>translation: ' + arr[0]+'</div>';
+                    console.log(arr);
+                    for (let i = 0; i < arr[1].split(',').length; i++) {
+                        wordInfo.innerHTML +=  '<div>'+trainingNames[i] + ':' + arr[1].split(',')[i]+'</div>';
+                    }
+                    wordInfo.innerHTML += '<div><button onclick="deleteWord()">delete word</button></div>';
+                });
+            }
+        }).then(data => {
+            console.log(data);
+            wordInfo.innerHTML = word + data;
+        })
+    }
+
+    function loadWordsWithOffset(name, offset) {
+        if (!name) return;
+        currentOffset = offset + 9;
+        fetch('/dict/' + name + '/' + offset)
+            .then(res => {
+                return res.text();
+            })
+            .then(data => {
+                if (offset == 0)
+                    words.innerHTML = '';
+                if (data != '') {
+                    words.style.display = 'grid';
+                    for (let i of data.split(',')) {
+                        words.innerHTML += `<div class='dict-logo word-logo' id='word_` + i + `' onclick="showWordInfo('` + i + `')">` + i + `</div>`;
+                    }
+                } else {
+                    if (offset == 0) {
+                        words.innerHTML = '<p>Selected word list is empty</p>';
+                    }
+                }
+            });
+    }
+
+    function getDictList(name) {
+        console.log('gdl');
+        currentSetName = name;
+        loadWordsWithOffset(name, 0);
+        curretOffset = 0;
+    }
+
+    function AddDict(name, language) {
+        fetch('/addWordSet', {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                language: language
+            })
+        }).then(res => {
+            if (res.status == 200) {
+                dictionaries.innerHTML += "<div class='dict-logo'><div class='dict-name'>" + name + "</div>" + language + "</div>";
+            }
+        })
+    }
+
+    function addDictBtn() {
+        AddDict(dictName.value, dictLanguage.value)
+    }
+
+    function addWordBtn() {
+        if (currentSetName) {
+            fetch('/addWord', {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    setName: currentSetName,
+                    spelling: spelling.value,
+                    translation: translation.value
+                })
+            }).then(res => {
+                if (res.status == 200) {
+                    let i = spelling.value;
+                    words.innerHTML += `<div class='dict-logo word-logo' id="word_` + spelling.value + `" onclick="showWordInfo('` + i + `')">` + i + `</div>`;
+                }
+            })
+        }
+    }
+    </script>
+</head>
+<body>
+    <section>
+        {% include "header.html" %}
+        <main>
+            <div class="dict-part">
+                <div class="title-dicts"><p class="title-p">Your dictionaries:</p></div>
+                <div class="existing-dicts" id="dictionaries">
+
+                    {% for dictionary in dictionaries %}
+                        <div class='dict-logo' onclick='getDictList("{{ dictionary.name }}")'>
+                            <div class="dict-name"> {{ dictionary.name }} </div>
+                             <p>{{ dictionary.language }}</p>
+                        </div>
+                    {% endfor %}
+
+                </div>
+                <div class="create-comment"><p>Create a dictionary:</p></div>
+                <div class="create-dicts">
+                    <input type="text" id="dictName" placeholder="name">
+                    <select id="dictLanguage">
+                        <option disabled> select a language</option>
+                        <option>english</option>
+                        <option>spanish</option>
+                    </select>
+                    <input id="dict-button" type="button" value="add" onclick="addDictBtn()">
+                </div>
+            </div>
+            <div class="words-part">
+                <div class="title-words"><p class="title-p">Your words:</p></div>
+                <div class="select-dict" id="words"><p>Select a dictionary</p></div>
+                <div class="load-more">
+                    <input type="button" value="load more words" onclick="loadWordsWithOffset(currentSetName,currentOffset)">
+                </div>
+                <div class="add-word">
+                    <p>Add a word here:</p>
+                </div>
+                <div class="input-word">
+                    <input type="text" id="spelling" placeholder="word">
+                    <input type="text" id="translation" placeholder="translation">
+                    <input id="translateButton" type="button" value="add" onclick="addWordBtn()">
+                </div>
+                <div class="comment-info" id="wordInfo">
+                    <p>Select a word to show info</p>
+                </div>
+            </div>
+        </main>
+        <footer><p>Copyright 2020 Medvosa and Nykk</p></footer>
+    </section>
+</body>
+</html>

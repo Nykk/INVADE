@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/dashboard.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <section>
+        {% include "header.html" %}
+        <main>
+            <div>
+                <h1>Greetings, {{ email }}!</h1>
+                <div>
+                    <p>Learned words: {{ totalWords }}</p>
+                    <p>Spent time on learning: SOON</p>
+                </div>
+            </div>
+            <div>
+                <video src="/static/videos-for-invade/index4.mp4" preload="auto" autoplay="true" loop="true" muted="muted"></video>
+            </div>
+        </main>
+    </section>
+    <footer><p>Copyright 2020 Medvosa and Nykk</p></footer>
+</body>
+</html>
