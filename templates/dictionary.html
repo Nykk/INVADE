@@ -202,16 +202,18 @@
          let input = document.querySelector('#translation');
          let translated = document.querySelector('#translatedInfo');
          let x = 0;
+         let old = false;
          native.addEventListener('keyup', function() {
-            setTimeout(function() {
-                tr(native.value, 'ru', i=> {
-                    console.log(JSON.parse(i))
-                    x = JSON.parse(i);
-                    translated.textContent = '';
-                    for(let i of x.translation)
-                        translated.textContent+=' '+i;
-                });
-            }, 1000);
+             if (old) clearTimeout(old);
+             old = setTimeout(function() {
+                 tr(native.value, 'ru', i=> {
+                     console.log(JSON.parse(i))
+                     x = JSON.parse(i);
+                     translated.textContent = '';
+                     for(let i of x.translation)
+                         translated.textContent+=' '+i;
+                 });
+             }, 1000);
          })
  </script>
 </body>
