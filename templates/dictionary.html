@@ -140,11 +140,11 @@
         }
     }
 
-    function tr(from, to){
+    function tr(from, to, cb){
         r = new XMLHttpRequest()
         r.open('GET','/getinfo/'+from+'/'+to,false)
         r.send()
-        console.log(r.response)
+        cb(r.response)
     }
     </script>
 </head>
@@ -189,6 +189,7 @@
                     <input type="text" id="translation" placeholder="translation">
                     <input id="translateButton" type="button" value="add" onclick="addWordBtn()">
                 </div>
+                <div id="translatedInfo"></div>
                 <div class="comment-info" id="wordInfo">
                     <p>Select a word to show info</p>
                 </div>
@@ -196,5 +197,22 @@
         </main>
         <footer><p>Copyright 2020 Medvosa and Nykk</p></footer>
     </section>
+    <script>
+         let native = document.querySelector('#spelling');
+         let input = document.querySelector('#translation');
+         let translated = document.querySelector('#translatedInfo');
+         let x = 0;
+         native.addEventListener('keyup', function() {
+            setTimeout(function() {
+                tr(native.value, 'ru', i=> {
+                    console.log(JSON.parse(i))
+                    x = JSON.parse(i);
+                    translated.textContent = '';
+                    for(let i of x.translation)
+                        translated.textContent+=' '+i;
+                });
+            }, 1000);
+         })
+ </script>
 </body>
 </html>

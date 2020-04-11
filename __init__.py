@@ -1,7 +1,6 @@
+import googletrans
 from flask import Flask, request, session as ses, render_template, redirect, abort
 from sqlalchemy.orm import sessionmaker, scoped_session
-
-from scripts import *
 
 print()
 
@@ -284,7 +283,22 @@ def spp():
 
 @app.route('/getinfo/<wd>/<to>')
 def trpg(wd,to):
-    return translate_to(wd,to)
+    rs=[]
+    def parse_out(out):
+        for i in out:
+            for j in i[1]:
+                rs.append(j)
+    print('aaa')
+    parse_out(googletrans.Translator().translate(wd,to).extra_data['all-translations'])
+    # print(parse_out(googletrans.Translator().translate(wd,to).extra_data['all-translations']))
+    ret = '{"word":"'+wd+'","translation":['
+    for i in rs:
+        ret+='"'+ i +'",'
+    ret=ret[:-1]
+    ret+=']}'
+    return ret
+
+
 
 @app.errorhandler(404)
 def erp(n):
