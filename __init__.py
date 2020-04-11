@@ -6,7 +6,7 @@ print()
 
 from config.base import *
 from config.local import db_path
-from models import *
+from statistics import *
 
 engine = create_engine('sqlite:///'+db_path+'?check_same_thread=false', echo=True)
 con = engine.connect()
@@ -51,6 +51,19 @@ def sp():
     return 'No such user'
 
 
+@app.route('/inc')
+def iws():
+    if 'userId' not in ses:
+        return ''
+    user = session.query(User).filter_by(id=ses['userId']).first()
+    if user:
+        user.incWordsToday(1)
+        session.commit()
+    else:
+        return 'Internal server error'
+    return 'ok'
+
+
 @app.route('/signup', methods=['POST'])
 def rp():
     name = request.form.get('name', None)
@@ -68,10 +81,15 @@ def rp():
 @app.route('/trainingRes/', methods=['POST'])
 def trs():
     if 'email' in ses:
+
+        user = session.query(User).filter_by(id=ses['userId']).first()
+
         user_id = ses['userId']
         training_id = request.json['trainingId']
         corrects = request.json['corrects']
         incorrects = request.json['incorrects']
+
+        incWordsNum=0
 
         print(user_id,training_id,corrects,incorrects)
         train_name="train"+str(training_id)
@@ -83,6 +101,12 @@ def trs():
             setattr(i,'train'+str(training_id),0)#i.train1=0
         for i in correct_records:
             setattr(i,'train'+str(training_id),getattr(i,'train'+str(training_id))+1)
+            if i.train1==i.train2==i.train3==i.train4==3:
+                print(i)
+                incWordsNum+=1
+        if incWordsNum>0:
+            user.incWordsToday(incWordsNum)
+        user.incTrainingsToday(1)
         session.commit()
         print(session.query(Word).filter(Word.id.in_(corrects)).all())
         return 'ok'
@@ -99,7 +123,10 @@ def logout():
 @app.route('/dashboard')
 def db():
     if 'email' in ses:
-        return render_template('dashboard.html', email=ses['email'])
+        user = session.query(User).filter_by(email=ses['email']).first()
+        if not user:
+            return 'error'
+        return render_template('dashboard.html', email=ses['email'], stats=user_statistics(session,user))
     return redirect('/')
 
 

@@ -1,5 +1,5 @@
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Table, Column, Integer, String, MetaData, create_engine
 
 Base = declarative_base()
 
@@ -10,12 +10,26 @@ class User(Base):
     email = Column(String)
     password = Column(String)
     native_language = Column(String)
-    
+    words_learned_by_days = Column(String)
+    trains_completed_by_days = Column(String)
+
     def __init__(self, name, email, password, native_language):
         self.name = name
         self.email = email
         self.password = password
-        self.native_language=native_language
+        self.native_language = native_language
+        self.words_learned_by_days = '0,0,0,0,0,0,0'
+        self.trains_completed_by_days = '0,0,0,0,0,0,0'
+
+    def incWordsToday(self, num):
+        wordsList = self.words_learned_by_days.split(',')
+        wordsList[0]=str(int(wordsList[0])+num)
+        self.words_learned_by_days = ','.join(wordsList)
+
+    def incTrainingsToday(self, num):
+        trainsList = self.trains_completed_by_days.split(',')
+        trainsList[0] = str(int(trainsList[0])+num)
+        self.trains_completed_by_days = ','.join(trainsList)
 
     def __repr__(self):
        return "<User(id=%s, name=%s, email='%s', password='%s', native_language='%s')>" % (

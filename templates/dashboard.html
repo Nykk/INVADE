@@ -7,6 +7,9 @@
     <title>Dashboard</title>
 </head>
 <body>
+    <script>
+        var stats = {{ stats|safe }};
+    </script>
     <section>
         {% include "header.html" %}
         <main>
@@ -15,6 +18,7 @@
                 <div>
                     <p>Learned words: {{ totalWords }}</p>
                     <p>Spent time on learning: SOON</p>
+                    {{ stats }}
                 </div>
             </div>
             <div>
