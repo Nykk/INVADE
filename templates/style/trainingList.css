@@ -46,6 +46,22 @@ body {
     align-items: center;
 }
 
+input[type="radio"]{
+    display: none;
+}
+
+input ~ label{
+    display:block;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    border:3px solid #FF9D00;
+}
+
+input:checked ~ label{
+    /*background-color:#FFAE22;*/
+    border:3px solid white;
+}
 /*.training-logo {*/
 /*    border-radius: 4vw;*/
 /*    color: white;*/
