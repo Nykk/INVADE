@@ -271,7 +271,7 @@ footer {
     header > ul {
         font-size: 4vw;
     }
-    main > .dict-part{
+    main > .dict-part{s
         grid-template-rows: 80px 6fr .5fr .5fr;
     }
     main > .words-part{
@@ -280,8 +280,7 @@ footer {
     .title-p {
         font-size: 30px !important;
     }
-}
-
-#overTrainBegin{
-    width:100%;
+    #overTrainBegin{
+        width:100%;
+    }
 }
