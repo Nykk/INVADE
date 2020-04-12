@@ -254,6 +254,10 @@
     .news {
         font-size: 3vw;
     }
+
+    footer{
+        font-size: 20px;
+    }
 }
 
 input + label {
