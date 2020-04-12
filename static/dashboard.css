@@ -2,8 +2,12 @@
     font-family: 'HelveticaNeue';
     src: url(./fonts/HelveticaNeue.ttf);
 }
+
 * {
     font-family: 'HelveticaNeue';
+    --col1: #ff9D00;
+    --col2: #bbbbbb;
+    --col3: #444444;
 }
 
 body, html {
@@ -32,6 +36,31 @@ ul > li {
     margin-right: 2vw;
     cursor: pointer;
 }
+/*svg g:first-child > path{*/
+/*    fill: var(--col1);*/
+/*}*/
+
+/*svg g:nth-child(2) > path{*/
+/*    fill: var(--col2);*/
+/*}*/
+
+/*.apexcharts-legend-series:first-child > .apexcharts-legend-marker {*/
+/*    background: var(--col1) !important;*/
+/*}*/
+
+/*.apexcharts-legend-series:nth-child(2) > .apexcharts-legend-marker {*/
+/*    background: var(--col2) !important;*/
+/*}*/
+/*#statistics *{*/
+/*    transition-duration: 0s;*/
+/*}*/
+/*.apexcharts-tooltip-series-group, .apexcharts-active{*/
+/*    background-color: var(--col3);*/
+/*}*/
+/*.apexchert-tool*/
+/*svg path:nth-child(2){*/
+/*    fill: #FF9D00;*/
+/*}*/
 
 @media(min-width:761px){
     li:hover {

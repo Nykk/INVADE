@@ -27,7 +27,11 @@
                 <video src="/static/videos-for-invade/index4.mp4" preload="auto" autoplay="true" loop="true" muted="muted"></video>
             </div>
         </main>
-
+        <style>
+            #statistics *{
+                transition-duration: 0s !important;
+            }
+        </style>
         <div id="statistics">
             <div class="chart">
                 <apexchart type="pie" width="380" :options="chartOptions" :series="series"></apexchart>
@@ -42,16 +46,24 @@
               apexchart: VueApexCharts,
             },
             data: {
+
                 series: [stats.learned, stats.inProgress],
+
                 chartOptions: {
+
                     chart: {
                         width: 380,
                         type: 'pie',
                     },
+                    fill: {
+                        colors: ['#FF9D00', '#BBBBBB', '#9C27B0'],
+                    },
+                    colors: ['#FF9D00', '#BBBBBB', '#9C27B0'],
                     labels: ['Learned', 'In progress'],
                     responsive: [{
                         breakpoint: 480,
                         options: {
+
                             chart: {
                                 width: 200
                             },
