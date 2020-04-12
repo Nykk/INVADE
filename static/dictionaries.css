@@ -271,7 +271,7 @@ footer {
     header > ul {
         font-size: 4vw;
     }
-    main > .dict-part{s
+    main > .dict-part{
         grid-template-rows: 80px 6fr .5fr .5fr;
     }
     main > .words-part{
@@ -282,5 +282,24 @@ footer {
     }
     #overTrainBegin{
         width:100%;
+    }
+}
+
+@media(max-width:500px){
+    .result{
+        flex-direction:column;
+    }
+    .third{
+        width:100% !important;
+        font-size:30px;
+        text-align: center;
+    }
+    .result > svg{
+        position:absolute;
+        right:10px;
+        top:50px;
+        transform: scale(0.5);
+    }
+    .third svg {
     }
 }
