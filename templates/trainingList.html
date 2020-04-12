@@ -46,9 +46,11 @@
             </div>
         </div>
 
+        <style>
+        </style>
         {% raw %}
 
-        <div v-if="shown">
+        <div v-if="shown" id="overTrainBegin" style="width:100%">
             {%  endraw %}
             {% with tnm=training_name %}
                 {% include "trainings/trainBegin.html" %}
