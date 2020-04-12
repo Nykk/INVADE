@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/dashboard.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
     <title>Dashboard</title>
 </head>
 <body>
-    <script>
-        var stats = {{ stats|safe }};
-    </script>
+
     <section>
         {% include "header.html" %}
         <main>
@@ -25,8 +27,42 @@
                 <video src="/static/videos-for-invade/index4.mp4" preload="auto" autoplay="true" loop="true" muted="muted"></video>
             </div>
         </main>
+
+        <div id="statistics">
+            <div class="chart">
+                <apexchart type="pie" width="380" :options="chartOptions" :series="series"></apexchart>
+            </div>
+        </div>
+
+        <script>
+        let stats = {{ stats|safe }};
+        let App = new Vue({
+            el: '#statistics',
+            components: {
+              apexchart: VueApexCharts,
+            },
+            data: {
+                series: [stats.learned, stats.inProgress],
+                chartOptions: {
+                    chart: {
+                        width: 380,
+                        type: 'pie',
+                    },
+                    labels: ['Learned', 'In progress'],
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            chart: {
+                                width: 200
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }]
+                },
+            },
+        })
+        </script>
+
         {% include "ending.html" %}
-{#    </section>#}
-{#    <footer><p>Copyright 2020 Medvosa and Nykk</p></footer>#}
-{#</body>#}
-{#</html>#}
