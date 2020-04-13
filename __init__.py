@@ -1,20 +1,19 @@
+import googletrans
 from flask import Flask, request, session as ses, render_template, redirect, abort
+from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker, scoped_session
 
-from models import *
+print()
 
-engine = create_engine('sqlite:////Volumes/High Sierra/Users/alme/PycharmProjects/INVADE/test.db?check_same_thread=false', echo=True)
+from config.base import *
+from config.local import db_path
+from statistics import *
+
+engine = create_engine('sqlite:///'+db_path+'?check_same_thread=false', echo=True)
 con = engine.connect()
 session = scoped_session(sessionmaker(bind=engine))
 
 metadata = MetaData()
-
-TRAINING_NAMES = ['spelling','choose translation','choose spelling','quick quiz']
-DIFFICULTIES = ['easy','medium','hard']
-LANGUAGES = [['russian','русский'],
-             ['chinese','中文'],
-             ['english','english'],
-             ['german','Deutsch']]
 
 print(User.__table__)
 # User.__table__.create(engine)
@@ -53,6 +52,19 @@ def sp():
     return 'No such user'
 
 
+@app.route('/inc')
+def iws():
+    if 'userId' not in ses:
+        return ''
+    user = session.query(User).filter_by(id=ses['userId']).first()
+    if user:
+        user.incWordsToday(1)
+        session.commit()
+    else:
+        return 'Internal server error'
+    return 'ok'
+
+
 @app.route('/signup', methods=['POST'])
 def rp():
     name = request.form.get('name', None)
@@ -70,10 +82,15 @@ def rp():
 @app.route('/trainingRes/', methods=['POST'])
 def trs():
     if 'email' in ses:
+
+        user = session.query(User).filter_by(id=ses['userId']).first()
+
         user_id = ses['userId']
         training_id = request.json['trainingId']
         corrects = request.json['corrects']
         incorrects = request.json['incorrects']
+
+        incWordsNum=0
 
         print(user_id,training_id,corrects,incorrects)
         train_name="train"+str(training_id)
@@ -85,6 +102,12 @@ def trs():
             setattr(i,'train'+str(training_id),0)#i.train1=0
         for i in correct_records:
             setattr(i,'train'+str(training_id),getattr(i,'train'+str(training_id))+1)
+            if i.train1==i.train2==i.train3==i.train4==3:
+                print(i)
+                incWordsNum+=1
+        if incWordsNum>0:
+            user.incWordsToday(incWordsNum)
+        user.incTrainingsToday(1)
         session.commit()
         print(session.query(Word).filter(Word.id.in_(corrects)).all())
         return 'ok'
@@ -101,18 +124,23 @@ def logout():
 @app.route('/dashboard')
 def db():
     if 'email' in ses:
-        return render_template('dashboard.html', email=ses['email'])
+        user = session.query(User).filter_by(email=ses['email']).first()
+        if not user:
+            return 'error'
+        return render_template('dashboard.html', email=ses['email'], stats=user_statistics(session,user))
     return redirect('/')
 
 
 @app.route('/dict')
 def dp():
     if 'userId' in ses:
+        native_language = session.query(User).filter_by(id=ses['userId']).first().native_language
         sets = session.query(WordSet).filter_by(owner_id=ses['userId']).all()
         return render_template('dictionary.html',
                                email=ses['email'],
                                dictionaries=[i for i in sets],
-                               training_names=TRAINING_NAMES)
+                               training_names=TRAINING_NAMES,
+                               nativeLanguage=native_language)
     return redirect('/')
 
 @app.route('/startTraining/<name>/<difficulty>')
@@ -217,6 +245,7 @@ def adws():
         abort(409)
     return 'not logged in'
 
+
 @app.route('/getWordInfo/', methods=['POST'])
 def gwi():
     if 'email' in ses:
@@ -281,6 +310,25 @@ def spp():
         session.commit()
         return 'ok'
     return 'error'
+
+@app.route('/getinfo/<wd>/<to>')
+def trpg(wd,to):
+    rs=[]
+    def parse_out(out):
+        for i in out:
+            for j in i[1]:
+                rs.append(j)
+    print('aaa')
+    parse_out(googletrans.Translator().translate(wd,to).extra_data['all-translations'])
+    # print(parse_out(googletrans.Translator().translate(wd,to).extra_data['all-translations']))
+    ret = '{"word":"'+wd+'","translation":['
+    for i in rs:
+        ret+='"'+ i +'",'
+    ret=ret[:-1]
+    ret+=']}'
+    return ret
+
+
 
 @app.errorhandler(404)
 def erp(n):

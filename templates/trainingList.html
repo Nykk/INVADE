@@ -1,7 +1,8 @@
-{% include "head.html" %}
+
 <style>
     {% include "style/trainingList.css" %}
 </style>
+    <link rel="stylesheet" href="/static/dictionaries.css">
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
@@ -29,60 +30,69 @@
 
 
 </script>
-<div id="trainSettingsForm">
-    <div id='content' v-if="!shown">
-        <div class='centered'>
-            <div class='dictionaries'>
-                {% for training in trainings %}
-                    <div class='training-logo training-logo-{{ training.replace(' ', '-') }}'
-                         onclick='select("{{ trainings.index(training) }}")'><p>{{ training }}</p></div>
-                {% endfor %}
+<section>
+
+    {% include "header.html" %}
+
+    <main id="trainSettingsForm" style="margin-bottom:20px">
+        <div id='content' v-if="!shown">
+            <div class='centered'>
+                <div class='dictionaries' id="trainings">
+                    {% for training in trainings %}
+                        <div class='training-logo training-logo-{{ training.replace(' ', '-') }}'
+                             onclick='select("{{ trainings.index(training) }}")'><p>{{ training }}</p></div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
 
-    {% raw %}
-
-    <div v-if="shown">
-        {%  endraw %}
-        {% with tnm=training_name %}
-            {% include "trainings/trainBegin.html" %}
-        {% endwith %}
+        <style>
+        </style>
         {% raw %}
-    </div>
-</div>
-<script>
-    var App = new Vue({
-        el: "#trainSettingsForm",
-        data: {
-            trainName: 'spelling',
-            shown: false,
-        }
-    });
 
-    function select(num) {
-        //alert(num, trainingNames[num]);
-        App.shown = true;
-        App.trainName = trainingNames[num];
-    }
-
-    function closeSelect() {
-        App.shown = false;
-    }
-
-    function difficulty() {
-        for (let i of difficulties.childNodes) {
-            if (i.tagName) {
-                if (i.childNodes[0].checked)
-                    return i.childNodes[0].attributes.vl.value
+        <div v-if="shown" id="overTrainBegin">
+            {%  endraw %}
+            {% with tnm=training_name %}
+                {% include "trainings/trainBegin.html" %}
+            {% endwith %}
+            {% raw %}
+        </div>
+    </main>
+    {% endraw %}
+    {% include "ending.html" %}
+    {% raw %}
+</section>
+    <script>
+        var App = new Vue({
+            el: "#trainSettingsForm",
+            data: {
+                trainName: 'spelling',
+                shown: false,
             }
-        }
-        return null;
-    }
+        });
 
-    function start() {
-        window.location.replace('/startTraining/' + App.trainName + '/' + difficulty())
-    }
-</script>
-{% endraw %}
-{% include "ending.html" %}
+        function select(num) {
+            //alert(num, trainingNames[num]);
+            App.shown = true;
+            App.trainName = trainingNames[num];
+        }
+
+        function closeSelect() {
+            App.shown = false;
+        }
+
+        function difficulty() {
+            for (let i of difficulties.childNodes) {
+                if (i.tagName) {
+                    if (i.childNodes[0].checked)
+                        return i.childNodes[0].attributes.vl.value
+                }
+            }
+            return null;
+        }
+
+        function start() {
+            window.location.replace('/startTraining/' + App.trainName + '/' + difficulty())
+        }
+    </script>
+    {% endraw %}

@@ -1,0 +1,110 @@
+{% include "trainings/trainingTop.html" %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<div id='content'>
+    <div class='centered'>
+        <script>
+            window.onload = function () {
+                calculateVariants();
+            };
+            var words = [
+                {% for word in words %}
+                    {
+                        id:{{word.id}},
+                        spelling: "{{ word.spelling }}",
+                        translation: "{{ word.translation }}"
+                    },
+                {% endfor %}
+            ];
+            var corrects = [];
+            var incorrects = [];
+        </script>
+        <h1>
+            choose translation
+        </h1>
+        {% raw %}
+        <div id="train">
+            <div class="flex-right" v-if="!ended">
+                <div id="translation">
+                    <div class="given-word">{{translation}}</div>
+                </div>
+                <div class="grid2x2">
+                    <button v-for="i in variants" v-on:click="check(i)">{{ i }}</button>
+                </div>
+            </div>
+            <div v-if="ended">
+                {% endraw %}
+                {% include "trainings/trainEnd.html" %}
+                {% raw %}
+            </div>
+        </div>
+        <script>
+            var app = new Vue({
+                el: '#train',
+                data: {
+                    wordNum: 0,
+                    ended: false,
+                    answer: '',
+                    corrects: [],
+                    incorrects: [],
+                    variants: [],
+                    correct: '',
+                },
+                computed: {
+                    translation: function () {
+                        if (this.wordNum < words.length)
+                            return words[this.wordNum].spelling;
+                        return null;
+                    }
+                },
+                methods: {
+                    check: (answer) => {
+                        score.innerText = app.wordNum + 2 + '/' + words.length;
+                        console.log(answer);
+                        if (answer == correct)
+                            app.corrects.push(words[app.wordNum])
+                        else
+                            app.incorrects.push(words[app.wordNum])
+                        if (app.wordNum < words.length - 1) {
+                            app.wordNum++;
+                            calculateVariants();
+                            correct = words[app.wordNum].translation;
+                        } else {
+                            app.ended = true;
+                            corrects_ids = app.corrects.map(i => i.id);
+                            incorrects_ids = app.incorrects.map(i => i.id);
+                            fetch('/trainingRes', {
+                                method: "POST",
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    corrects: corrects_ids,
+                                    incorrects: incorrects_ids,
+                                    trainingId: 2,//choose translation
+                                })
+                            })
+                        }
+                    },
+                },
+            });
+
+            function calculateVariants() {
+                correct = words[app.wordNum].translation;
+                app.correct = correct;
+                all = words.map(i => i.translation).sort((a, b) => Math.random() - Math.random()).splice(0, 4);
+                if (all.indexOf(correct) == -1) {
+                    all[Math.round(0 - 0.5 + Math.random() * 4)] = correct;
+                }
+                all = all.sort((a, b) => Math.random() - Math.random())
+                console.log(all, all.indexOf(correct))
+                app.variants = all;
+            }
+
+            score.innerText = 1 + '/' + words.length;
+        </script>
+        {% endraw %}
+    </div>
+</div>
+</div>
+{% include "ending.html" %}

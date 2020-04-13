@@ -1,28 +1,33 @@
-{% include "head.html" %}
-<div id='content'>
-    <style>
-        {% include "style/chooseDictForTraining.css" %}
-    </style>
-    <div class='centered'>
-        <h1>
-            Starting {{ difficulty }} {{ name }}:<br>
-            Select word set:
-        </h1>
-        <div class='dictionaries' id="dictionaries">
-            {% for dictionary in dictionaries %}
-                <div class='dict-logo'
-                        {% if dictionary.needToTrain>=6 %}
-                     onclick="window.location+='/{{ dictionary.setName }}'"
-                        {% else %}
-                     onclick="alert('not enough words to train')"
-                        {% endif %}
-                >
-                    <h3>{{ dictionary.setName }}</h3>
-                    <p>total words: {{ dictionary.wordCount }}</p>
-                    <p>need to train: {{ dictionary.needToTrain }}</p>
-                </div>
-            {% endfor %}
+
+<section>
+    {% include "header.html" %}
+    <div id='content'>
+        <link rel="stylesheet" href="/static/dictionaries.css">
+        <style>
+            {% include "style/chooseDictForTraining.css" %}
+        </style>
+        <div class='centered'>
+            <h1>
+                Starting {{ difficulty }} {{ name }}:<br>
+                Select word set:
+            </h1>
+            <div class='dictionaries select-dict-for-train' id="dictionaries">
+                {% for dictionary in dictionaries %}
+                    <div class='dict-logo'
+                            {% if dictionary.needToTrain>=6 %}
+                         onclick="window.location+='/{{ dictionary.setName }}'"
+                            {% else %}
+                         onclick="alert('not enough words to train')"
+                            {% endif %}
+                    >
+                        <h3>{{ dictionary.setName }}</h3>
+                        <div class="dictData">
+                            <p>total words: {{ dictionary.wordCount }}</p>
+                            <p>need to train: {{ dictionary.needToTrain }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
-</div>
 {% include "ending.html" %}

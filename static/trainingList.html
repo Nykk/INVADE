@@ -1,0 +1,88 @@
+{% include "head.html" %}
+<style src="/static/trainingList.css">
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    let currentSetName = null;
+    let currentWord = null;
+
+    var trainingNames = [{% for i in trainings %}"{{ i }}",{% endfor %}];
+
+    function getDictList(name) {
+        console.log('gdl');
+        currentSetName = name;
+        fetch('/dict/' + name)
+            .then(res => {
+                return res.text();
+            })
+            .then(data => {
+                words.innerHTML = '';
+                if (data != '') {
+                    for (let i of data.split(',')) {
+                        words.innerHTML += `<div class='dict-logo' id='word_` + i + `' onclick="showWordInfo('` + i + `')">` + i + `</div>`;
+                    }
+                }
+            });
+    }
+
+
+</script>
+<div id="trainSettingsForm">
+    <div id='content' v-if="!shown">
+        <div class='centered'>
+            <div class='dictionaries'>
+                {% for training in trainings %}
+                    <div class='training-logo training-logo-{{ training.replace(' ', '-') }}'
+                         onclick='select("{{ trainings.index(training) }}")'><p>{{ training }}</p></div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% raw %}
+
+    <div v-if="shown">
+        {%  endraw %}
+        {% with tnm=training_name %}
+            {% include "trainings/trainBegin.html" %}
+        {% endwith %}
+        {% raw %}
+    </div>
+</div>
+<script>
+    var App = new Vue({
+        el: "#trainSettingsForm",
+        data: {
+            trainName: 'spelling',
+            shown: false,
+        }
+    });
+
+    function select(num) {
+        //alert(num, trainingNames[num]);
+        App.shown = true;
+        App.trainName = trainingNames[num];
+    }
+
+    function closeSelect() {
+        App.shown = false;
+    }
+
+    function difficulty() {
+        for (let i of difficulties.childNodes) {
+            if (i.tagName) {
+                if (i.childNodes[0].checked)
+                    return i.childNodes[0].attributes.vl.value
+            }
+        }
+        return null;
+    }
+
+    function start() {
+        window.location.replace('/startTraining/' + App.trainName + '/' + difficulty())
+    }
+</script>
+{% endraw %}
+{% include "ending.html" %}

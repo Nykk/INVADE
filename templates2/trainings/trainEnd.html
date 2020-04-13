@@ -1,0 +1,26 @@
+<div class="result">
+    <div class="training-name">
+        {{ training_name }}
+    </div>
+    {% raw %}
+        <div>
+            <b>correct:<br></b>
+            <div v-for="i in corrects">{{ i.spelling }}</div>
+        </div>
+        <div>
+            <b>incorrect:<br></b>
+            <div v-for="i in incorrects">{{ i.spelling }}</div>
+        </div>
+        <div class="training-res-num">
+            {{ corrects.length }}/{{ incorrects.length }}
+        </div>
+    {% endraw %}
+</div>
+
+<div class="below-ending">
+    <div class="empty"></div>
+    <a href="/train" class="exit-training">
+        Exit
+    </a>
+    <div class="empty"></div>
+</div>

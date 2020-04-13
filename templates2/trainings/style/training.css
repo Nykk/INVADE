@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'HelveticaNeue';
+}
+
+#header {
+    display: flex;
+    flex-direction: row;
+}
+
+.empty {
+    flex-grow: 1;
+}
+
+.below-ending {
+    display: flex;
+    flex-direction: row
+}
+
+#score {
+    color: #703a98;
+    font-size: 5vw;
+    margin: 7px;
+    margin-right: 15%;
+}
+
+.result {
+    color: white;
+    background-color: #006CFF;
+    padding: 30px;
+    margin: 5px;
+    border-radius: 30px;
+    display: flex;
+    font-size: 3vw;
+    flex-direction: row;
+}
+
+.result > div {
+    width: 25%;
+}
+
+.training-name {
+    font-size: 3vw;
+    font-weight: bold;
+}
+
+.training-res-num {
+    font-size: 15vw;
+}
+
+.exit-training {
+    color: white;
+    font-size: 40px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #006CFF;
+    text-decoration: none;
+}
+
+.flex-right {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-right > div {
+    flex-grow: 1;
+    height: 40vw;
+}
+
+.grid2x2 {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.grid2x2 > button {
+    height: 20vw;
+    font-size: 3vw;
+    border-radius: 2vw;
+    background-color: #9D25FC;
+    color: white;
+}
+
+.given-word {
+    transform: translate(-5vw, -50%);
+    top: 50%;
+    left: 30%;
+    position: relative;
+    font-size: 7vw;
+}
+
+#translation {
+    border-radius: 2vw;
+    background-color: #9D25FC;
+    color: white;
+    font-size: 3vw;
+}
+
+.word {
+    color: #9D25FC;
+}
+
+.btn {
+    border-radius: 50vh;
+    padding: 20px;
+    font-size: 7vw;
+}
+
+#train {
+    font-size: 3vw;
+    font-size: 7vw;
+}
+
+#difficulties {
+    display: flex;
+    flex-direction: column;
+}

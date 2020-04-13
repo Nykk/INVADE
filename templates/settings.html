@@ -3,8 +3,8 @@
     {% include "style/settings.css" %}
 </style>
 
-{% include "head.html" %}
 <section class="settings">
+{% include "header.html" %}
     <div class="settings-window">
         <p class="title">Settings</p>
         <ul>
@@ -14,25 +14,24 @@
     </div>
     <div class="settings-window native-lang-window" id="langWindow">
         <p class="title">Native language</p>
-        <ul>
+        <div>
             {% for lang in languages %}
-                <li class="lang {% if current_language==lang[0] %}
+                <div class="lang {% if current_language==lang[0] %}
                             chosen
-                        {% endif %}" id="{{ lang[0] }}">{{ lang[1] }}</li>
+                        {% endif %}" id="{{ lang[0] }}">{{ lang[1] }}</div>
             {% endfor %}
-        </ul>
+        </div>
     </div>
     <div class="settings-window password-window" id="passWindow">
         <p class="title">Password</p>
-        <ul>
-            <li class="current-password">Current password:</li>
-            <li class="current-password-input"><input type="password" id="password"></li>
-            <li class="new-password">New password:</li>
-            <li class="new-password-input"><input type="password" id="repeatPassword"></li>
-            <li class="change-button" onclick="changePassword()">Change it</li>
-        </ul>
+        <div>
+            <div class="current-password">Current password:</div>
+            <div class="current-password-input"><input type="password" id="password"></div>
+            <div class="new-password">New password:</div>
+            <div class="new-password-input"><input type="password" id="repeatPassword"></div>
+            <div class="change-button" onclick="changePassword()">Change it</div>
+        </div>
     </div>
-</section>
 <script>
     langWindow.style.display = 'none';
     passWindow.style.display = 'none';
@@ -76,7 +75,7 @@
     }
 
     {% for lang in languages %}
-        {{ lang[0] }}.onclick = function () {
+        document.getElementById("{{ lang[0] }}").onclick = function () {
         fetch('/settings/setlang/{{ lang[0] }}');
         this.classList.add('chosen');
         {% for lang2 in languages %}

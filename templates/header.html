@@ -1,0 +1,87 @@
+<style>
+    *{
+        transition-duration: 0.5s;
+     }
+
+    a{
+        text-decoration:none;
+        color:black;
+    }
+    body > section{
+        display:flex;
+        flex-direction:column;
+        min-height: 100vh;
+    }
+    prefooter{
+        flex-grow:1;
+    }
+    @media(min-width: 761px){
+        a:hover{
+            color:orange;
+        }
+    }
+    ul {
+        float: right;
+        list-style: none;
+        display: flex;
+        font-size: 2.2vw;
+        color: #2D2E43;
+    }
+    ul > li {
+        margin-right: 2vw;
+        cursor: pointer;
+    }
+    @media(min-width:761px) {
+
+    }
+    header {
+        justify-content: flex-end;
+        align-items: center;
+        align-self: flex-end;
+    }
+
+    .select-dict-for-train{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+{# animations for other pages #}
+    @media(min-width:761px) {
+        .dict-logo:hover, .training-logo:hover {
+            transform: scale(1.080002007); /* #wetakeitback */
+        }
+        li:hover {
+            color: #FF9D00;
+        }
+    }
+    body, html, section {
+        overflow-x:auto !important;
+        display: contents;
+    }
+    @media(min-width: 780px){
+        body, html,section{
+            overflow-x: hidden !important;
+        }
+    }
+
+    @media (max-width: 760px) {
+        header > ul {
+            font-size: 4vw;
+        }
+    }
+
+    footer{
+        font-size: 20px !important;
+    }
+</style>
+<header>
+            <ul>
+                <li><a href="/">home</a></li>
+                <li><a href="/dict">dictionaries</a></li>
+                <li><a href="/train">trainings</a></li>
+                <li><a href="/settings">settings</a></li>
+                <li><a href="/logout">exit</a></li>
+            </ul>
+        </header>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

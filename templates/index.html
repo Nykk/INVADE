@@ -3,236 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/index.css">
     <title>Invade</title>
 </head>
 <body>
+    <!-- signup section -->
+    <section class="signup-section">
 
-<!-- signup section -->
-<section class="signup-section">
+        <svg class="close-button" viewBox="0 0 70.826 68.357">
+            <defs>
+                <style>
+                    .a{
+                        fill:none;
+                        stroke:black;
+                        stroke-width:5px;
+                    }
+                </style>
+            </defs>
+            <g transform="translate(-1309.732 -79.732)">
+                <line class="a" x1="64.821" y1="64.821" transform="translate(1313.969 81.5)"/>
+                <line class="a" y1="64.821" x2="64.821" transform="translate(1311.5 81.5)"/>
+            </g>
+        </svg>
 
-    <svg class="close-button" viewBox="0 0 70.826 68.357">
-        <defs>
-            <style>
-                .a {
-                    fill: none;
-                    stroke: #703a98;
-                    stroke-width: 5px;
-                }
-            </style>
-        </defs>
-        <g transform="translate(-1309.732 -79.732)">
-            <line class="a" x1="64.821" y1="64.821" transform="translate(1313.969 81.5)"/>
-            <line class="a" y1="64.821" x2="64.821" transform="translate(1311.5 81.5)"/>
-        </g>
-    </svg>
+        <form class="signup-form" action="/signup" method="post">
 
-    <form class="signup-form" action="/signup" method="post">
+            <div class="signup-inputs__wrapper">
 
-        <div class="signup-inputs__wrapper">
+                <input type="text" name="name" class="signup-form__name" placeholder="name">
 
-            <input type="text" name="name" class="signup-form__name" placeholder="name">
+                <input type="email" name="email" class="signup-form__email" placeholder="e-mail">
 
-            <input type="email" name="email" class="signup-form__email" placeholder="e-mail">
+                <input type="password" name="password" class="signup-form__password" placeholder="password">
 
-            <input type="password" name="password" class="signup-form__password" placeholder="password">
+                <input type="text" name="language" class="signup-form__language" placeholder="native language">
 
-            <input type="text" name="language" class="signup-form__language" placeholder="native language">
+            </div>
 
-        </div>
+            <button type="submit" name="submit" class="signup-form__submit">join</button>
 
-        <button type="submit" name="submit" class="signup-form__submit">join</button>
+        </form>
+    </section>
 
-    </form>
-</section>
+    <!-- login section -->
+    <section class="auth-section">
 
-<!-- login section -->
-<section class="auth-section">
+        <svg class="close-button" viewBox="0 0 70.826 68.357"><defs><style>.a{fill:none;stroke:black;stroke-width:5px;}</style></defs><g transform="translate(-1309.732 -79.732)"><line class="a" x1="64.821" y1="64.821" transform="translate(1313.969 81.5)"/><line class="a" y1="64.821" x2="64.821" transform="translate(1311.5 81.5)"/></g></svg>
 
-    <svg class="close-button" viewBox="0 0 70.826 68.357">
-        <defs>
-            <style>.a {
-                fill: none;
-                stroke: #703a98;
-                stroke-width: 5px;
-            }</style>
-        </defs>
-        <g transform="translate(-1309.732 -79.732)">
-            <line class="a" x1="64.821" y1="64.821" transform="translate(1313.969 81.5)"/>
-            <line class="a" y1="64.821" x2="64.821" transform="translate(1311.5 81.5)"/>
-        </g>
-    </svg>
+        <form class="auth-form" action="/signin" method="post">
 
-    <form class="auth-form" action="/signin" method="post">
+            <input type="email" name="email" class="auth-form__email" placeholder="e-mail">
 
-        <input type="email" name="email" class="auth-form__email" placeholder="e-mail">
+            <input type="password" name="password" class="auth-form__password" placeholder="password">
 
-        <input type="password" name="password" class="auth-form__password" placeholder="password">
+            <div class="auth-buttons__wrapper">
+                <button type="submit" name="submit" class="auth-form__submit">log in</button>
+                <div class="auth-form__signup"> or sign up</div>
+            </div>
 
-        <div class="auth-buttons__wrapper">
-            <button type="submit" name="submit" class="auth-form__submit">log in</button>
-            <div class="auth-form__signup"> or sign up</div>
-        </div>
-
-    </form>
-</section>
-
-<div id="app">
-    <!-- title section -->
+        </form>
+    </section>
     <section class="title-section">
-
-        <!-- background cube as join section -->
-        <div class="bg-cube join-cube">
-
-            <!-- right top two buttons -->
-            <ul class="join-list__wrapper">
-                <li class="join-list__item list-join-button">join</li>
-                <li class="join-list__item list-invade-button"><a class="invade-link" href="#main_page.html">invade</a>
-                </li>
-            </ul>
-
-        </div>
-
-
-        <div class="bg-cube animated-cubes__wrapper">
-
-            <div class="animated-title-cube above-cube"></div>
-            <div class="animated-title-cube middle-cube"></div>
-            <div class="animated-title-cube under-cube"></div>
-
-        </div>
-
-        <div class="title-text__wrapper">
-            <h1 class="title-text">
-                we don’t have <span class="foreign_colored-word">foreign</span> languages
-            </h1>
-        </div>
-
+        <header>
+            <p class="list-join-button">join invade</p>
+        </header>
+        <main>
+            <video src="/static/videos-for-invade/index1home.mp4" preload="auto" autoplay="true" loop="true" muted="muted"></video>
+            <div>
+                <p>
+                    We don’t have different languages
+                </p>
+            </div>
+        </main>
     </section>
 
-    <!-- middle section -->
-    <section class="middle-section">
-
-        <div class="bg-cube transport-cubes__wrapper">
-            <div class="bicycle-cube__item">bicycle</div>
-            <div class="plane-cube__item">plane</div>
-            <div class="car-cube__item">car</div>
-            <div class="ship-cube__item">ship</div>
-        </div>
-
-        <div class="transport-text__wrapper">
-            <p class="transport-text"> what’s your <span class="favourite_colored-word">favourite</span> mean of
-                transport?</p>
-            <p class="transport-answer">…let <span class="people_colored-word">people</span> know!</p>
-        </div>
-
-    </section>
-
-    <!-- bottom section -->
     <section class="bottom-section">
-
-        <div class="languages__wrapper">
-            <div class="dive-cube">dive</div>
-            <div class="into-cube">into</div>
-
-            <ul class="languages-example-list">
-                <li class="english__example-item">languages</li>
-                <li class="russian__example-item">языки</li>
-                <li class="chinese__example-item">语言</li>
-                <li class="german__example-item">sprachen</li>
-            </ul>
-        </div>
-
-        <div class="qa__wrapper">
-
-            <div class="learner-qa-part__wrapper">
-                <p class="learner-question__item">a learner?</p>
-                <p class="learner-answer__item">learn new words</p>
+        <div>
+            <div>
+                <video src="/static/videos-for-invade/index2.mp4" preload="auto" autoplay="true" loop="true" muted="muted">
+                </video>
+                <div>
+                    <p>
+                        What’s your favourite mean of transport? Let people know!
+                    </p>
+                </div>
             </div>
-
-            <div class="native-qa-part__wrapper">
-                <p class="native-question__item">a native speaker?</p>
-                <p class="native-answer__item">add words, help and meet new people</p>
+            <div>
+                <video src="/static/videos-for-invade/index3.mp4" preload="auto" autoplay="true" loop="true" muted="muted">
+                </video>
+                <div>
+                    <p>
+                        Are you going to learn a new language? Do it with pleasure!
+                    </p>
+                </div>
             </div>
-
+            <div>
+                <video src="/static/videos-for-invade/index4.mp4" preload="auto" autoplay="true" loop="true" muted="muted">
+                </video>
+                <div>
+                    <p>
+                        Are you a native speaker? Add words, help and meet new people! 
+                    </p>
+                </div>
+            </div>
         </div>
-
-        <div class="right-bottom-join__wrapper">
-            <div class="top-left-cube__item">join</div>
-            <div class="top-right-cube__item"></div>
-            <div class="bottom-left-cube__item"></div>
-            <div class="bottom-right-cube__item"></div>
-        </div>
-
+        <footer>
+            <p class="top-left-cube__item">join invade</p>
+        </footer>
     </section>
-</div>
-
+    
+    <script src="/static/index.js"></script>
 </body>
-
-<!-- temp styles -->
-<style>
-    {% include "style/index.css" %}
-</style>
-
-<!-- temp scripts -->
-<script>
-
-    // buttons to click
-    var showLoginButton = document.getElementsByClassName('list-join-button')[0];
-    var showSignupButton = document.getElementsByClassName('auth-form__signup')[0];
-    var closeButton0 = document.getElementsByClassName('close-button')[0];
-    var closeButton1 = document.getElementsByClassName('close-button')[1];
-    var bottomJoin = document.getElementsByClassName('top-left-cube__item')[0];
-
-
-    // events after clicking
-    var loginSectionShown = document.getElementsByClassName('auth-section')[0];
-    var signupSectionShown = document.getElementsByClassName('signup-section')[0];
-
-    // events functions
-    showLoginButton.onclick = function () {
-        loginSectionShown.style.display = 'grid';
-    };
-    bottomJoin.onclick = function () {
-        signupSectionShown.style.display = 'grid';
-    }
-    showSignupButton.onclick = function () {
-        loginSectionShown.style.display = 'none';
-        signupSectionShown.style.display = 'grid';
-    };
-    closeButton0.onclick = function () {
-        loginSectionShown.style.display = 'none';
-        signupSectionShown.style.display = 'none';
-    }
-    closeButton1.onclick = function () {
-        loginSectionShown.style.display = 'none';
-        signupSectionShown.style.display = 'none';
-    }
-
-    //animation
-    var aboveCube = document.getElementsByClassName('above-cube')[0];
-    var middleCube = document.getElementsByClassName('middle-cube')[0];
-    var underCube = document.getElementsByClassName('under-cube')[0];
-
-    setTimeout(function () {
-        aboveCube.style.transform = 'scale(1)';
-    }, 475);
-    setTimeout(function () {
-        middleCube.style.transform = 'scale(1)';
-    }, 425);
-    setTimeout(function () {
-        underCube.style.transform = 'scale(1)';
-    }, 325);
-
-    setTimeout(function () {
-        aboveCube.style.animation = '4.8s smallCubes infinite';
-    }, 900);
-    setTimeout(function () {
-        middleCube.style.animation = '4.9s smallCubes infinite';
-    }, 1100);
-    setTimeout(function () {
-        underCube.style.animation = '5s smallCubes infinite';
-    }, 1300);
-
-</script>
-
 </html>

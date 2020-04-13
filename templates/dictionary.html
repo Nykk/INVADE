@@ -1,6 +1,13 @@
-{% include "head.html" %}
-<script>
-    var currentOffset = 0;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <script src="http://www.google.com/jsapi?key=AIzaSyA5m1Nc8ws2BbmPRwKu5gFradvD_hgq6G0" type="text/javascript"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/dictionaries.css">
+    <title>Dictionaries</title>
+    <script>
+        var currentOffset = 0;
     trainingNames = [
         {% for i in training_names %}
             "{{ i }}",
@@ -28,6 +35,8 @@
     }
 
     async function showWordInfo(word) {
+        wrapper.style.display='block';
+        wordInfo.style.display='block';
         currentWord = word;
         fetch('/getWordInfo', {
             method: "POST",
@@ -44,10 +53,25 @@
 
                 res.text().then(function (text) {
                     arr = text.split(';')
-                    wordInfo.innerHTML = 'word: ' + word + '<br>translation: ' + arr[0];
+                    wordInfo.innerHTML = `<svg class="close-button" viewBox="0 0 70.826 68.357"  onclick="wordInfo.style.display=\'none\'; wrapper.style.display=\'none\'">
+                                            <defs>
+                                                <style>
+                                                    .a{
+                                                        fill:none;
+                                                        stroke:white;
+                                                        stroke-width:15px;
+                                                    }
+                                                </style>
+                                            </defs>
+                                            <g transform="translate(-1309.732 -79.732)">
+                                                <line class="a" x1="64.821" y1="64.821" transform="translate(1313.969 81.5)"/>
+                                                <line class="a" y1="64.821" x2="64.821" transform="translate(1311.5 81.5)"/>
+                                            </g>
+                                        </svg>`+
+                                       '<div>word: ' + word + '</div><div>translation: ' + arr[0]+'</div>';
                     console.log(arr);
                     for (let i = 0; i < arr[1].split(',').length; i++) {
-                        wordInfo.innerHTML += '<br>' + trainingNames[i] + ':' + arr[1].split(',')[i];
+                        wordInfo.innerHTML +=  '<div>'+trainingNames[i] + ':' + arr[1].split(',')[i]+'</div>';
                     }
                     wordInfo.innerHTML += '<div><button onclick="deleteWord()">delete word</button></div>';
                 });
@@ -59,6 +83,7 @@
     }
 
     function loadWordsWithOffset(name, offset) {
+        if (!name) return;
         currentOffset = offset + 9;
         fetch('/dict/' + name + '/' + offset)
             .then(res => {
@@ -70,12 +95,11 @@
                 if (data != '') {
                     words.style.display = 'grid';
                     for (let i of data.split(',')) {
-                        words.innerHTML += `<div class='dict-logo' id='word_` + i + `' onclick="showWordInfo('` + i + `')">` + i + `</div>`;
+                        words.innerHTML += `<div class='dict-logo word-logo' id='word_` + i + `' onclick="showWordInfo('` + i + `')">` + i + `</div>`;
                     }
                 } else {
                     if (offset == 0) {
-                        words.innerHTML = 'Selected word list is empty';
-                        words.style.display = 'block';
+                        words.innerHTML = '<p>Selected word list is empty</p>';
                     }
                 }
             });
@@ -126,65 +150,88 @@
             }).then(res => {
                 if (res.status == 200) {
                     let i = spelling.value;
-                    words.innerHTML += `<div class='dict-logo' id="word_` + spelling.value + `" onclick="showWordInfo('` + i + `')">` + i + `</div>`;
+                    words.innerHTML += `<div class='dict-logo word-logo' id="word_` + spelling.value + `" onclick="showWordInfo('` + i + `')">` + i + `</div>`;
                 }
             })
         }
     }
-</script>
-<style>
-    {% include "style/dictionary.css" %}
-</style>
-<script>
-    function showHideForm() {
-        createDictForm.style.display = 'block';
+
+    function tr(from, to, cb){
+        r = new XMLHttpRequest()
+        r.open('GET','/getinfo/'+from+'/'+to,false)
+        r.send()
+        cb(r.response)
     }
-</script>
-<div id='content'>
-    <div class="half-screen">
-        <div class='centered'>
-            <h1>
-                Your dictionaries:
-            </h1>
-            <div class='dictionaries' id="dictionaries">
-                {% for dictionary in dictionaries %}
-                    <div class='dict-logo' onclick='getDictList("{{ dictionary.name }}")'>
-                        <div class="dict-name"> {{ dictionary.name }} </div>
-                        {{ dictionary.language }}
-                    </div>
-                {% endfor %}
-            </div>
-            <div class='create-dict-form'>
-                <div onclick="showHideForm()">create a dictionary</div>
-                <div id="createDictForm">
+    </script>
+</head>
+<body>
+<div class="comment-info-wrapper" id="wrapper"></div>
+    <section style="display: grid; grid-template-rows: 2fr 9.5fr 0.5fr">
+        {% include "header.html" %}
+        <main>
+            <div class="dict-part">
+                <div class="title-dicts"><p class="title-p">Your dictionaries:</p></div>
+                <div class="existing-dicts" id="dictionaries">
+
+                    {% for dictionary in dictionaries %}
+                        <div class='dict-logo' onclick='getDictList("{{ dictionary.name }}")'>
+                            <div class="dict-name"> {{ dictionary.name }} </div>
+                             <p>{{ dictionary.language }}</p>
+                        </div>
+                    {% endfor %}
+
+                </div>
+                <div class="create-comment"><p>Create a dictionary:</p></div>
+                <div class="create-dicts">
                     <input type="text" id="dictName" placeholder="name">
                     <select id="dictLanguage">
                         <option disabled> select a language</option>
                         <option>english</option>
                         <option>spanish</option>
                     </select>
-                    <input type="button" value="add" onclick="addDictBtn()">
+                    <input id="dict-button" type="button" value="add" onclick="addDictBtn()">
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="half-screen">
-        <div>
-            <h1>Words:</h1>
-            <div id='words' class='words'>
-                select a dictionary
+            <div class="words-part">
+                <div class="title-words"><p class="title-p">Your words:</p></div>
+                <div class="select-dict" id="words"><p>Select a dictionary</p></div>
+                <div class="load-more">
+                    <input type="button" value="load more words" onclick="loadWordsWithOffset(currentSetName,currentOffset)">
+                </div>
+                <div class="add-word">
+                    <p>Add a word here:</p>
+                </div>
+                <div class="input-word">
+                    <input type="text" id="spelling" placeholder="word">
+                    <input type="text" id="translation" placeholder="translation">
+                    <input id="translateButton" type="button" value="add" onclick="addWordBtn()">
+                </div>
+                <div id="translatedInfo"></div>
+                    <div class="comment-info" id="wordInfo">
+
+                        <p>Select a word to show info</p>
+                </div>
             </div>
-            <input type="button" value="load more words" onclick="loadWordsWithOffset(currentSetName,currentOffset)">
-            <div class='form'>
-                add a word:<br>
-                <input type="text" id="spelling">
-                <input type="text" id="translation">
-                <input type="button" value="add" onclick="addWordBtn()">
-            </div>
-        </div>
-        <div id="wordInfo">
-            select a word to show info
-        </div>
-    </div>
-</div>
-{% include "ending.html" %}
+        </main>
+        <script>
+         let native = document.querySelector('#spelling');
+         let input = document.querySelector('#translation');
+         let translated = document.querySelector('#translatedInfo');
+         let x = 0;
+         let old = false;
+         let nativeLanguage = "{{ nativeLanguage }}";
+         native.addEventListener('keyup', function() {
+             if (old) clearTimeout(old);
+             old = setTimeout(function() {
+                 tr(native.value, nativeLanguage, i=> {
+                     console.log(JSON.parse(i))
+                     x = JSON.parse(i);
+                     translated.textContent = '';
+                     for(let i of x.translation)
+                         translated.textContent+=' '+i;
+                 });
+             }, 1000);
+         })
+
+        </script>
+        {% include "ending.html" %}

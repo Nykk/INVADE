@@ -5,33 +5,35 @@
         <title>Title</title>
     </head>
     <body>
-    <style>
-        {% include "trainings/style/training.css" %}
-    </style>
-    <div id="header">
-        <div class="empty"></div>
-        <div id="score">10/10</div>
-        <a href="/train">
-            <svg class="close-button" viewBox="0 0 70.826 68.357">
-                <defs>
-                    <style>
-                        .close-button {
-                            width: 5vw;
-                            cursor: pointer;
-                            margin: 10px;
-                        }
+    <section>
+        <style>
+            {% include "trainings/style/training.css" %}
+        </style>
+        <div id="header">
+            {% include "header.html" %}
+            <div class="empty"></div>
+            <div id="score">10/10</div>
+            <a href="/train">
+                <svg class="close-button" viewBox="0 0 70.826 68.357">
+                    <defs>
+                        <style>
+                            .close-button {
+                                width: 5vw;
+                                cursor: pointer;
+                                margin: 10px;
+                            }
 
-                        .a {
-                            fill: none;
-                            stroke: #703a98;
-                            stroke-width: 5px;
-                        }
-                    </style>
-                </defs>
-                <g transform="translate(-1309.732 -79.732)">
-                    <line class="a" x1="64.821" y1="64.821" transform="translate(1313.969 81.5)"/>
-                    <line class="a" y1="64.821" x2="64.821" transform="translate(1311.5 81.5)"/>
-                </g>
-            </svg>
-        </a>
-    </div>
+                            .a {
+                                fill: none;
+                                stroke: #FF9D00;
+                                stroke-width: 5px;
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(-1309.732 -79.732)">
+                        <line class="a" x1="64.821" y1="64.821" transform="translate(1313.969 81.5)"/>
+                        <line class="a" y1="64.821" x2="64.821" transform="translate(1311.5 81.5)"/>
+                    </g>
+                </svg>
+            </a>
+        </div>
