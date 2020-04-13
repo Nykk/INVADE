@@ -76,7 +76,7 @@
     }
 
     {% for lang in languages %}
-        {{ lang[0] }}.onclick = function () {
+        document.getElementById("{{ lang[0] }}").onclick = function () {
         fetch('/settings/setlang/{{ lang[0] }}');
         this.classList.add('chosen');
         {% for lang2 in languages %}

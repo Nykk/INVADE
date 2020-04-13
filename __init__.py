@@ -134,11 +134,13 @@ def db():
 @app.route('/dict')
 def dp():
     if 'userId' in ses:
+        native_language = session.query(User).filter_by(id=ses['userId']).first().native_language
         sets = session.query(WordSet).filter_by(owner_id=ses['userId']).all()
         return render_template('dictionary.html',
                                email=ses['email'],
                                dictionaries=[i for i in sets],
-                               training_names=TRAINING_NAMES)
+                               training_names=TRAINING_NAMES,
+                               nativeLanguage=native_language)
     return redirect('/')
 
 @app.route('/startTraining/<name>/<difficulty>')

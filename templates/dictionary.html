@@ -35,6 +35,7 @@
     }
 
     async function showWordInfo(word) {
+        wrapper.style.display='block';
         wordInfo.style.display='block';
         currentWord = word;
         fetch('/getWordInfo', {
@@ -52,7 +53,22 @@
 
                 res.text().then(function (text) {
                     arr = text.split(';')
-                    wordInfo.innerHTML = '<button onclick="wordInfo.style.display=\'none\'">close</button><div>word: ' + word + '</div><div>translation: ' + arr[0]+'</div>';
+                    wordInfo.innerHTML = `<svg class="close-button" viewBox="0 0 70.826 68.357"  onclick="wordInfo.style.display=\'none\'; wrapper.style.display=\'none\'">
+                                            <defs>
+                                                <style>
+                                                    .a{
+                                                        fill:none;
+                                                        stroke:white;
+                                                        stroke-width:15px;
+                                                    }
+                                                </style>
+                                            </defs>
+                                            <g transform="translate(-1309.732 -79.732)">
+                                                <line class="a" x1="64.821" y1="64.821" transform="translate(1313.969 81.5)"/>
+                                                <line class="a" y1="64.821" x2="64.821" transform="translate(1311.5 81.5)"/>
+                                            </g>
+                                        </svg>`+
+                                       '<div>word: ' + word + '</div><div>translation: ' + arr[0]+'</div>';
                     console.log(arr);
                     for (let i = 0; i < arr[1].split(',').length; i++) {
                         wordInfo.innerHTML +=  '<div>'+trainingNames[i] + ':' + arr[1].split(',')[i]+'</div>';
@@ -149,6 +165,7 @@
     </script>
 </head>
 <body>
+<div class="comment-info-wrapper" id="wrapper"></div>
     <section style="display: grid; grid-template-rows: 2fr 9.5fr 0.5fr">
         {% include "header.html" %}
         <main>
@@ -190,8 +207,9 @@
                     <input id="translateButton" type="button" value="add" onclick="addWordBtn()">
                 </div>
                 <div id="translatedInfo"></div>
-                <div class="comment-info" id="wordInfo">
-                    <p>Select a word to show info</p>
+                    <div class="comment-info" id="wordInfo">
+
+                        <p>Select a word to show info</p>
                 </div>
             </div>
         </main>
@@ -201,10 +219,11 @@
          let translated = document.querySelector('#translatedInfo');
          let x = 0;
          let old = false;
+         let nativeLanguage = "{{ nativeLanguage }}";
          native.addEventListener('keyup', function() {
              if (old) clearTimeout(old);
              old = setTimeout(function() {
-                 tr(native.value, 'ru', i=> {
+                 tr(native.value, nativeLanguage, i=> {
                      console.log(JSON.parse(i))
                      x = JSON.parse(i);
                      translated.textContent = '';
