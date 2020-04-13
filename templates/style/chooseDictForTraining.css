@@ -37,4 +37,17 @@ h1 {
 h3{
     font-size:3vw;
 }
+
+@media(max-width: 500px){
+    .dict-logo{
+        width:100%;
+        flex-direction: row;
+        justify-content:space-between;
+    }
+    .dict-logo h3{
+        margin: 2px;
+        font-size:6vw;
+    }
+}
+
 {% endraw %}

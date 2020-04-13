@@ -41,7 +41,8 @@
 }
 
 .training-name {
-    font-size: 6vw;
+    font-size: 3vw;
+    font-weight: bold;
 }
 
 .training-res-num {

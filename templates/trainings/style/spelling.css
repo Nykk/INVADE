@@ -14,8 +14,8 @@ input[type="text"] {
 }
 
 #train {
-    transform: translateY(-50%);
-    padding-top: 50%;
+    transform: translateY(50%);
+    /*padding-top: 50%;*/
 }
 
 .a {

@@ -4,13 +4,14 @@
     <div id='content'>
         <link rel="stylesheet" href="/static/dictionaries.css">
         <style>
+            {% include "style/chooseDictForTraining.css" %}
         </style>
         <div class='centered'>
             <h1>
                 Starting {{ difficulty }} {{ name }}:<br>
                 Select word set:
             </h1>
-            <div class='dictionaries' id="dictionaries">
+            <div class='dictionaries select-dict-for-train' id="dictionaries">
                 {% for dictionary in dictionaries %}
                     <div class='dict-logo'
                             {% if dictionary.needToTrain>=6 %}
@@ -20,8 +21,10 @@
                             {% endif %}
                     >
                         <h3>{{ dictionary.setName }}</h3>
-                        <p>total words: {{ dictionary.wordCount }}</p>
-                        <p>need to train: {{ dictionary.needToTrain }}</p>
+                        <div class="dictData">
+                            <p>total words: {{ dictionary.wordCount }}</p>
+                            <p>need to train: {{ dictionary.needToTrain }}</p>
+                        </div>
                     </div>
                 {% endfor %}
             </div>

@@ -41,7 +41,8 @@
 }
 
 .training-name {
-    font-size: 6vw;
+    font-size: 3vw;
+    font-weight: bold;
 }
 
 .training-res-num {
@@ -113,4 +114,22 @@
 #difficulties {
     display: flex;
     flex-direction: column;
+}
+
+ul > li{
+    font-size:20px;
+}
+
+@media(max-width: 500px){
+    .result{
+        font-size: 20px;
+        flex-direction: column;
+    }
+    .result > div{
+        width:100%;
+        text-align: center;
+    }
+    .result > .training-name{
+        font-size:7vw;
+    }
 }
