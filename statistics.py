@@ -20,6 +20,6 @@ def user_statistics(session, user):
         "total": total,
         "learned": learned,
         "inProgress": total - learned,
-        "trainingsByDays": [int(i) for i in user.trains_completed_by_days.split(',')],
-        "wordsByDays": [int(i) for i in user.words_learned_by_days.split(',')]
+        "trainingsByDays": [int(i) for i in user.trains_completed_by_days.split(',')][::-1],
+        "wordsByDays": [int(i) for i in user.words_learned_by_days.split(',')][::-1]
     }

@@ -96,6 +96,14 @@ footer {
     justify-content: center;
     background-color: #F4F4F4;
 }
+/*#chart{*/
+/*    max-width:600px;*/
+/*}*/
+#dataWrap{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
 @media (max-width: 760px) {
     main {
         display: grid;
