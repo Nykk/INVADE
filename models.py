@@ -12,6 +12,7 @@ class User(Base):
     native_language = Column(String)
     words_learned_by_days = Column(String)
     trains_completed_by_days = Column(String)
+    last_train_date = Column(String)
 
     def __init__(self, name, email, password, native_language):
         self.name = name
@@ -20,6 +21,7 @@ class User(Base):
         self.native_language = native_language
         self.words_learned_by_days = '0,0,0,0,0,0,0'
         self.trains_completed_by_days = '0,0,0,0,0,0,0'
+        self.last_train_date = '2020-02-10'
 
     def incWordsToday(self, num):
         wordsList = self.words_learned_by_days.split(',')
@@ -29,6 +31,18 @@ class User(Base):
     def incTrainingsToday(self, num):
         trainsList = self.trains_completed_by_days.split(',')
         trainsList[0] = str(int(trainsList[0])+num)
+        self.trains_completed_by_days = ','.join(trainsList)
+
+    def shiftStats(self):
+        wordsList = self.words_learned_by_days.split(',')
+        wordsList.pop()
+        wordsList=['0']+wordsList
+
+        trainsList = self.trains_completed_by_days.split(',')
+        trainsList.pop()
+        trainsList=['0']+trainsList
+
+        self.words_learned_by_days = ','.join(wordsList)
         self.trains_completed_by_days = ','.join(trainsList)
 
     def __repr__(self):
