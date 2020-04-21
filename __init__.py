@@ -10,6 +10,7 @@ print()
 from config.base import *
 from config.local import db_path
 from statistics import *
+import requests
 
 engine = create_engine('sqlite:///'+db_path+'?check_same_thread=false', echo=True)
 con = engine.connect()
@@ -144,6 +145,8 @@ def db():
             diff_days = (current_date - datetime(year=year, month=month, day=day)).days
             for i in range(diff_days):
                 user.shiftStats()
+            user.last_train_date = date_str
+            session.commit()
         user = session.query(User).filter_by(email=ses['email']).first()
         if not user:
             return 'error'
@@ -348,10 +351,15 @@ def trpg(wd,to):
     ret+=']}'
     return ret
 
+@app.route('/vka',methods=['GET'])
+def vkap():
+    uid = requests.get(# 'https://oauth.vk.com/access_token?client_id=1&client_secret=H2Pk8htyFD8024mZaPHm&redirect_uri=http://mysite.ru&code='+request.get('code'))
+                 'https://oauth.vk.com/access_token?client_id=7418833&client_secret=gpRBQ3PnFXm4UPRan5S0&code='+request.args.get('code')+'&redirect_uri=http://medvosa2.pythonanywhere.com/vka').json()['user_id']
+    return 'VK user id:' + str(uid)
 
 
 @app.errorhandler(404)
 def erp(n):
     return render_template("page404.html")
 
-app.run()
+# app.run()

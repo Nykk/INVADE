@@ -1,1 +1,1 @@
-db_path = '/Volumes/High Sierra/Users/alme/PycharmProjects/INVADE/test.db'
+db_path = './test.db'
