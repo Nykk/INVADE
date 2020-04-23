@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import googletrans
 from flask import Flask, request, session as ses, render_template, redirect, abort
 from sqlalchemy import create_engine, MetaData
@@ -82,9 +84,17 @@ def rp():
 @app.route('/trainingRes/', methods=['POST'])
 def trs():
     if 'email' in ses:
-
+        current_date = datetime.now()
+        print(current_date)
+        date_str = str(current_date.year)+'-'+str(current_date.month)+'-'+str(current_date.day)
+        print(date_str)
         user = session.query(User).filter_by(id=ses['userId']).first()
-
+        if user.last_train_date!=date_str:
+            year,month,day = [ int(i) for i in user.last_train_date.split('-')]
+            diff_days = (current_date - datetime(year=year, month=month,day=day)).days
+            user.last_train_date = date_str
+            for i in range(diff_days):
+                user.shiftStats()
         user_id = ses['userId']
         training_id = request.json['trainingId']
         corrects = request.json['corrects']
