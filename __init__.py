@@ -134,6 +134,16 @@ def logout():
 @app.route('/dashboard')
 def db():
     if 'email' in ses:
+        current_date = datetime.now()
+        print(current_date)
+        date_str = str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day)
+        print(date_str)
+        user = session.query(User).filter_by(id=ses['userId']).first()
+        if user.last_train_date != date_str:
+            year, month, day = [int(i) for i in user.last_train_date.split('-')]
+            diff_days = (current_date - datetime(year=year, month=month, day=day)).days
+            for i in range(diff_days):
+                user.shiftStats()
         user = session.query(User).filter_by(email=ses['email']).first()
         if not user:
             return 'error'
