@@ -72,17 +72,22 @@
                             app.ended = true;
                             corrects_ids = app.corrects.map(i => i.id);
                             incorrects_ids = app.incorrects.map(i => i.id);
-                            fetch('/trainingRes', {
-                                method: "POST",
+                            console.log(corrects_ids, incorrects_ids);
+                            score.style.display = 'none';
+                            st=''
+                            for(let i=0; i<corrects_ids.length;i++)
+                                st+=corrects_ids[i]+'_'
+                            if (st=='')
+                                st='_'
+                            st+='/'
+                            for(let i=0; i<incorrects_ids.length;i++)
+                                st+=incorrects_ids[i]+'_'
+                            fetch('/trainingRes/2/'+st, {
+                                method: "GET",
                                 headers: {
                                     'Accept': 'application/json',
                                     'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    corrects: corrects_ids,
-                                    incorrects: incorrects_ids,
-                                    trainingId: 2,//choose translation
-                                })
+                                }
                             })
                         }
                     },

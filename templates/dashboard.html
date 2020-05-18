@@ -18,9 +18,11 @@
             <div>
                 <h1>Greetings, {{ email }}!</h1>
                 <div>
-                    <p>Learned words: {{ totalWords }}</p>
+                    <p>Total words: {{ stats.total }}</p>
+                    <p>Learned words: {{ stats.learned }}</p>
+                    <p>Words in progress: {{ stats.inProgress }}</p>
                     <p>Spent time on learning: SOON</p>
-                    {{ stats }}
+                    <!--{{ stats }}-->
                 </div>
             </div>
             <div>

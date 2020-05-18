@@ -13,6 +13,8 @@ class User(Base):
     words_learned_by_days = Column(String)
     trains_completed_by_days = Column(String)
     last_train_date = Column(String)
+    vkid = Column(String)
+
 
     def __init__(self, name, email, password, native_language):
         self.name = name
@@ -56,16 +58,18 @@ class WordSet(Base):
     name = Column(String)
     owner_id = Column(Integer)
     language = Column(String)
+    access_type = Column(Integer)
 
-    def __init__(self, name, owner_id, language):
+    def __init__(self, name, owner_id, language, access_type=0):
         self.name = name
         self.owner_id = owner_id
         self.language = language
+        self.access_type = access_type  # 0 - public, 1 - private
         # self.native_language = native_language
 
     def __repr__(self):
-        return "<WordSet(id=%s, name=%s, owner_id='%s', language='%s')>" % (
-            self.id, self.name, self.owner_id, self.language)
+        return "<WordSet(id=%s, name=%s, owner_id='%s', language='%s', access_type='%s')>" % (
+            self.id, self.name, self.owner_id, self.language, self.access_type)
 
 
 class Word(Base):
@@ -97,4 +101,49 @@ class Word(Base):
     def __repr__(self):
         return "<Word(id=%s, spelling=%s, translation='%s', set=%s, trains='%s')>" % (
             self.id, self.spelling, self.translation, self.word_set,
+            [self.train1,self.train2,self.train3,self.train4,self.train5])
+
+
+class ImportedWordSet(Base):
+    __tablename__ = 'imported_word_sets'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer)
+    set_id = Column(Integer)
+
+    def __init__(self, user_id, set_id):
+        self.user_id = user_id
+        self.set_id = set_id
+
+    def __repr__(self):
+        return "<ImportedWordSet(id=%s, user_id=%s, set_id='%s')>" % (
+            self.id, self.user_id, self.set_id)
+
+
+class ImportedWord(Base):
+    __tablename__ = 'imported_words'
+    id = Column(Integer, primary_key=True)
+    import_set_id = Column(String)
+    original_word_id = Column(Integer)
+    train1 = Column(Integer)
+    train2 = Column(Integer)
+    train3 = Column(Integer)
+    train4 = Column(Integer)
+    train5 = Column(Integer)
+
+    def __init__(self, import_set_id, original_word_id):
+        self.import_set_id = import_set_id
+        self.original_word_id = original_word_id
+        self.train1 = 0
+        self.train2 = 0
+        self.train3 = 0
+        self.train4 = 0
+        self.train5 = 0
+
+    @property
+    def trains(self):
+        return [self.train1,self.train2,self.train3,self.train4,self.train5]
+
+    def __repr__(self):
+        return "<ImportedWord(id=%s, trains='%s')>" % (
+            self.id,
             [self.train1,self.train2,self.train3,self.train4,self.train5])

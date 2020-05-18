@@ -132,4 +132,13 @@ ul > li{
     .result > .training-name{
         font-size:7vw;
     }
+    .flex-right{
+        flex-direction: column;
+    }
+    .grid2x2{
+        grid-template-columns:100%;
+    }
+    .grid2x2 button{
+        height:unset;
+    }
 }

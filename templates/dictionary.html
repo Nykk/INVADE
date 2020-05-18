@@ -38,16 +38,12 @@
         wrapper.style.display='block';
         wordInfo.style.display='block';
         currentWord = word;
-        fetch('/getWordInfo', {
-            method: "POST",
+        fetch('/getWordInfo/'+word+'/'+currentSetName, {
+            method: "GET",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                word: word,
-                set: currentSetName
-            })
         }).then(res => {
             if (res.status == 200) {
 
@@ -112,17 +108,44 @@
         curretOffset = 0;
     }
 
-    function AddDict(name, language) {
-        fetch('/addWordSet', {
-            method: "POST",
+    function loadImportedWordsWithOffset(id, offset) {
+        if (!id) return;
+        currentOffset = offset + 9;
+        fetch('/imp_dict/' + id + '/' + offset)
+            .then(res => {
+                return res.text();
+            })
+            .then(data => {
+                if (offset == 0)
+                    words.innerHTML = '';
+                if (data != '') {
+                    words.style.display = 'grid';
+                    for (let i of data.split(',')) {
+                        words.innerHTML += `<div class='dict-logo word-logo' id='word_` + i + `' onclick="showWordInfo('` + i + `')">` + i + `</div>`;
+                    }
+                } else {
+                    if (offset == 0) {
+                        words.innerHTML = '<p>Selected word list is empty</p>';
+                    }
+                }
+            });
+    }
+
+    function viewImported(id,name) {
+        console.log('gdl');
+        currentSetName = name;
+        console.log('viewing imported '+id+' '+name);
+        loadImportedWordsWithOffset(id, 0);
+        curretOffset = 0;
+    }
+
+    function AddDict(name, language, privacyType) {
+        fetch('/addWordSet/'+name+'/'+language+'/'+privacyType, {
+            method: "GET",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                name: name,
-                language: language
-            })
         }).then(res => {
             if (res.status == 200) {
                 dictionaries.innerHTML += "<div class='dict-logo'><div class='dict-name'>" + name + "</div>" + language + "</div>";
@@ -131,28 +154,36 @@
     }
 
     function addDictBtn() {
-        AddDict(dictName.value, dictLanguage.value)
+        dictName.value=dictName.value.replace(/^ +/,'').replace(/ +$/,'');
+        if (dictName.value.length==0)
+            alert('Word set name cannot be empty')
+        else
+            AddDict(dictName.value, dictLanguage.value, privacy_type.value)
     }
 
     function addWordBtn() {
-        if (currentSetName) {
-            fetch('/addWord', {
-                method: "POST",
+        spelling.value=spelling.value.replace(/^ +/,'').replace(/ +$/,'');
+        translation.value=translation.value.replace(/^ +/,'').replace(/ +$/,'');
+        if (spelling.value.length==0)
+            alert('please provide not empty spelling')
+        else if (translation.value.length==0)
+            alert('please provide not empty translation')
+        else if (currentSetName) {
+            fetch('/addWord/'+currentSetName+'/'+spelling.value+'/'+translation.value, {
+                method: "GET",
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    setName: currentSetName,
-                    spelling: spelling.value,
-                    translation: translation.value
-                })
+                }
             }).then(res => {
                 if (res.status == 200) {
                     let i = spelling.value;
                     words.innerHTML += `<div class='dict-logo word-logo' id="word_` + spelling.value + `" onclick="showWordInfo('` + i + `')">` + i + `</div>`;
                 }
             })
+        }
+        else{
+            alert('please select word set')
         }
     }
 
@@ -172,22 +203,36 @@
             <div class="dict-part">
                 <div class="title-dicts"><p class="title-p">Your dictionaries:</p></div>
                 <div class="existing-dicts" id="dictionaries">
-
                     {% for dictionary in dictionaries %}
                         <div class='dict-logo' onclick='getDictList("{{ dictionary.name }}")'>
                             <div class="dict-name"> {{ dictionary.name }} </div>
                              <p>{{ dictionary.language }}</p>
                         </div>
                     {% endfor %}
-
                 </div>
-                <div class="create-comment"><p>Create a dictionary:</p></div>
+                <div class="title-dicts"><p class="title-p" style="font-size:30px">Imported dictionaries:</p></div>
+                <div class="existing-dicts" id="dictionaries">
+                    {% for dict in imported_sets %}
+                        <div class='dict-logo' onclick="viewImported({{ dict.imported_id }},'{{ dict.original_name }}')">
+                            <div class="dict-name"> {{ dict.original_name }} </div>
+                            <p>{{ dict.language }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="create-comment"><p>Create a dictionary or <a href="/dictSearch">find one</a>:</p></div>
                 <div class="create-dicts">
                     <input type="text" id="dictName" placeholder="name">
                     <select id="dictLanguage">
-                        <option disabled> select a language</option>
-                        <option>english</option>
-                        <option>spanish</option>
+                       <option disabled> select a language</option>
+                        {% for i in languages %}
+                        <!--<option>english</option>-->
+                        <!--<option>spanish</option>-->
+                        <option>{{i[0]}}</option>
+                        {% endfor %}
+                    </select>
+                    <select id="privacy_type">
+                        <option value="0">public</option>
+                        <option value="1">private</option>
                     </select>
                     <input id="dict-button" type="button" value="add" onclick="addDictBtn()">
                 </div>
@@ -220,10 +265,11 @@
          let x = 0;
          let old = false;
          let nativeLanguage = "{{ nativeLanguage }}";
+         let nativeLangCode = "{{langCode}}"
          native.addEventListener('keyup', function() {
              if (old) clearTimeout(old);
              old = setTimeout(function() {
-                 tr(native.value, nativeLanguage, i=> {
+                 tr(native.value, nativeLangCode, i=> {
                      console.log(JSON.parse(i))
                      x = JSON.parse(i);
                      translated.textContent = '';
@@ -232,6 +278,9 @@
                  });
              }, 1000);
          })
-
+        wrapper.onclick=(e)=>{
+            wordInfo.style.display='none';
+            wrapper.style.display='none';
+        }
         </script>
         {% include "ending.html" %}

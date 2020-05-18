@@ -6,32 +6,49 @@
 <section class="settings">
 {% include "header.html" %}
     <div class="settings-window">
-        <p class="title">Settings</p>
-        <ul>
-            <li>Change <span class="set-lang" id="langButton">native language</span></li>
-            <li>Change <span class="set-pass" id="passButton">password</span></li>
-        </ul>
-    </div>
-    <div class="settings-window native-lang-window" id="langWindow">
-        <p class="title">Native language</p>
-        <div>
-            {% for lang in languages %}
-                <div class="lang {% if current_language==lang[0] %}
-                            chosen
-                        {% endif %}" id="{{ lang[0] }}">{{ lang[1] }}</div>
-            {% endfor %}
+        <div class="settings-title">
+            <h1 class="title">Settings</h1>
+        </div>
+        <div class="settings-content">
+            <div class="settings-menu">
+                <ul>
+                    <li id="langButton">Change <span class="set-lang">native language</span></li>
+                    <li id="passButton">Change <span class="set-pass">password</span></li>
+                    <li id="vkButton">disconnect VK account</li>
+                </ul>
+            </div>
+            <div class="settings-inside">
+                <div class="settings-window native-lang-window" id="langWindow">
+                <p class="title">Native language</p>
+                <div>
+                    {% for lang in languages %}
+                        <div class="lang {% if current_language==lang[0] %}
+                                chosen
+                            {% endif %}" id="{{ lang[0] }}">{{ lang[1] }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="settings-window password-window" id="passWindow">
+                <p class="title">Password</p>
+                <div>
+                    <div class="current-password">Current password:</div>
+                    <div class="current-password-input"><input type="password" id="password"></div>
+                    <div class="new-password">New password:</div>
+                    <div class="new-password-input"><input type="password" id="repeatPassword"></div>
+                    <div class="change-button" onclick="changePassword()">Change it</div>
+                </div>
+            </div>
+            <div class="settings-window password-window" id="vkWindow" style='display:none'>
+                <p class="title">Disconnect vk account</p>
+                <div>
+                    <div class="current-password">Are you sure you want to delete vk account</div>
+                    <a href="/delVK" class="change-button" style="display:block">YES</a>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="settings-window password-window" id="passWindow">
-        <p class="title">Password</p>
-        <div>
-            <div class="current-password">Current password:</div>
-            <div class="current-password-input"><input type="password" id="password"></div>
-            <div class="new-password">New password:</div>
-            <div class="new-password-input"><input type="password" id="repeatPassword"></div>
-            <div class="change-button" onclick="changePassword()">Change it</div>
-        </div>
     </div>
+
 <script>
     langWindow.style.display = 'none';
     passWindow.style.display = 'none';
@@ -39,6 +56,7 @@
         if (langWindow.style.display == 'none') {
             langWindow.style.display = 'initial';
             passWindow.style.display = 'none';
+            vkWindow.style.display = 'none';
         } else {
             langWindow.style.display = 'none';
         }
@@ -48,8 +66,19 @@
         if (passWindow.style.display == 'none') {
             passWindow.style.display = 'initial';
             langWindow.style.display = 'none';
+            vkWindow.style.display = 'none';
         } else {
             passWindow.style.display = 'none';
+        }
+    }
+
+    vkButton.onclick = function () {
+        if (vkWindow.style.display == 'none') {
+            passWindow.style.display = 'none';
+            vkWindow.style.display = 'initial';
+            langWindow.style.display = 'none';
+        } else {
+            vkWindow.style.display = 'none';
         }
     }
 

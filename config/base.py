@@ -1,10 +1,10 @@
 TRAINING_NAMES = ['spelling','choose translation','choose spelling','quick quiz']
 DIFFICULTIES = ['easy','medium','hard']
-LANGUAGES = [['russian','русский'],
-             ['chinese (traditional)','中文'],
-             ['english','english'],
-             ['german','Deutsch'],
-             ['turkish','Tyrkie']]
+LANGUAGES = [['russian','русский','ru'],
+             ['chinese (traditional)','中文','cn'],
+             ['english','english','en'],
+             ['german','Deutsch','de'],
+             ['turkish','Tyrkie','tr']]
 
 # 'af': 'afrikaans',
 #     'sq': 'albanian',
