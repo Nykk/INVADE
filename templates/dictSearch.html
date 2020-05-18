@@ -1,4 +1,252 @@
 <!DOCTYPE html>
+<!— saved from url=(0032)http://localhost:5000/dictSearch —>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="http://www.google.com/jsapi?key=AIzaSyA5m1Nc8ws2BbmPRwKu5gFradvD_hgq6G0" type="text/javascript"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./Search a dictionary_files/dictionaries.css">
+        <title>Search a dictionary</title>
+    </head>
+    <body>
+        <style>
+            main{
+                display:flex;
+                flex-direction: column;
+                height: 100%;
+                width: 100%;
+            }
+            main div{
+                width: 100%;
+            }
+            input{
+                border: none;
+                outline: none;
+                margin-left: .2vw;
+                width: 92vw;
+                font-size: 10vw;
+                padding: 20px;
+                font-weight: 300;
+            }
+            input::placeholder {
+                color:rgb(214, 214, 214);
+            }
+            #search-button {
+                background: transparent;
+                cursor: pointer;
+                font-size: 5vw;
+                text-align: end;
+                margin-right: 8px;
+            }
+            .search-form{
+                display: flex;
+                flex-direction: column;
+            }
+            #order-wrapper {
+                display: flex;
+            }
+            input[type="text"]{
+                flex-grow: 1;
+            }
+            select{
+                appearance: none;
+                -webkit-appearance: none;
+                font-size: 5vw;
+                font-weight: 200;
+                color:#2D2E43;
+                background: white;
+                text-align: end;
+                margin-left: 28px;
+            }
+            #dictLanguage {
+                border: none;
+                outline: none;
+                cursor: pointer;
+                width: auto;
+                height: auto;
+            }
+            #results{
+                color:#333333;
+                margin: 3px;
+                flex-grow: 1;
+            }
+            .found-set{
+                margin-top: 40px;
+                border:1px solid #FF9D00;
+                border-radius:5px;
+                margin-left: 2vw;
+                display:flex;
+                flex-direction: row;
+                width: 94%;
+            }
+            .found-set div{
+                flex-grow:1;
+                padding:20px;
+            }
+            .found-set button{
+                padding: 20px;
+                background-color: #FF9D00;;
+                color: white;
+                border-width:0;
+            }
+        </style>
+    <div class="comment-info-wrapper" id="wrapper"></div>
+    <section>
+        <style>
+            *{
+                transition-duration: 0.5s;
+            }
+
+            a{
+                text-decoration:none;
+                color:black;
+            }
+            body > section{
+                display:flex;
+                flex-direction:column;
+                min-height: 100vh;
+            }
+            prefooter {
+                flex-grow:1;
+            }
+            @media(min-width: 761px){
+                a:hover{
+                    color:#FF9D00;
+                }
+            }
+            ul {
+                float: right;
+                list-style: none;
+                display: flex;
+                font-size: 2.2vw;
+                color: #2D2E43;
+            }
+            ul > li {
+                margin-right: 2vw;
+                cursor: pointer;
+            }
+            header {
+                justify-content: flex-end;
+                align-items: center;
+                align-self: flex-end;
+            }
+
+            .select-dict-for-train{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+
+            min-width:761px {
+                .dict-logo:hover, .training-logo:hover {
+                    transform: scale(1.080002007); /* #wetakeitback */
+                }
+                li:hover {
+                    color: #FF9D00;
+                }
+            }
+            body, html, section {
+                overflow-x:auto !important;
+                display: contents;
+            }
+            min-width: 780px{
+                body, html,section{
+                    overflow-x: hidden !important;
+                }
+            }
+
+            max-width: 760px {
+                header > ul {
+                    font-size: 4vw;
+                }
+            }
+
+            footer{
+                font-size: 20px !important;
+            }
+        </style>
+        {% include "header.html" %}
+        <main>
+            <div class="search-form">
+                <input type="text" placeholder="label" id="setName">
+                <div id="order-wrapper">
+                    <select id="dictLanguage">
+                        <option disabled="disabled"> select a language</option>
+                        {% for i in languages %}
+                            <option>{{i[0]}}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="button" id="search-button" value="search" onclick="search()">
+                </div>
+            </div>
+            <div id="results">
+                Found word sets will be here
+                {% raw %}
+                    <div class="found-set" v-for="i in sets">
+                        <div class="set-name">{{ i.name }}</div>
+                        <button v-on:click="add" v-bind:id="i.id">add</button>
+                    </div>
+                {% endraw %}
+            </div>
+        </main>
+        <script>
+        function search(){
+            console.log(setName.value, dictLanguage.value);
+            fetch('/search', {
+                    method: "POST",
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: setName.value,
+                    language: dictLanguage.value
+                })
+            }).then(res => {
+                if (res.status == 200){
+                    res.text()
+                        .then(function (text) {
+                            console.log(JSON.parse(text));
+                            app.sets = JSON.parse(text);
+                        })
+                }
+            });
+        }
+        var app = new Vue({
+            el:'main',
+            data:{
+                sets:[],
+            },
+            methods:{
+                add:function(event){
+                    fetch('/addPublicDict/'+event.target.id.toString());
+                    console.log(event.target.id);
+                }
+            }
+        });
+        </script>
+        <style>
+            footer{
+                color:grey;
+                font-size:2vw;
+                padding:2vw;
+            }
+        </style>
+        <prefooter></prefooter>
+        <footer>
+            Copyright 2020 Nykk and Medvosa
+        </footer>
+    </section>
+
+    </body>
+</html>
+
+{#
+
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
  <script src="http://www.google.com/jsapi?key=AIzaSyA5m1Nc8ws2BbmPRwKu5gFradvD_hgq6G0" type="text/javascript"></script>
@@ -128,3 +376,5 @@
         </script>
         {% endraw %}
         {% include "ending.html" %}
+
+     #}
