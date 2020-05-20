@@ -1,0 +1,116 @@
+{% raw %}
+@font-face {
+    font-family: 'HelveticaNeue';
+    src: url(./fonts/HelveticaNeue.ttf);
+}
+* {
+    font-family: 'HelveticaNeue';
+}
+
+body, html {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    display: grid;
+    grid-gap: 15px;
+    overflow-x:auto;
+}
+section {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-gap: 15px;
+}
+.auth-section {
+    z-index: 10;
+    position: ab;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, .95);
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+.auth-form {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+.auth-form__email, .auth-form__password {
+    width: 50vw;
+    height: 10vw;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 8vw;
+    color: black;
+}
+.auth-form__email::placeholder, .auth-form__password::placeholder {
+    color: black;
+}
+.auth-buttons__wrapper {
+    display: flex;
+    font-size: 8vw;
+}
+.auth-form__submit {
+    border: none;
+    outline: none;
+    width: 30vw;
+    height: 10vw;
+    background-color: transparent;
+    color: #FF9D00;
+    font-size: 8vw;
+    text-align: start;
+    cursor: pointer;
+}
+.auth-form__signup {
+    cursor: pointer;
+    color: #FF9D00;
+}
+.signup-section {
+    z-index: 10;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, .95);
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+.signup-form {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+.signup-inputs__wrapper {
+    display: grid;
+    justify-content: space-around;
+}
+.signup-form__name, .signup-form__email, .signup-form__password, .signup-form__language, .signup-form__submit {
+    width: 40vw;
+    height: 6vw;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 5vw;
+    color: black;
+}
+.signup-form__name::placeholder, .signup-form__email::placeholder, .signup-form__password::placeholder, .signup-form__language::placeholder {
+    color: black;
+}
+.signup-form__submit {
+    margin-top: 30px;
+    color: #FF9D00;
+    text-align: start;
+    cursor: pointer;
+}
+.alert {
+    font-size: 2vw;
+    color: rgba(255, 0, 64, 0.95);
+}
+@media (max-width: 760px) {
+    .alert {
+        font-size: 3vw;
+    }
+}
+{% endraw %}

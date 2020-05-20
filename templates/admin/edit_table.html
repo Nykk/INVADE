@@ -1,0 +1,72 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<a href="/admin" class="btn btn-warning">back</a>
+<h1>Edit table {{table_name}}</h1>
+
+<script>
+    changed={}
+
+    function save(num,name){
+        return function(){
+            if (!changed[num]){
+                changed[num]=[name];
+            }else{
+                if(changed[num].indexOf(name)==-1)
+                changed[num].unshift(name);
+            }
+        }
+    }
+
+    let xhr;
+
+    function send(){
+        let sendData={}
+        for (let i in  changed){
+            sendData[i]={}
+            for (let j of changed[i]){
+                sendData[i][j]=document.getElementById(i+'_'+j).innerText
+            }
+        }
+        console.log(sendData);
+        xhr = new XMLHttpRequest()
+        xhr.open('POST','/admin/save')
+        var formData = new FormData();
+        item={data:sendData, table:"{{table_name}}"};
+        formData.append("data", JSON.stringify(item));
+        xhr.send(formData)
+    }
+
+    function remove(num){
+        xhr = new XMLHttpRequest()
+        xhr.open('POST','/admin/remove')
+        var formData = new FormData();
+        item={id:num, table:"{{table_name}}"};
+        formData.append("data", JSON.stringify(item));
+        xhr.send(formData)
+    }
+</script>
+
+<table class="table table-editable">
+  <thead>
+    <tr>
+      {% for i in columns %}
+      <th scope="col">{{i}}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in entries %}
+    <tr>
+      {% for j in i %}
+      <td contenteditable="true" oninput="save({{i[0]}},'{{columns[loop.index-1]}}')()" id='{{i[0]}}_{{columns[loop.index-1]}}'> {{ j }} </td>
+      {% endfor %}
+      <td><button class="btn btn-danger" onclick="remove({{i[0]}})">delete</button></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<button onclick="send()" class="btn btn-success">save</button>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
