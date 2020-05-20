@@ -79,7 +79,7 @@
                             st+='/'
                             for(let i=0; i<incorrects_ids.length;i++)
                                 st+=incorrects_ids[i]+'_'
-                            fetch('/trainingRes/3/'+st, {
+                            fetch('/trainingRes/{%  endraw %}{{ "1" if imported else "0" }}{% raw %}/3/'+st, {
                                 method: "GET",
                                 headers: {
                                     'Accept': 'application/json',

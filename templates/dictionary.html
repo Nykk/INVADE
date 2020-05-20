@@ -78,6 +78,10 @@
         })
     }
 
+    function showImportedWordInfo(spelling,importedId){
+        alert(spelling,importedId);
+    }
+
     function loadWordsWithOffset(name, offset) {
         if (!name) return;
         currentOffset = offset + 9;
@@ -121,7 +125,8 @@
                 if (data != '') {
                     words.style.display = 'grid';
                     for (let i of data.split(',')) {
-                        words.innerHTML += `<div class='dict-logo word-logo' id='word_` + i + `' onclick="showWordInfo('` + i + `')">` + i + `</div>`;
+                        i = i.split(':')
+                        words.innerHTML += `<div class='dict-logo word-logo' id='word_` + i[0] + `' onclick="showImportedWordInfo('` + i[1] +","+i[0]+ `')">` + i[0] + `</div>`;
                     }
                 } else {
                     if (offset == 0) {

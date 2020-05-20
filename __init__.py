@@ -116,10 +116,10 @@ def searchp():
     print(res)
     return json.dumps([{"id":i.id,"name":i.name} for i in res])
 
-@app.route('/trainingRes/<num>/<cors>/<incors>', methods=['GET'])
-def trs(num,cors,incors):
+@app.route('/trainingRes/<imported>/<num>/<cors>/<incors>', methods=['GET'])
+def trs(imported,num,cors,incors):
     if 'email' in ses:
-        print('---------- TRES ------------')
+        # print('---------- TRES ------------')
         cors=cors.split('_')
         incors=incors.split('_')
         current_date = datetime.now()
@@ -139,16 +139,22 @@ def trs(num,cors,incors):
         incorrects = incors#request.json['incorrects']
 
         incWordsNum=0
-        print('''
-        +---------------------------------------+
-        |            TRAINING RESULT            |
-        +---------------------------------------+
-        ''')
+        # print('''
+        # +---------------------------------------+
+        # |            TRAINING RESULT            |
+        # +---------------------------------------+
+        # ''')
         print(user_id,training_id,corrects,incorrects)
         train_name="train"+str(training_id)
         print(train_name)
-        incorrect_records = session.query(Word).filter(Word.id.in_(incorrects)).all()
-        correct_records = session.query(Word).filter(Word.id.in_(corrects)).all()
+        incorrect_records = []
+        correct_records = []
+        if not imported == '1':
+            incorrect_records = session.query(Word).filter(Word.id.in_(incorrects)).all()
+            correct_records = session.query(Word).filter(Word.id.in_(corrects)).all()
+        else:
+            incorrect_records = session.query(ImportedWord).filter(Word.id.in_(incorrects)).all()
+            correct_records = session.query(ImportedWord).filter(Word.id.in_(corrects)).all()
         print(incorrect_records)
         for i in incorrect_records:
             setattr(i,'train'+str(training_id),0)#i.train1=0
@@ -161,7 +167,7 @@ def trs(num,cors,incors):
             user.incWordsToday(incWordsNum)
         user.incTrainingsToday(1)
         session.commit()
-        print(session.query(Word).filter(Word.id.in_(corrects)).all())
+        # print(session.query(Word).filter(Word.id.in_(corrects)).all())
         return 'ok'
     abort(409)
 
@@ -205,7 +211,7 @@ def dp():
                 lang_code = i[2]
                 break
         sets = session.query(WordSet).filter_by(owner_id=ses['userId']).all()
-        imported_sets = session.query(ImportedWordSet).filter_by(user_id=ses['userId']).all()
+        # imported_sets = session.query(ImportedWordSet).filter_by(user_id=ses['userId']).all()
         set_pairs = session.query(ImportedWordSet, WordSet).join(WordSet, ImportedWordSet.set_id == WordSet.id) \
             .filter(ImportedWordSet.user_id == ses['userId']).all()
         imported_sets = []
@@ -248,10 +254,22 @@ def stng(name,difficulty):
         for i in sets2:
             print(i,sets2[i])
         # return name+' '+difficulty
+        set_pairs = session.query(ImportedWordSet, WordSet).join(WordSet, ImportedWordSet.set_id == WordSet.id) \
+            .filter(ImportedWordSet.user_id == ses['userId']).all()
+        imported_sets = []
+        for i in set_pairs:
+            imp = i[0]
+            orig = i[1]
+            imported_sets.append({
+                "imported_id": imp.id,
+                "set_name": orig.name,
+                "needToTrain":8,
+            })
         return render_template('choseDictForTraining.html',
                                name = name,
                                difficulty=difficulty,
-                               dictionaries=[sets2[i] for i in sets2])
+                               dictionaries=[sets2[i] for i in sets2],
+                               imported_dictionaries=imported_sets)
     return redirect('/')
 
 
@@ -268,7 +286,39 @@ def training(name,difficulty,set_name):
         print(words)
         print(word_set)
         # return name+' '+difficulty
-        return render_template('trainings/'+name+'.html',words=words, training_name=name)
+        return render_template('trainings/'+name+'.html',
+                               words=words,
+                               training_name=name,
+                               imported=False)
+    return redirect('/')
+
+@app.route('/startTraining/<name>/<difficulty>/imported/<set_id>')
+def training_imported(name,difficulty,set_id):
+    if 'userId' in ses:
+        if name not in TRAINING_NAMES:
+            return 'wrong training name'
+        if difficulty not in DIFFICULTIES:
+            return "wrong difficulty"
+        training_id = TRAINING_NAMES.index(name)+1
+        # word_set = session.query(WordSet).filter_by(owner_id=ses['userId'], name=set_name).first()
+        words = session.query(ImportedWord, Word)\
+            .join(Word, ImportedWord.original_word_id == Word.id) \
+            .filter(ImportedWord.import_set_id == set_id,
+                    getattr(ImportedWord,'train'+str(training_id)) <3)\
+            .all()
+        words_to_front = map(lambda i:
+                                   {'id':i[0].id,
+                                    'spelling':i[1].spelling,
+                                    'translation':i[1].translation}
+                                   ,words)
+        # session.query(ImportedWord,Word).filter(Word.word_set==word_set.id, getattr(Word,'train'+str(training_id)) <3).limit(6).all()
+        print(words)
+        # print(word_set)
+        # return name+' '+difficulty
+        return render_template('trainings/'+name+'.html',
+                               words=words_to_front,
+                               training_name=name,
+                               imported=True)
     return redirect('/')
 
 
@@ -293,14 +343,14 @@ def idlp(set_id,offset):
     if 'userId' not in ses:
         return redirect('/')
     # set_id = session.query(ImportedWordSet).filter_by(user_id=ses['userId'], id=dict_id).first().id
-    words = [i[1] for i in session.query(ImportedWord,Word)\
+    words = [i for i in session.query(ImportedWord,Word)\
         .join(Word,ImportedWord.original_word_id==Word.id)\
         .filter(ImportedWord.import_set_id==set_id).all()]
     print(words)
 
     strret=''
     for i in words:
-        strret += i.spelling+','
+        strret += i[1].spelling+':'+str(i[0].id)+','
     if strret:
         strret=strret[:-1]
     return strret
@@ -363,6 +413,23 @@ def gwi(word,word_set):
         print(word)
         # print(dir(request))
         return word_object.translation+'; '+str(word_object.trains[:-1])[1:-1]
+        abort(409)
+    return 'not logged in'
+
+@app.route('/getWordInfo/imported/<imported_word_id>/<word_set_id>', methods=['GET'])
+def gwi_imported(imported_word_id,word_set_id):
+    if 'email' in ses:
+        user_id = ses['userId']
+        #word = request.json['word']
+        #word_set = request.json['set']
+        print(user_id, imported_word_id, word_set_id)
+        word_set = session.query(ImportedWordSet).filter_by(id=word_set_id, user_id=user_id).first()
+        print(word_set,word_set.id)
+        word_imp_object = session.query(ImportedWord).filter_by(import_set_id=word_set_id, id=imported_word_id).first()
+        word_object = session.query(Word).filter_by(id = word_imp_object.original_word_id)
+        print(imported_word_id)
+        # print(dir(request))
+        return word_object.translation+'; '+str(word_imp_object.trains[:-1])[1:-1]
         abort(409)
     return 'not logged in'
 

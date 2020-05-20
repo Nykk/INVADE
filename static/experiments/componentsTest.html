@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>-->
+
+</head>
+<body>
+    <script type="module">
+        import './vue.js';
+        Vue.component(
+            'counter',
+            {
+                data:function(){
+                    return {
+                        name:'peter',
+                        num:0,
+                    }
+                },
+                template:"<div v-on:click='num++'>hi{{ name }} ({{ num }})</div>"
+            },
+        );
+        Vue.component(
+            'user-info',
+            {
+                props:['login','id'],
+                template:"<div>user {{ login }} ()</div>"
+            },
+        )
+        /*Vue.component(
+            'counter',
+            {
+                data: ()=>{},
+                template: 'Счётчик кликов — '
+            }
+        )*/
+    </script>
+    <div id="main">
+        <counter></counter>
+        <counter></counter>
+        <counter></counter>
+        <user-info login="medvosa"></user-info>
+        <user-info v-bind:login="user.login" v-for="user in users"></user-info>
+    </div>
+    <script type="module">
+        import {name} from './test.js';
+        console.log(name);
+        var app = new Vue({
+            el:"#main",
+            data:{
+                 users:[
+                     {id:1, login:'jack'},
+                     {id:2, login:'peter'},
+                     {id:5, login:'mary'},
+                 ]
+            }
+        });
+    </script>
+</body>
+</html>

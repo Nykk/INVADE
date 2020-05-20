@@ -28,6 +28,25 @@
                     </div>
                 {% endfor %}
             </div>
+            <h1>
+                Imported word sets:
+            </h1>
+            <div class='dictionaries select-dict-for-train' id="dictionaries">
+                {% for dictionary in imported_dictionaries %}
+                    <div class='dict-logo'
+                            {% if dictionary.needToTrain>=6 %}
+                         onclick="window.location+='/imported/{{ dictionary.imported_id }}'"
+                            {% else %}
+                         onclick="alert('not enough words to train')"
+                            {% endif %}
+                    >
+                        <h3>{{ dictionary.set_name }}</h3>
+                        <div class="dictData">
+                            <p>need to train: {{ dictionary.needToTrain }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% include "ending.html" %}
