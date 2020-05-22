@@ -7,19 +7,19 @@
 {% include "header.html" %}
     <div class="settings-window">
         <div class="settings-title">
-            <h1 class="title">Settings</h1>
+            <h1 class="title">{{ loc ("Settings")}}</h1>
         </div>
         <div class="settings-content">
             <div class="settings-menu">
                 <ul>
-                    <li id="langButton">Change <span class="set-lang">native language</span></li>
-                    <li id="passButton">Change <span class="set-pass">password</span></li>
-                    <li id="vkButton">disconnect VK account</li>
+                    <li id="langButton">{{ loc ("Change")  }} <span class="set-lang">{{ loc ("native language")  }}</span></li>
+                    <li id="passButton">{{ loc ("Change")  }} <span class="set-pass">{{ loc ("password")  }}</span></li>
+                    <li id="vkButton">{{ loc ("disconnect VK account") }}</li>
                 </ul>
             </div>
             <div class="settings-inside">
                 <div class="settings-window native-lang-window" id="langWindow">
-                <p class="title">Native language</p>
+                <p class="title">{{ loc ("Native language") }}</p>
                 <div>
                     {% for lang in languages %}
                         <div class="lang {% if current_language==lang[0] %}
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="settings-window password-window" id="passWindow">
-                <p class="title">Password</p>
+                <p class="title">{{ loc ("Password")}}</p>
                 <div>
                     <div class="current-password">Current password:</div>
                     <div class="current-password-input"><input type="password" id="password"></div>

@@ -206,7 +206,7 @@
         {% include "header.html" %}
         <main>
             <div class="dict-part">
-                <div class="title-dicts"><p class="title-p">Your dictionaries:</p></div>
+                <div class="title-dicts"><p class="title-p">{{ loc("Your dictionaries") }}:</p></div>
                 <div class="existing-dicts" id="dictionaries">
                     {% for dictionary in dictionaries %}
                         <div class='dict-logo' onclick='getDictList("{{ dictionary.name }}")'>
@@ -215,7 +215,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                <div class="title-dicts"><p class="title-p" style="font-size:30px">Imported dictionaries:</p></div>
+                <div class="title-dicts"><p class="title-p" style="font-size:30px">{{ loc ("Imported dictionaries") }}:</p></div>
                 <div class="existing-dicts" id="dictionaries">
                     {% for dict in imported_sets %}
                         <div class='dict-logo' onclick="viewImported({{ dict.imported_id }},'{{ dict.original_name }}')">
@@ -224,9 +224,9 @@
                         </div>
                     {% endfor %}
                 </div>
-                <div class="create-comment"><p>Create a dictionary or <a href="/dictSearch">find one</a>:</p></div>
+                <div class="create-comment"><p>{{ loc("Create a dictionary or")}} <a href="/dictSearch">{{ loc("find one")}}</a>:</p></div>
                 <div class="create-dicts">
-                    <input type="text" id="dictName" placeholder="name">
+                    <input type="text" id="dictName" placeholder="{{ loc ("name")}}">
                     <select id="dictLanguage">
                        <option disabled> select a language</option>
                         {% for i in languages %}
@@ -236,25 +236,25 @@
                         {% endfor %}
                     </select>
                     <select id="privacy_type">
-                        <option value="0">public</option>
-                        <option value="1">private</option>
+                        <option value="0">{{ loc ("public")}}</option>
+                        <option value="1">{{ loc ("private")}}</option>
                     </select>
-                    <input id="dict-button" type="button" value="add" onclick="addDictBtn()">
+                    <input id="dict-button" type="button" value="{{ loc ("add") }}" onclick="addDictBtn()">
                 </div>
             </div>
             <div class="words-part">
-                <div class="title-words"><p class="title-p">Your words:</p></div>
-                <div class="select-dict" id="words"><p>Select a dictionary</p></div>
+                <div class="title-words"><p class="title-p">{{ loc("Your words") }}:</p></div>
+                <div class="select-dict" id="words"><p>{{ loc("Select a dictionary") }}</p></div>
                 <div class="load-more">
-                    <input type="button" value="load more words" onclick="loadWordsWithOffset(currentSetName,currentOffset)">
+                    <input type="button" value="{{ loc ("load more words")}}" onclick="loadWordsWithOffset(currentSetName,currentOffset)">
                 </div>
                 <div class="add-word">
-                    <p>Add a word here:</p>
+                    <p>{{ loc ("Add a word here") }}:</p>
                 </div>
                 <div class="input-word">
-                    <input type="text" id="spelling" placeholder="word">
-                    <input type="text" id="translation" placeholder="translation">
-                    <input id="translateButton" type="button" value="add" onclick="addWordBtn()">
+                    <input type="text" id="spelling" placeholder="{{ loc("word") }}">
+                    <input type="text" id="translation" placeholder="{{ loc("translation") }}">
+                    <input id="translateButton" type="button" value="{{ loc("add") }}" onclick="addWordBtn()">
                 </div>
                 <div id="translatedInfo"></div>
                     <div class="comment-info" id="wordInfo">

@@ -38,9 +38,77 @@ session.commit()
 app = Flask(__name__)
 app.config['SECRET_KEY']='sdfvsdh43f3f34'
 
+trnsh = {
+    "russian":{
+        "home": "главная",
+        "dictionaries": "словари",
+        "trainings": "тренировки",
+        "settings": "настройки",
+        "exit": "выход",
+    }
+}
+
+trnsb = {
+    "russian":{
+        "Settings": "настройки",
+        "Change": "Сменить",
+        "disconnect VK account": "Отключить аккаунт вконтакте",
+        "password": "пароль",
+        "native language":"родной язык",
+        "Your dictionaries":"Ваши словари",
+        "Your words":"Ваши слова",
+        "Select a dictionary":"Выберите словарь",
+        "Imported dictionaries": "Импортированные словари",
+        "Add a word here":"добавить слово в словарь",
+        "word":"cлово",
+        "translation":"перевод",
+        "name":"название",
+        "public": "публичный",
+        "private": "личный",
+        "add":"добавить",
+        "Create a dictionary or":"Создайте новый словарь или",
+        "find one":"найдите",
+        "load more words":"загрузить еще",
+        "spelling":"написание",
+        "choose translation":"выбор перевода",
+        "choose spelling": "выбор написания",
+        "quick quiz":"верно/неверно"
+    }
+}
+
 @app.context_processor
 def load_baseInfo():
-    return {}
+    lang = ses.get('lang',None)
+    loc_head = None
+    loc_body = None
+    lh = lambda x:x
+    lb = lambda x:x
+    if not lang or (lang not in trnsh):
+        loc_head = lh
+    else:
+        langarrh = trnsh[lang]
+        def lh2(x):
+            print('::-------'+x)
+            if x in langarrh:
+                return langarrh[x]
+            return x
+        loc_head = lh2
+    # print(loc_head("home"))
+    if not lang or (lang not in trnsb):
+        loc_body = lb
+        print('halt\n\n\n\n\n')
+    else:
+        langarrb = trnsb[lang]
+        def loc(x):
+            print('-------'+x)
+            if x in langarrb:
+                return langarrb[x]
+            return x
+        loc_body = loc
+        print('success\n\n\n\n')
+    # print(loc_body("Your dictionaries"))
+    return {"loc_head":loc_head,
+            "loc":loc_body}
 
 @app.route('/')
 def mp():
@@ -67,6 +135,7 @@ def sp():
         if ourUser.password == password:
             ses['email']=email
             ses['userId']=ourUser.id
+            ses['lang']=ourUser.native_language
             return redirect('/dashboard')
         else:
             return 'wrong password'
@@ -231,7 +300,7 @@ def dp():
                                nativeLanguage=native_language,
                                languages=LANGUAGES,
                                langCode=lang_code,
-                               imported_sets=imported_sets)
+                               imported_sets=imported_sets,)
     return redirect('/')
 
 @app.route('/startTraining/<name>/<difficulty>')
@@ -462,6 +531,7 @@ def stlp(lang):
     user = session.query(User).filter_by(email=ses['email']).first()
     if not user:
         abort(401)
+    ses['lang']=lang
     user.native_language=lang
     session.commit()
     return 'ok'
