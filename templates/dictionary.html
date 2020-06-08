@@ -34,6 +34,22 @@
         word_div.parentNode.removeChild(word_div);
     }
 
+    function resetStatistics() {
+        fetch('/resetStats', {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    word: currentWord,
+                    set: currentSetName
+                })
+            }
+        );
+
+    }
+
     async function showWordInfo(word) {
         wrapper.style.display='block';
         wordInfo.style.display='block';
@@ -69,7 +85,14 @@
                     for (let i = 0; i < arr[1].split(',').length; i++) {
                         wordInfo.innerHTML +=  '<div>'+trainingNames[i] + ':' + arr[1].split(',')[i]+'</div>';
                     }
-                    wordInfo.innerHTML += '<div><button onclick="deleteWord()">delete word</button></div>';
+                    wordInfo.innerHTML += `<div>
+                            <button onclick="deleteWord()" >
+                                delete word
+                           </button>
+                            <button onclick="resetStatistics()" >
+                                reset learning statistcs
+                           </button>
+                    </div>`;
                 });
             }
         }).then(data => {

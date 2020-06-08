@@ -524,6 +524,26 @@ def dwp():
         return 'ok'
     return 'not logged in'
 
+
+@app.route('/resetStats', methods=['POST'])
+def rstp():
+    if 'email' in ses:
+        user_id = ses['userId']
+        word = request.json['word']
+        word_set = request.json['set']
+        word_set = session.query(WordSet).filter_by(name=word_set,owner_id=user_id).first().id
+        word = session.query(Word).filter_by(word_set=word_set,spelling=word).first()
+        if word:
+            word.train1 = 0
+            word.train2 = 0
+            word.train3 = 0
+            word.train4 = 0
+            word.train5 = 0
+            session.commit()
+            return 'ok'
+        return 'no such word'
+    return 'not logged in'
+
 @app.route('/settings')
 def stp():
     if 'email' not in ses:
