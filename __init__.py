@@ -173,13 +173,22 @@ def stng(name,difficulty):
 @app.route('/startTraining/<name>/<difficulty>/<set_name>')
 def training(name,difficulty,set_name):
     if 'userId' in ses:
+        num = 4
+        if difficulty == 'medium':
+            num = 6
+        elif difficulty == 'hard':
+            num = 8
         if name not in TRAINING_NAMES:
             return 'wrong training name'
         if difficulty not in DIFFICULTIES:
             return "wrong difficulty"
         training_id = TRAINING_NAMES.index(name)+1
         word_set = session.query(WordSet).filter_by(owner_id=ses['userId'], name=set_name).first()
-        words = session.query(Word).filter(Word.word_set==word_set.id, getattr(Word,'train'+str(training_id)) <3).limit(6).all()
+        words = session.query(Word) \
+            .filter(
+            Word.word_set == word_set.id,
+            getattr(Word, 'train' + str(training_id)) < 3) \
+            .limit(num).all()
         print(words)
         print(word_set)
         # return name+' '+difficulty
