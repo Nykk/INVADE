@@ -1,6 +1,7 @@
 import googletrans
 from flask import Flask, request, session as ses, render_template, redirect, abort
 from sqlalchemy import create_engine, MetaData
+
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 print()
