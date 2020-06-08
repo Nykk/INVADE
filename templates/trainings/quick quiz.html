@@ -69,6 +69,28 @@
                             app.setSpelling();
                             correct = words[app.wordNum].spelling;
                         } else {
+
+                            app.ended = true;
+                            corrects_ids = app.corrects.map(i => i.id);
+                            incorrects_ids = app.incorrects.map(i => i.id);
+                            console.log(corrects_ids, incorrects_ids);
+                            score.style.display = 'none';
+                            st=''
+                            for(let i=0; i<corrects_ids.length;i++)
+                                st+=corrects_ids[i]+'_'
+                            if (st=='')
+                                st='_'
+                            st+='/'
+                            for(let i=0; i<incorrects_ids.length;i++)
+                                st+=incorrects_ids[i]+'_'
+                            fetch('/trainingRes/4/'+st, {
+                                method: "GET",
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                }
+                            })
+                            /*
                             app.ended = true;
                             corrects_ids = app.corrects.map(i => i.id);
                             incorrects_ids = app.incorrects.map(i => i.id);
@@ -83,7 +105,7 @@
                                     incorrects: incorrects_ids,
                                     trainingId: 4,//quick quiz
                                 })
-                            })
+                            })*/
 
                         }
                     },

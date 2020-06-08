@@ -36,6 +36,14 @@ ul > li {
     margin-right: 2vw;
     cursor: pointer;
 }
+#chart {
+    width: 100% !important;
+}
+#chart > div {
+    width: 100% !important;
+    min-height: none !important;
+}
+
 /*svg g:first-child > path{*/
 /*    fill: var(--col1);*/
 /*}*/
@@ -95,6 +103,14 @@ footer {
     display: flex;
     justify-content: center;
     background-color: #F4F4F4;
+}
+/*#chart{*/
+/*    max-width:600px;*/
+/*}*/
+#dataWrap{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
 }
 @media (max-width: 760px) {
     main {

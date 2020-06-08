@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        {% include "vkastyle.jinja" %}
+    </style>
+    <title>Logging in VK</title>
+</head>
+<body>
+    <section class="auth-section">
+
+        <form class="auth-form" action="/addvk" method="post">
+
+            <p class="alert">In order to log in via VK further, first link your existing account by filling the fields below or sign up</p>
+
+            <input type="text" name="login" class="auth-form__email" placeholder="login">
+
+            <input type="password" name="password" class="auth-form__password" placeholder="password">
+
+            <div class="auth-buttons__wrapper">
+                <button type="submit" name="submit" class="auth-form__submit">link it</button>
+                <a class="auth-form__signup" href="/signupaftervk"> or sign up</div>
+            </div>
+
+        </form>
+
+    </section>
+    <script src="index.js"></script>
+</body>
+</html>

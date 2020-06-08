@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        {% include "vkastyle.jinja" %}
+    </style>
+    <link rel="stylesheet" href="vka.css">
+</head>
+<body>
+    <section class="signup-section">
+
+        <form class="signup-form" action="/signup" method="post">
+
+            <div class="signup-inputs__wrapper">
+
+                <input type="text" name="name" class="signup-form__name" placeholder="name">
+
+                <input type="email" name="email" class="signup-form__email" placeholder="e-mail">
+
+                <input type="password" name="password" class="signup-form__password" placeholder="password">
+
+                <input type="text" name="language" class="signup-form__language" placeholder="native language">
+
+            </div>
+
+            <button type="submit" name="submit" class="signup-form__submit">join</button>
+
+        </form>
+    </section>
+</body>
+</html>

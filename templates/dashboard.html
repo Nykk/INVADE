@@ -18,9 +18,11 @@
             <div>
                 <h1>Greetings, {{ email }}!</h1>
                 <div>
-                    <p>Learned words: {{ totalWords }}</p>
+                    <p>Total words: {{ stats.total }}</p>
+                    <p>Learned words: {{ stats.learned }}</p>
+                    <p>Words in progress: {{ stats.inProgress }}</p>
                     <p>Spent time on learning: SOON</p>
-                    {{ stats }}
+                    <!--{{ stats }}-->
                 </div>
             </div>
             <div>
@@ -32,14 +34,23 @@
                 transition-duration: 0s !important;
             }
         </style>
-        <div id="statistics">
-            <div class="chart">
-                <apexchart type="pie" width="380" :options="chartOptions" :series="series"></apexchart>
+        <div id="dataWrap">
+            <div id="statistics">
+                <div class="chart">
+                    <apexchart type="pie" width="380" :options="chartOptions" :series="series"></apexchart>
+                </div>
+            </div>
+
+            <div id="chart">
+                <apexchart type="area" height="350" :options="chartOptions" :series="series"></apexchart>
             </div>
         </div>
-
         <script>
-        let stats = {{ stats|safe }};
+            let days = ["MON","TUE","WED","THU","FRI","SAT","SUN"];
+            const currentDay = Date().split(' ')[0].toUpperCase();
+            while(days[days.length-1]!=currentDay)
+                days.unshift(days.pop())
+            let stats = {{ stats|safe }};
         let App = new Vue({
             el: '#statistics',
             components: {
@@ -74,7 +85,51 @@
                     }]
                 },
             },
-        })
-        </script>
+        });
+        let App2 = new Vue({
+        el: '#chart',
+        components: {
+          apexchart: VueApexCharts,
+        },
+        data: {
 
+          series: [{
+            name: "Words learned per day",
+            data: stats.wordsByDays
+          }, {
+            name: "Training per day",
+            data: stats.trainingsByDays
+          }],
+          chartOptions: {
+            chart: {
+              height: 350,
+              type: 'area'
+            },
+              fill: {
+                        colors: ['#FF9D00', '#BBBBBB', '#9C27B0'],
+                    },
+                    colors: ['#FF9D00', '#BBBBBB', '#9C27B0'],
+            dataLabels: {
+              enabled: false
+            },
+            stroke: {
+              curve: 'smooth'
+            },
+            xaxis: {
+              type: 'Days',
+              categories: days,
+            },
+            tooltip: {
+              x: {
+                format: 'dd/MM/yy HH:mm'
+              },
+            },
+          },
+
+
+        },
+
+      })
+
+        </script>
         {% include "ending.html" %}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <script src="http://www.google.com/jsapi?key=AIzaSyA5m1Nc8ws2BbmPRwKu5gFradvD_hgq6G0" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/dictionaries.css">
+    <title>Search a dictionary</title>
+
+<body>
+<style>
+    main{
+        display:flex;
+        flex-direction: column;
+        height:100%;
+    }
+    main div{
+        width:100%;
+    }
+    input{
+        border-radius: 5px;
+        padding:20px;
+    }
+    .search-form{
+        display: flex;
+        flex-direction: row;
+    }
+    input[type="text"]{
+        flex-grow: 1;
+    }
+    select{
+        appearance: none;
+        -webkit-appearance: none;
+        padding:20px;
+    }
+    #dictLanguage, input{
+        border: 1px solid goldenrod;
+    }
+    #results{
+        background-color: #BBBBBB;
+        color:#333333;
+        padding: 20px;
+        margin: 3px;
+        border-radius: 5px;
+        flex-grow: 1;
+    }
+    .found-set{
+        border:1px solid goldenrod;
+        border-radius:5px;
+        display:flex;
+        flex-direction: row;
+    }
+    .found-set div{
+        flex-grow:1;
+        padding:20px;
+    }
+    .found-set button{
+        paddding:20px;
+        border-radius:5px;
+        background-color: goldenrod;
+        color:white;
+        border-width:0;
+        margin:1px;
+    }
+</style>
+<div class="comment-info-wrapper" id="wrapper"></div>
+    <section>
+        {% include "header.html" %}
+
+        <main>
+            <div class="search-form">
+                <input type="text" value="name" placeholder="word set name" id="setName">
+                <select id="dictLanguage">
+                       <option disabled> select a language</option>
+                        {% for i in languages %}
+                            <option>{{i[0]}}</option>
+                        {% endfor %}
+                    </select>
+                <input type="button" value="search" onclick="search()">
+            </div>
+        {%  raw %}
+            <div id="results">
+                Found word sets will be here
+                <div class="found-set" v-for="i in sets">
+                    <div class="set-name">{{ i.name }}</div>
+                    <button>add</button>
+                </div>
+            </div>
+        </main>
+        <script>
+            function search(){
+                console.log(setName.value, dictLanguage.value);
+                fetch('/search', {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: setName.value,
+                        language: dictLanguage.value
+                    })
+                }).then(res => {
+                    if (res.status == 200) {
+                        res.text().then(function (text) {
+                            console.log(JSON.parse(text));
+                            app.sets = JSON.parse(text);
+                        })
+                    }
+                });
+            }
+            var app = new Vue({
+                el:'main',
+                data:{
+                    sets:[],
+                }
+            });
+        </script>
+        {% endraw %}
+        {% include "ending.html" %}

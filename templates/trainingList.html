@@ -1,6 +1,6 @@
-
 <style>
     {% include "style/trainingList.css" %}
+    /*here*/
 </style>
     <link rel="stylesheet" href="/static/dictionaries.css">
 
@@ -40,7 +40,7 @@
                 <div class='dictionaries' id="trainings">
                     {% for training in trainings %}
                         <div class='training-logo training-logo-{{ training.replace(' ', '-') }}'
-                             onclick='select("{{ trainings.index(training) }}")'><p>{{ training }}</p></div>
+                             onclick='select("{{ trainings.index(training) }}")'><p>{{ loc(training) }}</p></div>
                     {% endfor %}
                 </div>
             </div>

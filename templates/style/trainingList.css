@@ -115,5 +115,16 @@ svg > g > .b , #closeButton {
     text-align: start;
     margin-left: 1.5vw;
 }
-
+@media (orientation:portrait) /*(max-width:760px)*/{
+#content{
+        width:100%;
+    }
+    #trainings{
+        width:100%;
+        grid-template-columns:100% !important;
+    }
+    .training-logo{
+        width:100%;
+    }
+}
 {% endraw %}
