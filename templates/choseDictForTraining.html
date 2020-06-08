@@ -13,7 +13,7 @@
             </h1>
             <div class='dictionaries select-dict-for-train' id="dictionaries">
                 {% for dictionary in dictionaries %}
-                    <div class='dict-logo'
+                    <div class='dict-logo' style="width: 15em; height: 15em; font-size: 3em"
                             {% if dictionary.needToTrain>=6 %}
                          onclick="window.location+='/{{ dictionary.setName }}'"
                             {% else %}
