@@ -119,7 +119,7 @@ class ImportedWordSet(Base):
             self.id, self.user_id, self.set_id)
 
 
-class ImportedWord(Base):
+class sImportedWord(Base):
     __tablename__ = 'imported_words'
     id = Column(Integer, primary_key=True)
     import_set_id = Column(String)
