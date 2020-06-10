@@ -20,13 +20,14 @@
             <div class="settings-inside">
                 <div class="settings-window native-lang-window" id="langWindow">
                 <p class="title">{{ loc ("Native language") }}</p>
-                <div>
+                <div class="list">
                     {% for lang in languages %}
                         <div class="lang {% if current_language==lang[0] %}
                                 chosen
                             {% endif %}" id="{{ lang[0] }}">{{ lang[1] }}</div>
                     {% endfor %}
                 </div>
+                <h3>You need to reload the page after choosing a language</h3>
             </div>
             <div class="settings-window password-window" id="passWindow">
                 <p class="title">{{ loc ("Password")}}</p>

@@ -15,8 +15,6 @@
     background-color: #F4F4F4;
     width: 100%;
     height: 100%;
-    border-radius: 4vw;
-    margin-left: 2vw;
     transition: .5s cubic-bezier(0.34, 1.61, 0.7, 1);
 }
 
@@ -34,7 +32,7 @@
     flex-direction:column;
     margin: 0;
     padding: 0;
-    padding-left: 10px;
+    padding-left: 1em;
 }
 
 h1{
@@ -42,23 +40,29 @@ h1{
 }
 
 .lang{
-        padding: 10px;
+    padding: 10px;
     margin: 2px;
-    border: 2px solid #c7c7c7;
     border-radius: 5px;
+    background: #E5E5E5;
 }
 
 .settings-menu ul li{
     padding:10px;
-    border-radius:5px;
-    border: 2px solid #c7c7c7;
+    padding-left: 0;
 }
 
 .settings-inside{
-    border: 2px solid #c7c7c7;
     border-radius:5px;
     flex-grow: 1;
     margin-right: 20px;
+}
+
+.settings-inside > h3 {
+    margin-left: 2.6em;
+}
+
+.list {
+    margin-left: 2.6em;
 }
 
 .native-lang-window {
@@ -71,9 +75,6 @@ h1{
     z-index: 0;
     display: none;
     transition: .3s ease-in-out;
-}
-
-.current-password, .new-password {
 }
 
 .new-password {
@@ -99,16 +100,30 @@ input {
 }
 
 .change-button{
-    border: 2px solid #c7c7c7;
     margin: 2px;
     padding: 10px;
     width: calc(100% - 28px);
     border-radius: 5px;
 }
 
+.current-password {
+    margin-left: .2em;
+}
+
+#vkWindow a {
+    background: #FF9D00;
+}
+
+#vkWindow > div {
+    margin-left: 2.6em;
+}
 
 .native-lang-window > ul > li {
     cursor: pointer;
+}
+
+.native-lang-window > h3 {
+    margin-left: 2.6em;
 }
 
 .chosen {
@@ -121,6 +136,10 @@ input {
     line-height: 1.5;
     margin-left: 3.2vw;
     padding: 0;
+}
+
+#passWindow > div {
+    margin-left: 2.6em;
 }
 
 .settings-window > ul > li:nth-child(1) > span {
@@ -143,11 +162,16 @@ input {
         height: 100%;
     }
 
+    .settings-menu ul {
+        flex-direction: row;
+        float: left;
+        font-size: 4.5vw;
+    }
+
     .settings-window {
         background-color: #F4F4F4;
-        width: 45vw;
-        height: 63vw;
-        border-radius: 7.2vw;
+        width: 100%;
+        height: 100%;
     }
 
     .settings-window > .title {
@@ -161,6 +185,10 @@ input {
         line-height: 1.5;
         margin-left: 5.8vw;
         padding: 0;
+    }
+
+    .settings-content {
+        flex-direction: column;
     }
 
     .settings-window > ul > li:nth-child(1) > span {
