@@ -240,7 +240,7 @@ def trs(num,cors,incors):
 
 
 @app.route('/trainingRes/<imported>/<num>/<cors>/<incors>', methods=['GET'])
-def trs(imported,num,cors,incors):
+def trsi(imported,num,cors,incors):
     if 'email' in ses:
         # print('---------- TRES ------------')
         cors=cors.split('_')
