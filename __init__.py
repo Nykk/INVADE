@@ -186,6 +186,59 @@ def searchp():
     print(res)
     return json.dumps([{"id":i.id,"name":i.name} for i in res])
 
+
+@app.route('/trainingRes/<num>/<cors>/<incors>', methods=['GET'])
+def trs(num,cors,incors):
+    if 'email' in ses:
+        print('---------- TRES ------------')
+        cors=cors.split('_')
+        incors=incors.split('_')
+        current_date = datetime.now()
+        print(current_date)
+        date_str = str(current_date.year)+'-'+str(current_date.month)+'-'+str(current_date.day)
+        print(date_str)
+        user = session.query(User).filter_by(id=ses['userId']).first()
+        if user.last_train_date!=date_str:
+            year,month,day = [ int(i) for i in user.last_train_date.split('-')]
+            diff_days = (current_date - datetime(year=year, month=month,day=day)).days
+            user.last_train_date = date_str
+            for i in range(diff_days):
+                user.shiftStats()
+        user_id = ses['userId']
+        training_id = num#request.json['trainingId']
+        corrects = cors#request.json['corrects']
+        incorrects = incors#request.json['incorrects']
+
+        incWordsNum=0
+        print('''
+        +---------------------------------------+
+        |            TRAINING RESULT            |
+        +---------------------------------------+
+        ''')
+        print(user_id,training_id,corrects,incorrects)
+        train_name="train"+str(training_id)
+        print(train_name)
+        incorrect_records = session.query(Word).filter(Word.id.in_(incorrects)).all()
+        correct_records = session.query(Word).filter(Word.id.in_(corrects)).all()
+        print(incorrect_records)
+        for i in incorrect_records:
+            setattr(i,'train'+str(training_id),0)#i.train1=0
+        for i in correct_records:
+            setattr(i,'train'+str(training_id),getattr(i,'train'+str(training_id))+1)
+            if i.train1==i.train2==i.train3==i.train4==3:
+                print(i)
+                incWordsNum+=1
+        if incWordsNum>0:
+            user.incWordsToday(incWordsNum)
+        user.incTrainingsToday(1)
+        session.commit()
+        print(session.query(Word).filter(Word.id.in_(corrects)).all())
+        return 'ok'
+    abort(409)
+
+
+
+
 @app.route('/trainingRes/<imported>/<num>/<cors>/<incors>', methods=['GET'])
 def trs(imported,num,cors,incors):
     if 'email' in ses:
