@@ -45,6 +45,7 @@ main > div > .title-dicts > p {
 }
 main > div > .existing-dicts {
     display: grid;
+    grid-gap: 1em;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 .dict-logo {
@@ -58,6 +59,9 @@ main > div > .existing-dicts {
     display: flex;
     justify-content: center;
     flex-direction: column;
+}
+.dict-logo:not(.word-logo){
+     box-shadow: /* The top layer shadow */ 0 -1px 1px rgba(0,0,0,0.15), /* The second layer */ 0 -10px 0 -5px #eee, /* The second layer shadow */ 0 -10px 1px -4px rgba(0,0,0,0.15), /* The third layer */ 0 -20px 0 -10px #eee, /* The third layer shadow */ 0 -20px 1px -9px rgba(0,0,0,0.15);
 }
 .dict-logo > p {
     width: 100%;
@@ -239,8 +243,13 @@ main > .words-part > .comment-info > p {
     padding:5px;
     border-radius: 10px;
     border: 2px solid grey;
-    background-color:#ff9D00;
-    color:white;
+    background-color:#f1f1f1;
+    color:black;
+}
+
+#wordInfo div{
+    font-weight: lighter;
+    font-family: sans-serif;
 }
 
 #wordInfo svg{

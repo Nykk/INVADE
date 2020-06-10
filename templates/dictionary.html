@@ -232,9 +232,11 @@
                 <div class="title-dicts"><p class="title-p">{{ loc("Your dictionaries") }}:</p></div>
                 <div class="existing-dicts" id="dictionaries">
                     {% for dictionary in dictionaries %}
-                        <div class='dict-logo' onclick='getDictList("{{ dictionary.name }}")'>
-                            <div class="dict-name"> {{ dictionary.name }} </div>
-                             <p>{{ dictionary.language }}</p>
+                        <div>
+                            <div class='dict-logo' onclick='getDictList("{{ dictionary.name }}")'>
+                                <div class="dict-name"> {{ dictionary.name }} </div>
+                                <p>{{ dictionary.language }}</p>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
